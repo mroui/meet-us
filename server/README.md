@@ -1,4 +1,5 @@
 # Backend
+[(powrót do głównej dokumentacji)](../README.md)
 
 ### Technologia
 Językiem używanym w tym projekcie jest `typescript` (https://www.typescriptlang.org/) - typowany język zorientowany obiektowo, nadal kod można tworzyć w natywnym javascripcie używając rozszerzeń `.js` dla plików.
