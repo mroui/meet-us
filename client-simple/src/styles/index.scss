@@ -1,0 +1,92 @@
+@import '~antd/dist/antd.min.css';
+@import '../styles/variables';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  color: $color-black;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input::placeholder {
+  color: $color-whiteblue-dark2;
+}
+
+textarea::placeholder {
+  color: $color-black;
+}
+
+// Page styles
+.page {
+  height: 100vh;
+  height: 100%;
+
+  &__content {
+    flex: 1;
+    background-color: $color-whiteblue;
+    min-height: 100vh;
+  }
+
+  &__header {
+    border-bottom: 1px solid $color-whiteblue-dark;
+    background-color: $color-white;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__heading {
+    font-weight: $font-weight-bold;
+    font-size: 18px;
+  }
+
+  &__wrapper {
+    padding: 25px;
+
+    &--absolute {
+      width: 100%;
+      max-width: 450px;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+// Media queries
+@media (min-width: 768px) {
+  .page {
+    display: flex; 
+    margin-left: 300px;
+  }
+}
+
+// Keyframes
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

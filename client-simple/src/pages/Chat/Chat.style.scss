@@ -1,0 +1,71 @@
+@import '../../styles/variables';
+
+// Chat
+.chat {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+  }
+
+  &__content {
+    padding: 25px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    background-color: $color-white;
+    border-top: 1px solid $color-whiteblue-dark;
+    padding: 25px;
+    width: 100%;
+  }
+
+  &__form {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+
+  &__textarea {
+    font-weight: $font-weight-regular;
+    font-size: 14px;
+    width: 100%;
+    min-height: 46px;
+    height: 46px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: $color-white;
+    border: 1px solid $color-grey-light;
+    resize: vertical;
+  }
+  
+  &__back {
+    margin-left: 40px;
+  }
+
+  &__btn {
+    height: 46px;
+    min-width: 150px;
+    margin-top: 15px;
+  }
+}
+
+// Media queries
+@media (min-width: 992px) {
+  .chat {
+    &__form {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    &__textarea {
+      margin-right: 20px;
+    }
+
+    &__btn {
+      margin-top: 0;
+    }
+  }
+}

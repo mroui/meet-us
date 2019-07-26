@@ -1,0 +1,78 @@
+@import '../../styles/variables';
+
+// Channel
+.channel {
+  color: $color-black;
+  background-color: $color-white;
+  border-radius: 6px;
+  margin-bottom: 22px;
+  display: block;
+  padding: 15px 20px;
+  border: 1px solid $color-whiteblue-dark;
+  border-bottom-width: 2px;
+  justify-content: space-between;
+  align-items: center;
+  transition: .25s background-color ease;
+  
+  &:hover {
+    background-color: $color-whiteblue-dark;
+  }
+
+  &__title {
+    font-weight: $font-weight-semibold;
+    font-size: 15px;
+    color: $color-black;
+    padding: 8px 0;
+    flex: 1;
+    transition: .25s color ease;
+  }
+}
+
+// Actions
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 46px;
+  }
+
+  &__value {
+    font-weight: $font-weight-semibold;
+    font-size: 15px;
+    color: $color-black;
+    margin-right: 6px;
+  }
+
+  &__img {
+    height: 18px;
+  }
+  
+  &__separator {
+    width: 1px;
+    height: 30px;
+    background-color: $color-whiteblue-dark;
+    display: block;
+    margin: 0 15px;
+  }
+}
+
+// Media queries
+@media (min-width: 480px) {
+  .channel {
+    display: flex;
+
+    &__title {
+      margin-right: 15px;
+    }
+  }
+
+  .actions {
+    margin: 0;
+  }
+}

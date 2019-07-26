@@ -1,0 +1,85 @@
+@import '../../../styles/variables';
+
+// Map
+.map-location {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 !important;
+  }
+
+  &__container {
+    color: $color-black;
+    background-color: $color-white;
+    flex-grow: 1;
+    border: 1px solid $color-whiteblue-dark;
+    border-bottom-width: 2px;
+    position: relative;
+    overflow: hidden;
+    animation: show .5s;
+  }
+
+  &__label {
+    cursor: default !important;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: $color-white;
+    box-shadow: 2px 3px 6px rgba(16, 16, 16, 0.2);
+
+    &-title {
+      font-size: 14px;
+      font-weight: $font-weight-semibold;
+      color: $color-purple;
+    }
+
+    &-content {
+      font-size: 12px;
+      border-radius: 5px;
+
+      & p {
+        margin: 6px 0 8px 0;
+      }
+
+      .btn {
+        pointer-events: all;
+        cursor: pointer;
+        z-index: 2000;
+      }
+    }
+  }
+
+  &__search-wrapper {
+    position: absolute;
+    top: 120px !important; // DK: Override google maps styles
+    left: 0 !important;
+    width: 100%;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    & .form__group {
+      max-width: 600px;
+    }
+  }
+
+  &__search {
+    position: relative;
+    background: $color-white;
+    border: 1px solid transparent;
+    box-shadow: 2px 3px 6px rgba(16, 16, 16, 0.2);
+    width: 100%;
+  }
+}

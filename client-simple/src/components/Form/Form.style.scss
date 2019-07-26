@@ -1,0 +1,92 @@
+@import '../../styles/variables';
+
+// Form
+.form {
+  width: 100%;
+
+  &__heading {
+    font-weight: $font-weight-bold;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 50px;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  &__group {
+    margin-bottom: 25px;
+    width: 100%;
+  }
+
+  &__label {
+    font-weight: $font-weight-semibold;
+    font-size: 12px;
+    color: $color-black;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  &__input {
+    font-weight: $font-weight-regular;
+    font-size: 14px;
+    line-height: 46px;
+    width: 100%;
+    height: 46px;
+    padding: 0 20px;
+    border-radius: 20px;
+    background-color: $color-whiteblue-dark;
+    border: 1px transparent solid;
+    outline: none;
+    &:focus {
+      border: 1px $color-whiteblue-dark2 solid;
+    }
+
+    &.is-invalid {
+      color: $color-red;
+      background: $color-white-red;
+      border: 1px $color-red solid;
+    }
+  }
+
+  &__btn {
+    font-size: 14px;
+    padding: 0 20px;
+    min-width: 150px;
+    height: 46px;
+    display: block;
+    border-radius: 20px;
+    margin: 50px auto 40px auto;
+    cursor: pointer;
+    &.is-disabled {
+      cursor: default;
+      color: $color-grey-light;
+      background: $color-grey-light2;
+      border-color: $color-grey-light;
+      outline: none;
+    }
+  }
+
+  &__footer {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  &__text {
+    font-size: 14px;
+    display: block;
+    margin-top: 15px;
+  }
+
+  &__link {
+    color: $color-blue;
+  }
+
+  &__error {
+    font-size: 15px;
+    color: $color-red;
+    text-align: center;
+    margin: 0;
+  }
+}

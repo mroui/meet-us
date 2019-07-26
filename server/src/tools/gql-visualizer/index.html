@@ -1,0 +1,25 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/react@16/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.production.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.css" />
+    <script src="https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.min.js"></script>
+</head>
+<body>
+<div id="voyager">Loading...</div>
+<script>
+  function introspection(query) {
+    const gqlUrl = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
+    console.log(`Fetching graphql schema from: ${gqlUrl}...`);
+    return fetch(gqlUrl + "/graphql", {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({query}),
+    }).then(response => response.json());
+  }
+
+  GraphQLVoyager.init(document.getElementById('voyager'), {introspection: introspection})
+</script>
+</body>
+</html>

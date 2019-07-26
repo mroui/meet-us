@@ -1,0 +1,21 @@
+{
+  "name": "localized-chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:tdsoft/tdsoft-map-chat.git",
+  "author": "TDSOFT",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "install:all": "npm i && cd ./client-simple && npm i && cd ../server && npm i"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-native": "^3.7.0",
+    "husky": "^2.3.0"
+  },
+  "husky": {},
+  "dependencies": {}
+}

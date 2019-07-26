@@ -1,0 +1,22 @@
+[
+  {
+    "msg": "Hellloooooo",
+    "guestName": "Guest1",
+    "guestId": "123"
+  },
+  {
+    "msg": "Supp",
+    "guestName": "Guest2",
+    "guestId": "321"
+  },
+  {
+    "msg": "Wanna play some Apex Legends guys?",
+    "guestName": "Guest3",
+    "guestId": "111"
+  },
+  {
+    "msg": "sure thing",
+    "guestName": "Guest4",
+    "guestId": "000"
+  }
+]

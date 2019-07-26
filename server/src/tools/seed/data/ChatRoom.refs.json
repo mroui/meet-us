@@ -1,0 +1,61 @@
+{
+  "0": {
+    "users": {
+      "ref": "User",
+      "fieldIsArray": true,
+      "query": {
+        "profile.firstName": "Antoni"
+      }
+    },
+    "owner": {
+      "ref": "User",
+      "query": {
+        "profile.lastName": "Greenwood"
+      }
+    }
+  },
+  "1": {
+    "users": {
+      "ref": "User",
+      "fieldIsArray": true,
+      "query": {
+        "$or": [
+          {
+            "profile.firstName": "Antoni"
+          },
+          {
+            "profile.lastName": "Greenwood"
+          }
+        ]
+      }
+    },
+    "owner": {
+      "ref": "User",
+      "query": {
+        "profile.firstName": "Antoni"
+      }
+    }
+  },
+  "2": {
+    "users": {
+      "ref": "User",
+      "fieldIsArray": true,
+      "query": {
+        "$or": [
+          {
+            "profile.firstName": "Antoni"
+          },
+          {
+            "profile.lastName": "Greenwood"
+          }
+        ]
+      }
+    },
+    "owner": {
+      "ref": "User",
+      "query": {
+        "profile.lastName": "Greenwood"
+      }
+    }
+  }
+}

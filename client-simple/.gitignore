@@ -1,0 +1,17 @@
+# OSX
+#
+.DS_Store
+
+# prod build
+build/
+# Tests
+
+.jest/
+coverage/
+
+# ENV
+src/config/development.env.json
+
+node_modules
+yarn.lock
+package-lock.json

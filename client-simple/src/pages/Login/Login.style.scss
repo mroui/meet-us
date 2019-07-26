@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+// Media queries
+@media (min-height: 600px) {
+  .login {
+    &__wrapper {
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+  }
+}

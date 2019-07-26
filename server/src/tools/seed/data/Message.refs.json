@@ -1,0 +1,58 @@
+{
+  "0": {
+    "from": {
+      "ref": "User",
+      "query": {
+        "profile.firstName": "Antoni"
+      }
+    },
+    "chatroom": {
+      "ref": "ChatRoom",
+      "query": {
+        "name": "Apex Legends Crew"
+      }
+    }
+  },
+  "1": {
+    "from": {
+      "ref": "User",
+      "query": {
+        "profile.firstName": "Antoni"
+      }
+    },
+    "chatroom": {
+      "ref": "ChatRoom",
+      "query": {
+        "name": "Apex Legends Crew"
+      }
+    }
+  },
+  "2": {
+    "from": {
+      "ref": "User",
+      "query": {
+        "profile.lastName": "Greenwood"
+      }
+    },
+    "chatroom": {
+      "ref": "ChatRoom",
+      "query": {
+        "name": "Apex Legends Crew"
+      }
+    }
+  },
+  "3": {
+    "from": {
+      "ref": "User",
+      "query": {
+        "profile.firstName": "Antoni"
+      }
+    },
+    "chatroom": {
+      "ref": "ChatRoom",
+      "query": {
+        "name": "TDSOFT Channel"
+      }
+    }
+  }
+}

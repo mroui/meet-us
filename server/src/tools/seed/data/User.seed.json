@@ -1,0 +1,44 @@
+[
+  {
+    "username": "grease",
+    "profile": {
+      "firstName": "Antoni",
+      "lastName": "James"
+    },
+    "roles": ["user"],
+    "services": {
+      "password": {
+        "bcrypt": "$2a$10$bk9hNJpJ/A5xBjxPfQKgru23lvADzp/i8795UbM3n.vmFCUz6NEw."
+      }
+    },
+    "createdAt": 1562835799847.0,
+    "updatedAt": 1562835799847.0,
+    "emails": [
+      {
+        "address": "zaqwsx@zaqwsx.com",
+        "verified": false
+      }
+    ]
+  },
+  {
+    "username": "gieres",
+    "profile": {
+      "firstName": "Mason",
+      "lastName": "Greenwood"
+    },
+    "roles": ["user"],
+    "services": {
+      "password": {
+        "bcrypt": "$2a$10$bk9hNJpJ/A5xBjxPfQKgru23lvADzp/i8795UbM3n.vmFCUz6NEw."
+      }
+    },
+    "createdAt": 1562835799847.0,
+    "updatedAt": 1562835799847.0,
+    "emails": [
+      {
+        "address": "zaqwsx@s.com",
+        "verified": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "legacyDecotators": true
+    },
+    "requireConfigFile": true,
+    "babelOptions": {"configFile": "./babel.config.js"}
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "plugins":  [],
+  "settings": {},
+  "rules": {
+    "semi": ["warn", "always"],
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+    "indent": ["error", 2],
+    "no-console": "off",
+    "no-unused-vars": "off"
+  }
+}
