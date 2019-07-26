@@ -16,7 +16,6 @@ import { User, Profile } from './UserEntity'
 import './enums'
 import { accountsPassword } from './accounts'
 import { Role } from './enums'
-import { client as plaid } from '../payments/plaid'
 
 @InputType()
 class ProfileInput implements Partial<Profile> {
@@ -76,50 +75,6 @@ export default class UserResolver {
     })
 
     return createdUserId
-  }
-
-  @Mutation(returns => Boolean)
-  @Authorized()
-  async onboardUser(
-    @Arg('publicToken') publicToken: string,
-    @Arg('property') property: PropertyInput,
-    @Ctx() ctx: Context
-  ) {
-    return new Promise((resolve, reject) => {
-      plaid.exchangePublicToken(publicToken, async (err, response) => {
-        if (err != null) reject(err)
-
-        const user = await this.service.findOneById(ctx.userId)
-        user.plaid = {
-          accessToken: response.access_token,
-          itemId: response.item_id,
-        }
-        user.properties = [property]
-        user.isOnboarded = true
-        await user.save()
-
-        resolve(true)
-      })
-    })
-  }
-
-  @Mutation(returns => Boolean)
-  @Authorized()
-  async setPlaidToken(@Arg('publicToken') publicToken: string, @Ctx() ctx: Context) {
-    return new Promise((resolve, reject) => {
-      plaid.exchangePublicToken(publicToken, async (err, response) => {
-        if (err != null) reject(err)
-
-        const user = await this.service.findOneById(ctx.userId)
-        user.plaid = {
-          accessToken: response.access_token,
-          itemId: response.item_id,
-        }
-        await user.save()
-
-        resolve(true)
-      })
-    })
   }
 
   @GQLFieldResolver(returns => String)

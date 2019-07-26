@@ -15,17 +15,6 @@ export class Profile {
 }
 
 @GQLObject()
-export class Plaid {
-  @DBProp({ required: true })
-  @GQLField()
-  accessToken: string;
-
-  @DBProp({ required: true })
-  @GQLField()
-  itemId: string;
-}
-
-@GQLObject()
 export class Property {
   @DBProp({ required: true })
   @GQLField()
@@ -50,20 +39,12 @@ export class User extends Typegoose {
   profile: Profile;
 
   @DBProp()
-  @GQLField(type => Plaid, { nullable: true })
-  plaid?: Plaid;
-
-  @DBProp()
   @GQLField(type => Property, { nullable: true })
   properties?: Property[];
 
   @DBProp({ required: true, enum: Role })
   @GQLField(type => Role)
   roles: Role[];
-
-  @DBProp()
-  @GQLField({ nullable: true })
-  isOnboarded?: boolean;
 
   @DBProp()
   @GQLField(() => Date)

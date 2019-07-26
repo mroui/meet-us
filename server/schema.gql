@@ -53,8 +53,6 @@ input MessageInput {
 
 type Mutation {
   createUser(user: CreateUserInput!): ID!
-  onboardUser(property: PropertyInput!, publicToken: String!): Boolean!
-  setPlaidToken(publicToken: String!): Boolean!
 
   """Adds new message to chatroom"""
   addMessage(message: MessageInput!): ID
@@ -64,11 +62,6 @@ type Mutation {
 
   """Creates and return new chatroom id"""
   createNewChatroom(chatroom: CreateChatRoomInput!): ID!
-}
-
-type Plaid {
-  accessToken: String!
-  itemId: String!
 }
 
 type Profile {
@@ -117,10 +110,8 @@ enum Role {
 type User {
   _id: ID!
   profile: Profile!
-  plaid: Plaid
   properties: [Property!]
   roles: [Role!]!
-  isOnboarded: Boolean
   createdAt: DateTime!
   updatedAt: DateTime!
   firstName: String!

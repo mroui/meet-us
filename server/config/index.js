@@ -13,11 +13,5 @@ module.exports = {
   MONGO_URL: process.env.MONGO_URL || `mongodb://localhost:27017/fullstack`,
   SOCKET_IO_PATH: "/socket",
   ACCOUNTS_SECRET: "secret",
-  PLAID_CLIENT_ID: "xxxxxxx",
-  PLAID_SECRET: "xxxxxxx",
-  PLAID_PUBLIC_KEY: "xxxxxxx",
-  PLAID_PRODUCTS: "transactions",
-  PLAID_COUNTRY_CODES: "US",
-  PLAID_ENV: "sandbox",
   ...ifDevProperties()
 };
