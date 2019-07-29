@@ -24,9 +24,9 @@ export class ChatRoom extends Typegoose {
   @GQLField(type => User)
   owner: Ref<User>;
 
-  @DBProp({ default: false })
+  @DBProp({ default: true })
   @GQLField()
-  verified: Boolean;
+  active: Boolean;
 
   @DBProp({ required: true, min: -90, max: 90  })
   @GQLField()

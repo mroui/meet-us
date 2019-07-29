@@ -9,7 +9,7 @@ type ChatRoom {
   description: String
   users: [User!]
   owner: User!
-  verified: Boolean!
+  active: Boolean!
   latitude: Float!
   longitude: Float!
 }
