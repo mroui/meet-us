@@ -8,7 +8,7 @@ const Legend = () => {
       <div className="legend__wrapper">
         <span className="legend__name">Connect</span>
         <span className="legend__name">Users</span>
-        <span className="legend__name">Verified</span>
+        <span className="legend__name">Active</span>
       </div>
     </div>
   );

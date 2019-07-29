@@ -1,11 +1,11 @@
 import React from "react";
 import UserSmallSvg from "../../assets/svg/user-small.svg";
-import VerifiedSvg from "../../assets/svg/verified.svg";
-import NotVerifiedSvg from "../../assets/svg/not-verified.svg";
+import ActiveSvg from "../../assets/svg/active.svg";
+import NotActiveSvg from "../../assets/svg/not-active.svg";
 import Button from "../Button/Button";
 import "./ChannelItem.style.scss";
 
-const ChannelItem = ({ id, title, url, users, verified, isLogged, toggleModal }) => {
+const ChannelItem = ({ id, title, url, users, active, isLogged, toggleModal }) => {
   return (
     <div className="channel">
       <h3 className="channel__title">{title}</h3>
@@ -29,7 +29,7 @@ const ChannelItem = ({ id, title, url, users, verified, isLogged, toggleModal })
         <span className="actions__separator"></span>
 
         <span className="actions__item">
-          <img src={verified ? VerifiedSvg : NotVerifiedSvg} className="actions__img" alt="" />
+          <img src={active ? ActiveSvg : NotActiveSvg} className="actions__img" alt="" />
         </span>
       </div>
     </div>

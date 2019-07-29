@@ -130,8 +130,8 @@ class Home extends Component {
       ) : (
         // Show chatrooms
         <div className="chatrooms">
-          {chatrooms.map(({ _id, name, users, verified }) => (
-            <ChannelItem key={_id} id={_id} title={name} url={`/chat/${_id}`} users={(users && users.length) || 0} verified={verified} toggleModal={this.toggleModal} isLogged={!!userState.user} />
+          {chatrooms.map(({ _id, name, users, active }) => (
+            <ChannelItem key={_id} id={_id} title={name} url={`/chat/${_id}`} users={(users && users.length) || 0} active={active} toggleModal={this.toggleModal} isLogged={!!userState.user} />
           ))}
         </div>
       );
@@ -186,7 +186,7 @@ const GET_CHATROOMS = gql`
       }
       latitude
       longitude
-      verified
+      active
     }
   }
 `;
