@@ -10,6 +10,8 @@ import withSocket from "../../components/withSocket";
 import "./Chat.style.scss";
 import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
+import ActiveSvg from "../../assets/svg/active.svg";
+import NotActiveSvg from "../../assets/svg/not-active.svg";
 
 class Chat extends Component {
   state = {
@@ -84,6 +86,8 @@ class Chat extends Component {
     const { match, chatroom } = this.props;
 
     return (
+      
+
       <div className="page">
         <Sidebar>
           <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} />
@@ -94,6 +98,10 @@ class Chat extends Component {
             <header className="page__header">
               <h2 className="page__heading">Chat: {chatroom && chatroom.name}</h2>
               <Button href="/" additionalClass="chat__back" isLink>To Channel List</Button>
+              {
+                //TODO: make toggle to deactive & active chatroom
+              }
+              {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) ? <img src={chatroom.active ? ActiveSvg : NotActiveSvg} className="chat__active" alt="" /> : null}
             </header>
 
             <div className="chat__content">
@@ -131,6 +139,10 @@ const GET_CURRENT_CHATROOM = gql`
                     firstName
                 }
             }
+            owner {
+              _id 
+            }
+            active
         }
     }
 `;

@@ -50,7 +50,13 @@
     min-width: 150px;
     margin-top: 15px;
   }
+
+  &__active {
+    margin-left: 40px;
+    height: 18px;
+  }
 }
+
 
 // Media queries
 @media (min-width: 992px) {
