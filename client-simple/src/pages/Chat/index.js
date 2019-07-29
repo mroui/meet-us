@@ -10,14 +10,14 @@ import withSocket from "../../components/withSocket";
 import "./Chat.style.scss";
 import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
-import ActiveSvg from "../../assets/svg/active.svg";
-import NotActiveSvg from "../../assets/svg/not-active.svg";
+import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 
 class Chat extends Component {
   state = {
     inputMessageText: "",
     guestId: localStorage.getItem("guest_ID") || null,
-    guestName: localStorage.getItem("guest_Username") || null
+    guestName: localStorage.getItem("guest_Username") || null,
+    isActive: false
   };
 
   loggedUserId = () => _.get(this.props, ["context", "userState", "user", "id"], null);
@@ -50,7 +50,7 @@ class Chat extends Component {
     const { inputMessageText: msg, guestId, guestName } = this.state;
     const { chatId: chatroom } = this.props.match.params;
     const loggedUserId = this.loggedUserId();
-    
+
     return {
       ...((loggedUserId) ? {from: loggedUserId} : {guestId, guestName}),
       msg,
@@ -81,6 +81,15 @@ class Chat extends Component {
     }
   };
 
+  toggleActiveChatroom = e => {
+    //TODO: update in database this chatroom activation-----------------------------
+    this.setState({isActive: !this.state.isActive});
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({isActive: newProps.chatroom.active});
+  }
+
   render() {
     const { inputMessageText } = this.state;
     const { match, chatroom } = this.props;
@@ -98,10 +107,9 @@ class Chat extends Component {
             <header className="page__header">
               <h2 className="page__heading">Chat: {chatroom && chatroom.name}</h2>
               <Button href="/" additionalClass="chat__back" isLink>To Channel List</Button>
-              {
-                //TODO: make toggle to deactive & active chatroom
-              }
-              {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) ? <img src={chatroom.active ? ActiveSvg : NotActiveSvg} className="chat__active" alt="" /> : null}
+              {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
+                ? <TogglerActiveChatroom isChecked={this.state.isActive} toggleActive={this.toggleActiveChatroom} /> 
+                : null}
             </header>
 
             <div className="chat__content">
