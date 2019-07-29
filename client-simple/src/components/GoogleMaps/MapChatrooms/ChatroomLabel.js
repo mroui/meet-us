@@ -1,11 +1,17 @@
 import React, { Component } from "react";
-import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
+import Marker from "react-google-maps/lib/components/Marker";
+import { InfoWindow } from "react-google-maps";
 import { withRouter } from "react-router-dom";
 
 class ChatroomLabel extends Component {
+
+  state = {
+    isOpen: false
+  }
+
   gotoChatroom(evt, roomId) {
-    evt.preventDefault();
-    evt.stopPropagation();
+    evt.preventDefault;
+    evt.stopPropagation;
 
     console.log(`gotoChatroom.id: `, roomId);
 
@@ -13,20 +19,31 @@ class ChatroomLabel extends Component {
       this.props.history.push(`/chat/${roomId}`); // DK: This causes react error
   }
 
+  toggleMarkerLabel() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+
   render() {
     const { chatroom: { _id, name, description, latitude, longitude } } = this.props;
 
-    return <MarkerWithLabel
+    return <Marker
       position={{ lat: latitude, lng: longitude }}
       labelClass="chatrooms-map__label"
       labelAnchor={{ x: -20, y: 20 }}
-      onClick={(e) => this.gotoChatroom(e, _id)}
+      onClick={() => this.toggleMarkerLabel()}
     >
-      <div className="chatrooms-map__label-content">
-        <h2 className="chatrooms-map__label-title">#{name}</h2>
-        {description ? <p>{description}</p> : ""}
-      </div>
-    </MarkerWithLabel>;
+      {this.state.isOpen && <InfoWindow>
+        <div className="chatrooms-map__label-content"
+          style={{display: this.state.visibilityLabel}}>
+          <h2 className="chatrooms-map__label-title"
+            onClick={(e) => this.gotoChatroom(e, _id)}>#{name}</h2>
+          {description ? <p>{description}</p> : ""}
+        </div>
+      </InfoWindow>}
+    </Marker>;
   }
 }
 
