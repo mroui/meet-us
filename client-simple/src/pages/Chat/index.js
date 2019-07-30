@@ -59,21 +59,22 @@ class Chat extends Component {
     };
   };
 
+
   handleFormSubmit = e => {
     e.preventDefault();
 
     if (this.isValidUserOrGuest()) {
       const { inputMessageText } = this.state;
-      const { mutate } = this.props;
 
       if (inputMessageText.length > 0) {
         this.setState({inputMessageText: ""});
-        return mutate({variables: this.prepareDataForMutation()});
+        return this.props.addMessage({variables: this.prepareDataForMutation()});
       } else {
         message.error("Message is empty");
       }
     }
   }
+
 
   onEnterPress = e => {
     if (e.which === 13 && e.shiftKey === false) {
@@ -81,9 +82,25 @@ class Chat extends Component {
     }
   };
 
+
+  prepareDataForMutationUpdate = () => {
+    const active = !this.props.chatroom.active;
+    const chatroom = this.props.chatroom.variables._id;
+
+    return { chatroom: chatroom, active: active };
+  };
+
   toggleActiveChatroom = e => {
     //TODO: update in database this chatroom activation-----------------------------
     this.setState({isActive: !this.state.isActive});
+    //return this.props.updateChatroomActivity({variables: this.prepareDataForMutationUpdate()});
+
+    //return this.props.addMessage({variables: this.prepareDataForMutation()});
+
+    const active = !this.props.chatroom.active;
+    const chatroom = this.props.chatroom.variables._id;
+    return this.props.updateActivityChatroom({variables: this.prepareDataForMutationUpdate()});
+
   }
 
   componentWillReceiveProps(newProps) {
@@ -155,9 +172,11 @@ const GET_CURRENT_CHATROOM = gql`
     }
 `;
 
-const UPDATE_CHATROOM = gql`
+const UPDATE_CHATROOM_ACTIVITY = gql`
   mutation ($chatroom: String!, $active: Boolean!) {
-    updateActivityChatroom(message: {chatroom: $chatroom, active: $active})
+    updateActivityChatroom(chatroom: $chatroom, active: $active) {
+      name
+    }
   }
 `;
 
@@ -172,6 +191,8 @@ const withCurrentChatroom = graphql(GET_CURRENT_CHATROOM, {
   props: ({data: {chatroom, ...others}}) => ({chatroom: {...others, ...chatroom}})
 });
 
-const withAddMessage = graphql(ADD_MESSAGE);
+const withAddMessage = graphql(ADD_MESSAGE, { name: "addMessage"});
 
-export default compose(withCurrentChatroom, withAddMessage)(withSocket(withUserContext(Chat)));
+const withUpdateActivityChatroom = graphql(UPDATE_CHATROOM_ACTIVITY, { name: "updateActivityChatroom"});
+
+export default compose(withCurrentChatroom, withAddMessage, withUpdateActivityChatroom)(withSocket(withUserContext(Chat)));
