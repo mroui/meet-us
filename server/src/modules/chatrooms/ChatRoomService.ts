@@ -37,7 +37,8 @@ export class ChatRoomService {
     return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {users: user}}, {new: true}).populate("users").exec();
   }
 
-  async updateChatroom(chatroom: String, active: Boolean) {
+  //can be one method to update all chatroom - but maybe later..
+  async updateActivityChatroom(chatroom: String, active: Boolean) {
     return this.model.findByIdAndUpdate(chatroom, {active: active}).exec();
   }
 }

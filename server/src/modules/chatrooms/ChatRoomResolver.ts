@@ -65,10 +65,10 @@ export default class ChatRoomResolver {
       return await this.service.createNewChatroom(chatroom, ctx.userId)
   }
 
-  @Mutation(returns => ChatRoom, { description: "Update and return new chatroom"})
-  async updateChatroom(
+  @Mutation(returns => ChatRoom, { description: "Update activity and return new chatroom"})
+  async updateActivityChatroom(
     @Arg("chatroom", returns => String) chatroom: string,
     @Arg("active") active: Boolean){
-      return await this.service.updateChatroom(chatroom, active)
+      return await this.service.updateActivityChatroom(chatroom, active)
   }
 }

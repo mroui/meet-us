@@ -155,6 +155,12 @@ const GET_CURRENT_CHATROOM = gql`
     }
 `;
 
+const UPDATE_CHATROOM = gql`
+  mutation ($chatroom: String!, $active: Boolean!) {
+    updateActivityChatroom(message: {chatroom: $chatroom, active: $active})
+  }
+`;
+
 const ADD_MESSAGE = gql`
   mutation ($guestId: String, $guestName: String, $msg: String!, $chatroom: ID!, $nickname: String!) {
     addMessage(message: {guestId: $guestId, guestName: $guestName, msg: $msg, chatroom: $chatroom, nickname: $nickname})
