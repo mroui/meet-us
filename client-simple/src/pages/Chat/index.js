@@ -88,7 +88,16 @@ class Chat extends Component {
     const chatroom = this.props.chatroom.variables._id;
 
     this.setState({isActive: !this.state.isActive});
-    return this.props.updateActivityChatroom({variables: { chatroom: chatroom, active: active }});
+    return this.props.updateActivityChatroom({
+      variables: { chatroom: chatroom, active: active },
+      //------------------------------------------------------------------------TODO QUERY
+      refetchQueries: () => [{
+        query: GET_CURRENT_CHATROOM,
+        variables: {
+          _id: chatroom
+        }
+      }]
+    });
   }
 
 
@@ -114,7 +123,7 @@ class Chat extends Component {
               <h2 className="page__heading">Chat: {chatroom && chatroom.name}</h2>
               <Button href="/" additionalClass="chat__back" isLink>To Channel List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
-                ? <TogglerActiveChatroom isChecked={this.state.isActive} toggleActive={this.toggleActiveChatroom} /> 
+                ? <TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} /> 
                 : null}
             </header>
 
@@ -129,9 +138,10 @@ class Chat extends Component {
                   name="message"
                   id="message"
                   className="chat__textarea"
-                  placeholder="Enter your message here..."
+                  placeholder={chatroom.active ? "Enter your message here..." : "Event is disabled!"}
                   onKeyPress={this.onEnterPress}
                   onChange={e => this.setState({inputMessageText: e.target.value})}
+                  disabled={!chatroom.active}
                 />
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
