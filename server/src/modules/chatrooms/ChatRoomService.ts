@@ -39,6 +39,6 @@ export class ChatRoomService {
 
   //can be one method to update all chatroom - but maybe later..
   async updateActivityChatroom(chatroom: String, active: Boolean) {
-    return this.model.findByIdAndUpdate(chatroom, {active: active}).exec();
+    return this.model.findByIdAndUpdate(chatroom, {active: active}, {new: true}).exec();
   }
 }

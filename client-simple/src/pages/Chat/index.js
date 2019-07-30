@@ -83,25 +83,14 @@ class Chat extends Component {
   };
 
 
-  prepareDataForMutationUpdate = () => {
-    const active = !this.props.chatroom.active;
-    const chatroom = this.props.chatroom.variables._id;
-
-    return { chatroom: chatroom, active: active };
-  };
-
   toggleActiveChatroom = e => {
-    //TODO: update in database this chatroom activation-----------------------------
-    this.setState({isActive: !this.state.isActive});
-    //return this.props.updateChatroomActivity({variables: this.prepareDataForMutationUpdate()});
-
-    //return this.props.addMessage({variables: this.prepareDataForMutation()});
-
     const active = !this.props.chatroom.active;
     const chatroom = this.props.chatroom.variables._id;
-    return this.props.updateActivityChatroom({variables: this.prepareDataForMutationUpdate()});
 
+    this.setState({isActive: !this.state.isActive});
+    return this.props.updateActivityChatroom({variables: { chatroom: chatroom, active: active }});
   }
+
 
   componentWillReceiveProps(newProps) {
     this.setState({isActive: newProps.chatroom.active});
