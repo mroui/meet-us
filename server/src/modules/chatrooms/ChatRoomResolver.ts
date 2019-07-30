@@ -1,7 +1,9 @@
 import {Resolver, Query, Arg, Mutation, Authorized, Ctx, ID, InputType, Field as GQLField} from "type-graphql";
 import { ChatRoomService } from "./ChatRoomService";
 import { ChatRoom } from "./ChatRoomEntity";
-import {Context} from "../common/context";
+import { Context } from "../common/context";
+import { User } from "../user/UserEntity";
+import { Ref } from "typegoose";
 
 @InputType()
 class CreateChatRoomInput implements Partial<ChatRoom> {
@@ -18,6 +20,7 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   longitude: Number;
 
 }
+
 
 @Resolver(ChatRoom)
 export default class ChatRoomResolver {
@@ -60,5 +63,12 @@ export default class ChatRoomResolver {
       @Arg("chatroom", returns => CreateChatRoomInput) chatroom: CreateChatRoomInput,
       @Ctx() ctx: Context) {
       return await this.service.createNewChatroom(chatroom, ctx.userId)
+  }
+
+  @Mutation(returns => ChatRoom, { description: "Update and return new chatroom"})
+  async updateChatroom(
+    @Arg("chatroom", returns => String) chatroom: string,
+    @Arg("active") active: Boolean){
+      return await this.service.updateChatroom(chatroom, active)
   }
 }

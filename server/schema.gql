@@ -62,6 +62,9 @@ type Mutation {
 
   """Creates and return new chatroom id"""
   createNewChatroom(chatroom: CreateChatRoomInput!): ID!
+
+  """Update and return new chatroom"""
+  updateChatroom(active: Boolean!, chatroom: String!): ChatRoom!
 }
 
 type Profile {

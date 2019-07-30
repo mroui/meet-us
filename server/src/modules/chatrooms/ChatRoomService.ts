@@ -36,4 +36,8 @@ export class ChatRoomService {
   async joinToChatroom(chatroomId: String, user: Ref<User>) {
     return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {users: user}}, {new: true}).populate("users").exec();
   }
+
+  async updateChatroom(chatroom: String, active: Boolean) {
+    return this.model.findByIdAndUpdate(chatroom, {active: active}).exec();
+  }
 }
