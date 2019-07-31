@@ -10,18 +10,29 @@ class Register extends Component {
     lastName: "",
     email: "",
     password: "",
+    repeatpassword: "",
     errorMsg: null
   }
 
-  resetState = () => this.setState({ firstName: "", lastName: "", email: "", password: "" });
+  resetState = () => this.setState({ firstName: "", lastName: "", email: "", password: "", repeatpassword: ""});
 
   handleFormSubmit = signUp => async (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password } = this.state;
+    const { firstName, lastName, email, password, repeatpassword } = this.state;
+
+    if(password=="" || firstName=="" || lastName=="" || email=="" || repeatpassword=="") {
+      const errorMsg = "Fill empty fields!";
+      return (this.setState({errorMsg}));
+    } else if (password !== repeatpassword) {
+      const errorMsg = "Passwords not match!";
+      return (this.setState({errorMsg}));
+    }
+
     console.log("Submitting registration...", { firstName, lastName, email, password });
     const registerRes = await signUp({ firstName, lastName, email, password });
     const err = this.handleRegisterError(registerRes);
     console.log(`registerRes: `, JSON.stringify(registerRes));
+
     if (!err) this.props.history.push("/");
     this.resetState();
   };
@@ -46,7 +57,7 @@ class Register extends Component {
   }
 
   render() {
-    const { name, username, email, password, errorMsg } = this.state;
+    const { name, username, email, password, repeatpassword, errorMsg } = this.state;
 
     return <div className="page">
       <div className="page__wrapper page__wrapper--absolute register__wrapper">
@@ -61,6 +72,7 @@ class Register extends Component {
                 id="name"
                 placeholder="John"
                 value={name}
+                minLength="1"
                 onChange={e => this.setState({firstName: e.target.value})} />
 
               <FormInput
@@ -68,6 +80,7 @@ class Register extends Component {
                 id="username"
                 placeholder="Doe"
                 value={username}
+                minLength="1"
                 onChange={e => this.setState({lastName: e.target.value})} />
 
               <FormInput
@@ -75,6 +88,7 @@ class Register extends Component {
                 id="email"
                 placeholder="example@example.com"
                 value={email}
+                type="email"
                 onChange={e => this.setState({email: e.target.value})} />
 
               <FormInput
@@ -83,7 +97,18 @@ class Register extends Component {
                 placeholder="Password"
                 value={password}
                 type="password"
+                minLength="8"
                 onChange={e => this.setState({password: e.target.value})} />
+
+              <FormInput
+                label="Repeat password"
+                id="repeatpasswd"
+                placeholder="Password"
+                value={repeatpassword}
+                type="password"
+                minLength="8"
+                onChange={e => this.setState({repeatpassword: e.target.value})} />
+
               <Button variant="primary" additionalClass="form__btn">Register</Button>
               {errorMsg ? <p className="form__error">{errorMsg}</p> : ""}
             </Form>
