@@ -138,12 +138,15 @@ class Chat extends Component {
                   name="message"
                   id="message"
                   className="chat__textarea"
-                  placeholder={chatroom.active ? "Enter your message here..." : "Event is disabled!"}
+                  placeholder={chatroom.active ? "Enter your message here..." : "Sorry, chatroom is disabled!"}
                   onKeyPress={this.onEnterPress}
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
-                <Button variant="primary" additionalClass="chat__btn">Send</Button>
+                <Button variant="primary"
+                  additionalClass="chat__btn"
+                  disabled={!chatroom.active}
+                >Send</Button>
               </form>
             </div>
           </div>
