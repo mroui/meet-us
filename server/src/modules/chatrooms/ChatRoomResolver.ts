@@ -19,6 +19,18 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   @GQLField(type => Number)
   longitude: Number;
 
+  @GQLField(() => Date)
+  date: Date;
+
+  @GQLField(() => Date)
+  time: Date;
+
+  @GQLField()
+  price: Number;
+
+  @GQLField()
+  contact: String;
+
 }
 
 
@@ -39,7 +51,6 @@ export default class ChatRoomResolver {
 
   @Query(returns => [ChatRoom], { description: "Get list of all chatrooms" })
   async chatrooms() {
-    // DK: All should be all, app gives no way to verify an chatroom ATM
     return await this.service.find();
   }
 
