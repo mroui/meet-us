@@ -41,8 +41,8 @@ export class ChatRoom extends Typegoose {
   date: Date;
 
   @DBProp({ required: true })
-  @GQLField(() => Date)
-  time: Date;
+  @GQLField(() => String)
+  time: String;
 
   @DBProp({ required: true, min: 0, max: 10000})
   @GQLField()
