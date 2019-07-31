@@ -13,9 +13,9 @@ const ChannelItem = ({ id, title, url, users, active, isLogged, toggleModal }) =
       <div className="actions">
         <span className="actions__item">
           {isLogged ? (
-            <Button variant="primary" href={url} isLink>Join</Button>
+            <Button variant="primary" href={url} isLink>Show</Button>
           ) : (
-            <Button variant="primary" onClick={() => toggleModal(id)} isLink>Join</Button>
+            <Button variant="primary" onClick={() => toggleModal(id)} isLink>Show</Button>
           )}
         </span>
 

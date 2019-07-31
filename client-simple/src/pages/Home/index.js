@@ -36,7 +36,7 @@ class Home extends Component {
     const { username, modalOpen } = this.state;
     const guestID = localStorage.getItem("guest_ID");
     const guestUsername = localStorage.getItem("guest_Username");
-    const modalDesc = (guestID && guestUsername) ? "Welcome back. Your login is set to:" : "Please enter your username before joining the channel";
+    const modalDesc = (guestID && guestUsername) ? "Welcome back. Your login is set to:" : "Please enter your username before showing the event";
 
     return (
       <Modal
@@ -58,7 +58,7 @@ class Home extends Component {
             />
           )}
 
-          <Button variant="primary" type="submit" additionalClass="modal__btn">Join Channel</Button>
+          <Button variant="primary" type="submit" additionalClass="modal__btn">Show event</Button>
         </form>
       </Modal>
     );
@@ -73,7 +73,7 @@ class Home extends Component {
 
     if (!guestID || !guestUsername) {
       if (!username.length) {
-        return message.error("You must enter username before joinging the channel");
+        return message.error("You must enter username before showing the event");
       }
 
       if (username.length < 4) {
@@ -105,14 +105,14 @@ class Home extends Component {
     const { chatrooms, loading, error } = this.props.data;
     const { user } = this.props.context.userState;
 
-    if (loading && isUserLogged) return <Loader>Loading channels...</Loader>;
+    if (loading && isUserLogged) return <Loader>Loading events...</Loader>;
     if (error || !isUserLogged) return null;
 
     const loggedUserChatrooms = chatrooms.filter(chatroom => chatroom.owner._id === user.id);
 
     if (loggedUserChatrooms.length > 0) {
       return loggedUserChatrooms.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);
-    } else return <SidebarMessage>You don't have any channels yet</SidebarMessage>;
+    } else return <SidebarMessage>You don't have any events yet</SidebarMessage>;
   };
 
   renderAllChatrooms = () => {
@@ -120,7 +120,7 @@ class Home extends Component {
     const { userState } = this.props.context;
     const { chatrooms, loading, error } = this.props.data;
 
-    if (loading) return <Loader isDark>Loading channels...</Loader>;
+    if (loading) return <Loader isDark>Loading events...</Loader>;
     if (error) return null;
 
     if (chatrooms && chatrooms.length) {
@@ -136,7 +136,7 @@ class Home extends Component {
         </div>
       );
     }
-    return <div>There are no channels at the moment</div>;
+    return <div>There are no events at the moment</div>;
   };
 
   render() {
@@ -155,7 +155,7 @@ class Home extends Component {
 
         <section className={mapVisible ? "page__content chatrooms-map__content" : "page__content"}>
           <header className="page__header">
-            <h2 className="page__heading">Channel List</h2>
+            <h2 className="page__heading">Events List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
           </header>
 

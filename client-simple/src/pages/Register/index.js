@@ -20,13 +20,11 @@ class Register extends Component {
     e.preventDefault();
     const { firstName, lastName, email, password, repeatpassword } = this.state;
 
-    if(password=="" || firstName=="" || lastName=="" || email=="" || repeatpassword=="") {
-      const errorMsg = "Fill empty fields!";
-      return (this.setState({errorMsg}));
-    } else if (password !== repeatpassword) {
-      const errorMsg = "Passwords not match!";
-      return (this.setState({errorMsg}));
-    }
+    let errorMsg = "";
+    if(password=="" || firstName=="" || lastName=="" || email=="" || repeatpassword=="") errorMsg = "Fill empty fields!";
+    else if (password !== repeatpassword) errorMsg = "Passwords not match!";
+    else if (firstName.length< 4) errorMsg = "Your firstname is too short";
+    if (errorMsg!=="") return (this.setState({errorMsg}));
 
     console.log("Submitting registration...", { firstName, lastName, email, password });
     const registerRes = await signUp({ firstName, lastName, email, password });
@@ -72,7 +70,7 @@ class Register extends Component {
                 id="name"
                 placeholder="John"
                 value={name}
-                minLength="1"
+                minLength="4"
                 onChange={e => this.setState({firstName: e.target.value})} />
 
               <FormInput

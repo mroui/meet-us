@@ -154,8 +154,8 @@ class Chat extends Component {
         <section className="page__content">
           <div className="chat__wrapper">
             <header className="page__header">
-              <h2 className="page__heading">Chat: {chatroom && chatroom.name}</h2>
-              <Button href="/" additionalClass="chat__back" isLink>To Channel List</Button>
+              <h2 className="page__heading">{chatroom && chatroom.name}</h2>
+              <Button href="/" additionalClass="chat__back" isLink>To Events List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit event</Button></span>

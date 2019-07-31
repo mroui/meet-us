@@ -94,7 +94,7 @@ class Sidebar extends Component {
             {({ userState }) => <>
               <footer className="sidebar__footer">
                 {userState.user ? (
-                  <Button href="/create" variant="primary" additionalClass="sidebar__btn" isLink>Create Channel</Button>
+                  <Button href="/create" variant="primary" additionalClass="sidebar__btn" isLink>Create Event</Button>
                 ) : (
                   <Button href="/register" variant="primary" additionalClass="sidebar__btn" isLink>Create Account</Button>
                 )}

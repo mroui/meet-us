@@ -41,19 +41,19 @@ class Step1 extends Component {
 
     return (
       <div className="page__wrapper page__wrapper--absolute steps__wrapper">
-        <h1 className="form__heading">Create Channel</h1>
+        <h1 className="form__heading">Create Event</h1>
 
         <FormInput
-          label="Channel Title"
+          label="Event Title"
           id="title"
-          placeholder="Name your channel"
+          placeholder="Name your event"
           value={title}
           onChange={e => this.validChannelTitle(e)} />
 
         <FormInput
-          label="Describe your channel (optional)"
+          label="Describe your event (optional)"
           id="description"
-          placeholder="Cool things about your channel..."
+          placeholder="Cool things about your event..."
           value={description}
           onChange={onDescriptionChange} />
 
@@ -96,7 +96,7 @@ class Step2 extends Component {
             additionalClass="maps__input"
             disabled={true}
             value={location.name} />
-          <Button variant="primary" type="submit" additionalClass={this.getSubmitClasses(location)}>Create Channel</Button>
+          <Button variant="primary" type="submit" additionalClass={this.getSubmitClasses(location)}>Create Event</Button>
         </div>
       </>
     );
