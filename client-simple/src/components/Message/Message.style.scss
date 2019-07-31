@@ -45,15 +45,15 @@
 
     &--primary {
       color: $color-white;
-      background-color: $color-purple;
-      border-color: $color-purple;
+      background-color: $color-blue;
+      border-color: $color-blue;
       margin-left: auto;
     }
 
     &--secondary {
       color: $color-white;
-      background-color: $color-blue;
-      border-color: $color-blue;
+      background-color: $color-blue-light2;
+      border-color: $color-blue-light2;
       margin-left: auto;
     }
   }

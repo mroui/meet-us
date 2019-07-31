@@ -3,7 +3,7 @@
 // Sidebar
 .sidebar {
   width: 300px;
-  background-color: $color-purple-darkest;
+  background-color: $color-blue-dark;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -33,7 +33,7 @@
   &__header {
     padding: 35px 25px;
     text-align: center;
-    border-bottom: 1px solid $color-purple-dark;
+    border-bottom: 1px solid $color-blue-light;
   }
 
   &__img {
@@ -63,7 +63,7 @@
 
     &:hover,
     &:focus {
-      color: $color-blue;
+      color: $color-blue-light2;
     }
   }
 
@@ -93,7 +93,7 @@
     transition: .25s color ease; 
 
     &:hover {
-      color: $color-blue;
+      color: $color-blue-light2;
     }
   }
 
@@ -102,11 +102,11 @@
   }
 
   &__message {
-    background-color: $color-purple-dark;
+    background-color: $color-blue-light;
     border-radius: 6px;
     padding: 10px;
     text-align: center;
-    border: 1px solid $color-purple;
+    border: 1px solid $color-blue;
     margin-bottom: 15px;
   }
 
@@ -124,7 +124,7 @@
   }
 
   &__footer {
-    border-top: 1px solid $color-purple-dark;
+    border-top: 1px solid $color-blue-light;
     padding: 25px;
   }
 }

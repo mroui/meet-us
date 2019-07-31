@@ -90,7 +90,6 @@ class Chat extends Component {
     this.setState({isActive: !this.state.isActive});
     return this.props.updateActivityChatroom({
       variables: { chatroom: chatroom, active: active },
-      //------------------------------------------------------------------------TODO QUERY
       refetchQueries: () => [{
         query: GET_CURRENT_CHATROOM,
         variables: {
