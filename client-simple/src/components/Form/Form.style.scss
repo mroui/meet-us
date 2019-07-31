@@ -61,8 +61,8 @@
     cursor: pointer;
     &.is-disabled {
       cursor: default;
-      color: $color-grey-light;
-      background: $color-grey-light2;
+      color: $color-white;
+      background: $color-grey-light;
       border-color: $color-grey-light;
       outline: none;
     }

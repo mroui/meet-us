@@ -9,13 +9,35 @@ import MapLocationPicker from "../../components/GoogleMaps/MapLocationPicker/Map
 import "./CreateChannel.style.scss";
 
 class Step1 extends Component {
-  state = { validTitle: false }
+  state = { 
+    validTitle: false,
+    validDate: false,
+    validTime: false,
+    validPrice: true,
+    validContact: false
+  }
 
   valueValid() {
-    const { validTitle } = this.state;
+    const { validTitle, validDate, validTime, validPrice, validContact } = this.state;
 
     if (!validTitle) {
-      message.error(`Channel title is too short`);
+      message.error(`Event title is too short`);
+      return false;
+    }
+    if (!validDate) {
+      message.error(`Event date format is incorrect`);
+      return false;
+    }
+    if (!validTime) {
+      message.error(`Event time format is incorrect`);
+      return false;
+    }
+    if (!validPrice) {
+      message.error(`Event price is too big`);
+      return false;
+    }
+    if (!validContact) {
+      message.error(`Contact details are too short`);
       return false;
     }
 
@@ -33,8 +55,64 @@ class Step1 extends Component {
     }
   }
 
+  validChannelDate(e) {
+    const { onDateChange } = this.props;
+    onDateChange(e);
+
+    if (e.target.value!=null) {
+      this.setState({validDate: true});
+    } else {
+      this.setState({validTitle: false});
+    }
+  }
+
+  validChannelTime(e) { 
+    const { onTimeChange } = this.props;
+    onTimeChange(e);
+
+    if (e.target.value!=null) {
+      this.setState({validTime: true});
+    } else {
+      this.setState({validTime: false});
+    }
+  }
+
+  validChannelPrice(e) {
+    const { onPriceChange } = this.props;
+    onPriceChange(e);
+
+    if (e.target.value<10000) {
+      this.setState({validPrice: true});
+    } else {
+      this.setState({validPrice: false});
+    }
+  }
+
+  validChannelContact(e) {
+    const { onContactChange } = this.props;
+    onContactChange(e);
+
+    if (e.target.value.length > 3) {
+      this.setState({validContact: true});
+    } else {
+      this.setState({validContact: false});
+    }
+  }
+
+  getTodayDate = () => {
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1;
+    const yyyy = today.getFullYear();
+    if(dd<10) dd="0"+dd;
+    if(mm<10) mm="0"+mm;
+    return (yyyy+"-"+mm+"-"+dd);
+  }
+
   render() {
-    const { canGoNext, title, description, onDescriptionChange, nextStep } = this.props;
+    const { canGoNext, title, description, onDescriptionChange, nextStep, 
+      date, time, price, contact, onContactChange } = this.props;
+
     const { validTitle } = this.state;
     const isStepValid = canGoNext();
     const nextStepBtnClasses = (validTitle && isStepValid) ? "form__btn" : "form__btn is-disabled";
@@ -47,6 +125,7 @@ class Step1 extends Component {
           label="Event Title"
           id="title"
           placeholder="Name your event"
+          minLength="3"
           value={title}
           onChange={e => this.validChannelTitle(e)} />
 
@@ -56,6 +135,38 @@ class Step1 extends Component {
           placeholder="Cool things about your event..."
           value={description}
           onChange={onDescriptionChange} />
+
+        <FormInput
+          label="Date"
+          id="date"
+          type="date"
+          min={this.getTodayDate()}
+          value={date}
+          onChange={e => this.validChannelDate(e)} />
+
+        <FormInput
+          label="Time"
+          id="time"
+          type="time"
+          value={time}
+          onChange= {e => this.validChannelTime(e)}/>
+
+        <FormInput
+          label="Price [$]"
+          id="price"
+          type="number"
+          min="0"
+          max="10000"
+          value={price}
+          onChange={e => this.validChannelPrice(e)} />
+
+        <FormInput
+          label="Contact to organizer"
+          id="contact"
+          placeholder="Telephone number, e-mail address..."
+          minLength="3"
+          value={contact}
+          onChange={e => this.validChannelContact(e)} />
 
         <Button variant="primary" additionalClass={nextStepBtnClasses}
           onClick={(e) => this.valueValid() && canGoNext() && nextStep(e)}>Next Step</Button>
@@ -109,12 +220,16 @@ class CreateChannel extends Component {
     channelTitle: "",
     channelDescription: "",
     channelLocation: "",
+    channelDate: "",
+    channelTime: "",
+    channelPrice: 0,
+    channelContact: "",
     isValid: true
   }
 
   canSubmitForm  = () => {
-    const { channelTitle, channelLocation } = this.state;
-    return (channelTitle && channelLocation);
+    const { channelTitle, channelLocation, channelDate, channelTime, channelPrice, channelContact } = this.state;
+    return (channelTitle && channelLocation && channelDate && channelTime && channelPrice && channelContact);
   }
 
   handleFormSubmit = async e => {
@@ -122,8 +237,8 @@ class CreateChannel extends Component {
     e.preventDefault();
 
     if (this.canSubmitForm()) {
-      const { channelTitle, channelDescription, channelLocation} = this.state;
-      const chatroom = {name: channelTitle, description: channelDescription, ...channelLocation};
+      const { channelTitle, channelDescription, channelLocation, channelDate, channelTime, channelPrice, channelContact } = this.state;
+      const chatroom = {name: channelTitle, description: channelDescription, channelLocation, channelDate, channelTime, channelPrice, channelContact};
 
       if (createChannel) {
         const {data: {createNewChatroom: newChatroomId}} = await createChannel({variables: {chatroom}});
@@ -136,8 +251,8 @@ class CreateChannel extends Component {
   }
 
   canProceedToStep2 = () => {
-    const { isValid, channelTitle } = this.state;
-    return isValid && channelTitle.length;
+    const { isValid, channelTitle, channelDate, channelTime, channelContact } = this.state;
+    return isValid && channelTitle.length && channelDate && channelTime && channelContact;
   }
 
   handleTitleChange = evt => {
@@ -152,13 +267,30 @@ class CreateChannel extends Component {
     this.setState({channelLocation: {latitude: lat(), longitude: lng()}});
   }
 
+  handleDateChange = evt => {
+    this.setState({channelDate: evt.target.value});
+  }
+
+  handleTimeChange = evt => {
+    this.setState({channelTime: evt.target.value});
+  }
+
+  handlePriceChange = evt => {
+    this.setState({channelPrice: evt.target.value});
+  }
+
+  handleContactChange = evt => {
+    this.setState({channelContact: evt.target.value});
+  }
+
   nextStep = () => {
     const currentStep = this.state.currentStep + 1;
     this.setState({currentStep: currentStep});
   }
 
   renderCurrentStep = currentStep => {
-    const { channelTitle, channelDescription, channelAddress } = this.state;
+    const { channelTitle, channelDescription, channelAddress, 
+      channelDate, channelTime, channelPrice, channelContact } = this.state;
 
     switch (currentStep) {
     case 1:
@@ -169,6 +301,14 @@ class CreateChannel extends Component {
           onTitleChange={this.handleTitleChange}
           description={channelDescription}
           onDescriptionChange={this.handleDescriptionChange}
+          date={channelDate}
+          onDateChange={this.handleDateChange}
+          time={channelTime}
+          onTimeChange={this.handleTimeChange}
+          price={channelPrice}
+          onPriceChange={this.handlePriceChange}
+          contact={channelContact}
+          onContactChange={this.handleContactChange}
           canGoNext={this.canProceedToStep2}
           nextStep={this.nextStep}
         />
