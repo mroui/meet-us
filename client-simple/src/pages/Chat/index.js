@@ -11,13 +11,17 @@ import "./Chat.style.scss";
 import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
+import Modal from "../../components/Modal/Modal";
+import { FormInput } from "../../components/Form/Form";
 
 class Chat extends Component {
   state = {
     inputMessageText: "",
     guestId: localStorage.getItem("guest_ID") || null,
     guestName: localStorage.getItem("guest_Username") || null,
-    isActive: false
+    isActive: false,
+    modalOpen: false,
+    chatroomName: null
   };
 
   loggedUserId = () => _.get(this.props, ["context", "userState", "user", "id"], null);
@@ -101,7 +105,39 @@ class Chat extends Component {
 
 
   componentWillReceiveProps(newProps) {
-    this.setState({isActive: newProps.chatroom.active});
+    this.setState({
+      isActive: newProps.chatroom.active,
+      chatroomName: newProps.chatroom.name
+    });
+  }
+
+  toggleModal = () => {
+    this.setState({modalOpen: !this.state.modalOpen});
+  }
+
+  renderModal() {
+    const modalOpen = this.state.modalOpen;
+    const modalHeading = "Edit \"" + this.state.chatroomName + "\"";
+    const modalDesc = "Fill fields which you want to change";
+
+    return (
+      <Modal
+        id="edit_channel"
+        heading={modalHeading}
+        desc={modalDesc}
+        modalOpen={modalOpen}
+        closeModal={() => this.toggleModal()}>
+        <form className="form">
+          {//-----------------------------------------------------------------------------TODO: add form for edit changes of event
+            /* <FormInput
+            label="Your username"
+            id="username"
+            placeholder="Username"
+          /> */}
+          <Button variant="primary" type="submit" additionalClass="modal__btn">Accept changes</Button>
+        </form>
+      </Modal>
+    );
   }
 
   render() {
@@ -110,7 +146,6 @@ class Chat extends Component {
 
     return (
       
-
       <div className="page">
         <Sidebar>
           <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} />
@@ -122,7 +157,8 @@ class Chat extends Component {
               <h2 className="page__heading">Chat: {chatroom && chatroom.name}</h2>
               <Button href="/" additionalClass="chat__back" isLink>To Channel List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
-                ? <TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} /> 
+                ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
+                  <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit event</Button></span>
                 : null}
             </header>
 
@@ -150,6 +186,7 @@ class Chat extends Component {
             </div>
           </div>
         </section>
+        {this.renderModal()}
       </div>
     );
   }
