@@ -38,7 +38,6 @@ class Chat extends Component {
 
 
   handleUpdateChatroom = chatroom => {
-    console.log(chatroom.users);
     this.setState({chatroom: { 
       _id: chatroom._id, 
       description: chatroom.description, 
@@ -137,7 +136,8 @@ class Chat extends Component {
 
   renderModal() {
     const modalOpen = this.state.modalOpen;
-    const modalHeading = "Edit \"" + this.state.chatroomName + "\"";
+    const eventName = this.state.chatroom ? this.state.chatroom.name : this.props.chatroom.name
+    const modalHeading = "Edit \"" + eventName + "\"";
     const modalDesc = "Fill fields which you want to change";
 
     return (
