@@ -37,6 +37,7 @@ class Chat extends Component {
   };
 
 
+  //owner & users are not changable so there're not in chatroom variable
   handleUpdateChatroom = chatroom => {
     this.setState({chatroom: { 
       _id: chatroom._id, 
@@ -85,6 +86,21 @@ class Chat extends Component {
   };
 
 
+  addBotMessage = () => {
+    const guestName = "HELPBOT";
+    const chatActive = this.state.chatroom ? this.state.chatroom.active : this.props.chatroom.active;
+    const msg = chatActive ? "/INFO Chatroom is disabled!" : "/INFO Chatroom is enabled!";
+    const { chatId: chatroom } = this.props.match.params;
+
+    return {
+      ...({guestId: "0", guestName}),
+      msg,
+      chatroom,
+      nickname: guestName
+    };
+  }
+
+
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -123,9 +139,14 @@ class Chat extends Component {
 
     const chatroom = {name, description, latitude, longitude, active, date, time, price: parseInt(price), contact };
     
-    return this.props.updateActivityChatroom({
-      variables: { chatroom, chatroomId: id }
-    });
+    return (
+      this.props.updateActivityChatroom({
+        variables: { chatroom, chatroomId: id }
+      }),
+      this.props.addMessage({
+        variables: this.addBotMessage()
+      })
+    );
   }
 
 
@@ -168,7 +189,6 @@ class Chat extends Component {
       chatroom = this.state.chatroom;
 
     return (
-      
       <div className="page">
         <Sidebar>
           <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} />
@@ -181,7 +201,7 @@ class Chat extends Component {
               <Button href="/" additionalClass="chat__back" isLink>To Event List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
-                  <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit event</Button></span>
+                  <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit Event</Button></span>
                 : null}
             </header>
 
