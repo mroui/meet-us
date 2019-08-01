@@ -4,25 +4,30 @@ import { ChatRoom } from "./ChatRoomEntity";
 import { Context } from "../common/context";
 import { User } from "../user/UserEntity";
 import { Ref } from "typegoose";
+import socketIO from '../../socketIO';
 
 @InputType()
 class CreateChatRoomInput implements Partial<ChatRoom> {
-  @GQLField(type => String)
+
+  @GQLField()
   name: string;
 
-  @GQLField({ nullable: true })
+  @GQLField()
   description?: string;
 
-  @GQLField(type => Number)
+  @GQLField()
   latitude: Number;
 
-  @GQLField(type => Number)
+  @GQLField()
   longitude: Number;
 
-  @GQLField(() => Date)
+  @GQLField()
+  active: Boolean;
+
+  @GQLField()
   date: Date;
 
-  @GQLField(() => String)
+  @GQLField()
   time: String;
 
   @GQLField()
@@ -78,8 +83,15 @@ export default class ChatRoomResolver {
 
   @Mutation(returns => ChatRoom, { description: "Update and return new chatroom"})
   async updateActivityChatroom(
-    @Arg("chatroom", returns => String) chatroom: string,
-    @Arg("active") active: Boolean){
-      return await this.service.updateActivityChatroom(chatroom, active)
+    @Arg("chatroom", returns => CreateChatRoomInput) chatroom: CreateChatRoomInput,
+    @Arg("chatroomId", returns => String) chatroomId: String){
+
+      const {socket} = await socketIO();
+      return await this.service.updateActivityChatroom(chatroom, chatroomId)
+          .then((chatroom) => { 
+            socket.to(chatroomId).emit("chatroomUpdate", chatroom);
+              return chatroom
+          })
+          .catch((e) => console.log('e: ', e));
   }
 }

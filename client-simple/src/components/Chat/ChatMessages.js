@@ -25,7 +25,11 @@ class ChatMessages extends Component {
     this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
   }
 
-  handleIncomingMessage = msg => this.setState({messages: [...this.state.messages, msg]});
+  handleIncomingMessage = msg =>
+  {
+    this.setState({messages: [...this.state.messages, msg]});
+    console.log("handle incoming", this.state.messages);
+  }
 
   renderMessage = (message) => {
     const {guestId } = this.state;

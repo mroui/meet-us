@@ -147,7 +147,7 @@ class Home extends Component {
       <div className="page">
         <Sidebar userName={null}>
           {userState.user && (
-            <SidebarArea heading="Your Channels">
+            <SidebarArea heading="Your Events">
               {this.renderLoggedUserChatrooms()}
             </SidebarArea>
           )}
@@ -155,7 +155,7 @@ class Home extends Component {
 
         <section className={mapVisible ? "page__content chatrooms-map__content" : "page__content"}>
           <header className="page__header">
-            <h2 className="page__heading">Events List</h2>
+            <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
           </header>
 

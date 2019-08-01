@@ -12,27 +12,37 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
-import { FormInput } from "../../components/Form/Form";
 
 class Chat extends Component {
   state = {
     inputMessageText: "",
     guestId: localStorage.getItem("guest_ID") || null,
     guestName: localStorage.getItem("guest_Username") || null,
-    isActive: false,
     modalOpen: false,
-    chatroomName: null
+    chatroom: null
   };
+
 
   loggedUserId = () => _.get(this.props, ["context", "userState", "user", "id"], null);
   loggedUserName = () => _.get(this.props, ["context", "userState", "user", "profile", "firstName"], null);
+
 
   componentDidMount = async () => {
     const { socket } = this.props;
     const { chatId } = this.props.match.params;
 
     socket.on("connection", this.emitJoinSocketRoomRequest(chatId));
+    socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
   };
+
+
+  handleUpdateChatroom = chatroom => {
+    this.setState({chatroom: { _id: chatroom._id, description: chatroom.description, latitude: chatroom.latitude, 
+      longitude: chatroom.longitude, name: chatroom.name, date: chatroom.date, time: chatroom.time, price: chatroom.price,
+      contact: chatroom.contact, owner: {_id: chatroom.owner}, active: chatroom.active}});
+    console.log("handle")
+  }
+
 
   isValidUserOrGuest = () => {
     const { guestName, guestId } = this.state;
@@ -41,14 +51,15 @@ class Chat extends Component {
       message.error(`Please either login or use guest account`);
       return false;
     }
-
     return true;
   };
+
 
   emitJoinSocketRoomRequest = chatId => {
     const { socket } = this.props;
     socket.emit("join", chatId);
   };
+
 
   prepareDataForMutation = () => {
     const { inputMessageText: msg, guestId, guestName } = this.state;
@@ -88,32 +99,24 @@ class Chat extends Component {
 
 
   toggleActiveChatroom = e => {
-    const active = !this.props.chatroom.active;
-    const chatroom = this.props.chatroom.variables._id;
+    const stateChatroom = this.state.chatroom;
 
-    this.setState({isActive: !this.state.isActive});
+    const active = stateChatroom ? stateChatroom.active : !this.props.chatroom.active;
+    const { name, description, latitude, longitude, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
+    const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
+
+    const chatroom = {name, description, latitude, longitude, active, date, time, price: parseInt(price), contact };
+    
     return this.props.updateActivityChatroom({
-      variables: { chatroom: chatroom, active: active },
-      refetchQueries: () => [{
-        query: GET_CURRENT_CHATROOM,
-        variables: {
-          _id: chatroom
-        }
-      }]
+      variables: { chatroom, chatroomId: id }
     });
   }
 
-
-  componentWillReceiveProps(newProps) {
-    this.setState({
-      isActive: newProps.chatroom.active,
-      chatroomName: newProps.chatroom.name
-    });
-  }
 
   toggleModal = () => {
     this.setState({modalOpen: !this.state.modalOpen});
   }
+
 
   renderModal() {
     const modalOpen = this.state.modalOpen;
@@ -140,9 +143,14 @@ class Chat extends Component {
     );
   }
 
+
   render() {
     const { inputMessageText } = this.state;
-    const { match, chatroom } = this.props;
+    let { match, chatroom } = this.props;
+    if (this.state.chatroom)
+      chatroom = this.state.chatroom;
+
+    console.log(chatroom);
 
     return (
       
@@ -155,7 +163,7 @@ class Chat extends Component {
           <div className="chat__wrapper">
             <header className="page__header">
               <h2 className="page__heading">{chatroom && chatroom.name}</h2>
-              <Button href="/" additionalClass="chat__back" isLink>To Events List</Button>
+              <Button href="/" additionalClass="chat__back" isLink>To Event List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit event</Button></span>
@@ -196,6 +204,14 @@ const GET_CURRENT_CHATROOM = gql`
     query($_id: String!) {
         chatroom(_id: $_id) {
             name
+            description
+            latitude
+            longitude
+            active
+            date
+            time
+            price
+            contact
             users {
                 _id
                 profile {
@@ -205,15 +221,20 @@ const GET_CURRENT_CHATROOM = gql`
             owner {
               _id 
             }
-            active
         }
     }
 `;
 
 const UPDATE_CHATROOM_ACTIVITY = gql`
-  mutation ($chatroom: String!, $active: Boolean!) {
-    updateActivityChatroom(chatroom: $chatroom, active: $active) {
+  mutation ($chatroom: CreateChatRoomInput!, $chatroomId: String!) {
+    updateActivityChatroom(chatroom: $chatroom,  chatroomId: $chatroomId) {
       name
+      description
+      date
+      time
+      price
+      active
+      contact
     }
   }
 `;

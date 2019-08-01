@@ -2,6 +2,7 @@ import * as socketIO from "socket.io";
 import {PORT, SOCKET_IO_PATH} from "../../config/index";
 import {messageHandler} from './message.event';
 import {joinChatroomHandler, leaveChatroomHandler} from './change-channels.event';
+import {updateChatroomHandler} from './update-chatroom.event';
 
 let initializedSocketIO;
 
@@ -13,6 +14,7 @@ async function initializeSocketIO(expressHttpServer) {
         io.on("connection", function (socket) {
             //Init handlers
             messageHandler(socket);
+            updateChatroomHandler(socket);
             joinChatroomHandler(socket);
             leaveChatroomHandler(socket);
             return resolve({io, socket});

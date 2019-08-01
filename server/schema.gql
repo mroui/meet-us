@@ -20,9 +20,10 @@ type ChatRoom {
 
 input CreateChatRoomInput {
   name: String!
-  description: String
+  description: String!
   latitude: Float!
   longitude: Float!
+  active: Boolean!
   date: DateTime!
   time: String!
   price: Float!
@@ -72,7 +73,7 @@ type Mutation {
   createNewChatroom(chatroom: CreateChatRoomInput!): ID!
 
   """Update and return new chatroom"""
-  updateActivityChatroom(active: Boolean!, chatroom: String!): ChatRoom!
+  updateActivityChatroom(chatroomId: String!, chatroom: CreateChatRoomInput!): ChatRoom!
 }
 
 type Profile {
