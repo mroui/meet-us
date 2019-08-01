@@ -13,6 +13,7 @@ import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
 
+
 class Chat extends Component {
   state = {
     inputMessageText: "",
@@ -37,10 +38,20 @@ class Chat extends Component {
 
 
   handleUpdateChatroom = chatroom => {
-    this.setState({chatroom: { _id: chatroom._id, description: chatroom.description, latitude: chatroom.latitude, 
-      longitude: chatroom.longitude, name: chatroom.name, date: chatroom.date, time: chatroom.time, price: chatroom.price,
-      contact: chatroom.contact, owner: {_id: chatroom.owner}, active: chatroom.active}});
-    console.log("handle")
+    console.log(chatroom.users);
+    this.setState({chatroom: { 
+      _id: chatroom._id, 
+      description: chatroom.description, 
+      latitude: chatroom.latitude, 
+      longitude: chatroom.longitude, 
+      name: chatroom.name, 
+      date: chatroom.date, 
+      time: chatroom.time, 
+      price: chatroom.price,
+      contact: chatroom.contact, 
+      active: chatroom.active,
+      owner: this.props.chatroom.owner,
+      users: this.props.chatroom.users}});
   }
 
 
@@ -78,6 +89,12 @@ class Chat extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
+    if (!this.state.chatroom.active){
+      this.setState({inputMessageText: ""});
+      message.error("Sorry, chatroom is disabled!");
+      return;
+    }
+
     if (this.isValidUserOrGuest()) {
       const { inputMessageText } = this.state;
 
@@ -101,7 +118,7 @@ class Chat extends Component {
   toggleActiveChatroom = e => {
     const stateChatroom = this.state.chatroom;
 
-    const active = stateChatroom ? stateChatroom.active : !this.props.chatroom.active;
+    const active = stateChatroom ? !stateChatroom.active : !this.props.chatroom.active;
     const { name, description, latitude, longitude, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
     const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
 
@@ -150,8 +167,6 @@ class Chat extends Component {
     if (this.state.chatroom)
       chatroom = this.state.chatroom;
 
-    console.log(chatroom);
-
     return (
       
       <div className="page">
@@ -177,7 +192,7 @@ class Chat extends Component {
             <div className="chat__footer">
               <form className="form chat__form" onSubmit={this.handleFormSubmit}>
                 <textarea
-                  value={inputMessageText}
+                  value={chatroom.active ? inputMessageText : ""}
                   name="message"
                   id="message"
                   className="chat__textarea"
@@ -186,10 +201,7 @@ class Chat extends Component {
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
-                <Button variant="primary"
-                  additionalClass="chat__btn"
-                  disabled={!chatroom.active}
-                >Send</Button>
+                <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
             </div>
           </div>

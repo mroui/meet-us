@@ -20,7 +20,7 @@ type ChatRoom {
 
 input CreateChatRoomInput {
   name: String!
-  description: String!
+  description: String
   latitude: Float!
   longitude: Float!
   active: Boolean!

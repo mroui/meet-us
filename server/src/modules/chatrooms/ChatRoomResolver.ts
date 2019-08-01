@@ -2,7 +2,7 @@ import {Resolver, Query, Arg, Mutation, Authorized, Ctx, ID, InputType, Field as
 import { ChatRoomService } from "./ChatRoomService";
 import { ChatRoom } from "./ChatRoomEntity";
 import { Context } from "../common/context";
-import { User } from "../user/UserEntity";
+import { User } from '../user/UserEntity'
 import { Ref } from "typegoose";
 import socketIO from '../../socketIO';
 
@@ -12,7 +12,7 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   @GQLField()
   name: string;
 
-  @GQLField()
+  @GQLField(type => String, { nullable: true })
   description?: string;
 
   @GQLField()
@@ -89,6 +89,8 @@ export default class ChatRoomResolver {
       const {socket} = await socketIO();
       return await this.service.updateActivityChatroom(chatroom, chatroomId)
           .then((chatroom) => { 
+            const chatId = chatroomId;
+            const isUserInPassedChat = !!Object.keys(socket.rooms).includes(chatId.valueOf());
             socket.to(chatroomId).emit("chatroomUpdate", chatroom);
               return chatroom
           })
