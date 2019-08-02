@@ -25,10 +25,9 @@ class ChatMessages extends Component {
     this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
   }
 
-  handleIncomingMessage = msg =>
-  {
+  handleIncomingMessage = msg => {
+    if (msg.from._id === "0") msg.guestId="0";
     this.setState({messages: [...this.state.messages, msg]});
-    console.log("handle incoming", this.state.messages);
   }
 
   renderMessage = (message) => {
@@ -42,11 +41,12 @@ class ChatMessages extends Component {
       return _socketIoNickname || guestName || _graphQlNickname || "Unknown User";
     };
 
-    const isMsgOfMine = message.guestId!="0" ? (message.from && message.from._id || message.guestId) === (this.loggedUserId() || guestId) : false;
+    const isMsgOfMine = (message.guestId!="0") ? (message.from && message.from._id || message.guestId) === (this.loggedUserId() || guestId) : false;
+    const variant=(message.guestId!="0") ? ((isMsgOfMine) ? "primary" : "") : "bot";
 
     return (
       <Message key={message._id} author={getMsgAuthorNickname()} toRight={isMsgOfMine} timestamp={message.createdAt}>
-        <MessageText variant={(isMsgOfMine) ? "primary" : ""}>{message.msg}</MessageText>
+        <MessageText variant={variant}>{message.msg}</MessageText>
       </Message>
     );
   };

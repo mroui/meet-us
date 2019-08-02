@@ -89,7 +89,7 @@ class Chat extends Component {
   addBotMessage = () => {
     const guestName = "HELPBOT";
     const chatActive = this.state.chatroom ? this.state.chatroom.active : this.props.chatroom.active;
-    const msg = chatActive ? "/INFO Chatroom is disabled!" : "/INFO Chatroom is enabled!";
+    const msg = chatActive ? "/INFO: Chatroom is disabled!" : "/INFO: Chatroom is enabled!";
     const { chatId: chatroom } = this.props.match.params;
 
     return {

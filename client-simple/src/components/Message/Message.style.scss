@@ -50,6 +50,13 @@
       margin-left: auto;
     }
 
+    &--bot {
+      color: $color-grey;
+      background-color: $color-grey-light;
+      border-color: $color-grey-light;
+      margin-left: auto;
+    }
+
     &--secondary {
       color: $color-white;
       background-color: $color-blue-light2;
