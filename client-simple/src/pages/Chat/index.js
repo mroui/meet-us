@@ -93,7 +93,8 @@ class Chat extends Component {
     const { chatId: chatroom } = this.props.match.params;
 
     return {
-      ...({guestId: "0", guestName}),
+      guestId: "0",
+      guestName,
       msg,
       chatroom,
       nickname: guestName
@@ -104,7 +105,8 @@ class Chat extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
-    if (!this.state.chatroom.active){
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    if (!chatroom.active){
       this.setState({inputMessageText: ""});
       message.error("Sorry, chatroom is disabled!");
       return;

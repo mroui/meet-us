@@ -39,7 +39,7 @@ class ChatMessages extends Component {
       const _graphQlNickname = _.get(message, ["from", "profile", "firstName"], null);
       const {guestName} = message;
 
-      return _socketIoNickname || _graphQlNickname || guestName || "Unknown User";
+      return _socketIoNickname || guestName || _graphQlNickname || "Unknown User";
     };
 
     const isMsgOfMine = (message.from && message.from._id || message.guestId) === (this.loggedUserId() || guestId);

@@ -89,8 +89,6 @@ export default class ChatRoomResolver {
       const {socket} = await socketIO();
       return await this.service.updateActivityChatroom(chatroom, chatroomId)
           .then((chatroom) => { 
-            const chatId = chatroomId;
-            const isUserInPassedChat = !!Object.keys(socket.rooms).includes(chatId.valueOf());
             socket.to(chatroomId).emit("chatroomUpdate", chatroom);
               return chatroom
           })
