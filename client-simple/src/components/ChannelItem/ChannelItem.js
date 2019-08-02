@@ -5,10 +5,11 @@ import NotActiveSvg from "../../assets/svg/not-active.svg";
 import Button from "../Button/Button";
 import "./ChannelItem.style.scss";
 
-const ChannelItem = ({ id, title, url, users, active, date, latitude, longitude, isLogged, toggleModal }) => {
+const ChannelItem = ({ id, title, url, users, active, date, locationName, isLogged, toggleModal }) => {
 
   const newDate = date.substring(0,10);
   const dateFormat = new Date(newDate).toDateString().substring(4,10);
+  console.log(locationName)
 
   return (
     <div className="channel">
@@ -17,7 +18,7 @@ const ChannelItem = ({ id, title, url, users, active, date, latitude, longitude,
       <div className="actions">
 
         <span className="actions__item">
-          <span className="actions__value">{latitude}</span>
+          <span className="actions__value">{locationName}</span>
         </span>
         { 
           //------------------------------------------------------------------------------------------------------------------------TODO: location

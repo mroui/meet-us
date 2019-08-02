@@ -36,6 +36,10 @@ export class ChatRoom extends Typegoose {
   @GQLField()
   longitude: Number;
 
+  @DBProp()
+  @GQLField(type => String)
+  locationName: String;
+
   @DBProp({ required: true })
   @GQLField(() => Date)
   date: Date;

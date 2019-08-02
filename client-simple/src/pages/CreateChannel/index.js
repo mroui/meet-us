@@ -185,7 +185,7 @@ class Step2 extends Component {
   onLocationPick = marker => {
     const { onLocationChange } = this.props;
     this.setState({ location: marker });
-    if (onLocationChange) onLocationChange(marker.position);
+    if (onLocationChange) onLocationChange(marker);
   };
   
   getSubmitClasses = loc => (loc.name) ? "form__btn maps__btn" : "form__btn maps__btn is-disabled";
@@ -220,6 +220,7 @@ class CreateChannel extends Component {
     channelTitle: "",
     channelDescription: "",
     channelLocation: "",
+    channelLocationDesc: "",
     channelDate: "",
     channelTime: "",
     channelPrice: 0,
@@ -228,8 +229,8 @@ class CreateChannel extends Component {
   }
 
   canSubmitForm  = () => {
-    const { channelTitle, channelLocation, channelDate, channelTime, channelContact } = this.state;
-    return (channelTitle && channelLocation && channelDate && channelTime && channelContact);
+    const { channelTitle, channelLocation, channelLocationDesc, channelDate, channelTime, channelContact } = this.state;
+    return (channelTitle && channelLocation && channelLocationDesc && channelDate && channelTime && channelContact);
   }
 
   handleFormSubmit = async e => {
@@ -237,8 +238,8 @@ class CreateChannel extends Component {
     e.preventDefault();
 
     if (this.canSubmitForm()) {
-      const { channelTitle, channelDescription, channelLocation, channelDate, channelTime, channelPrice, channelContact } = this.state;
-      const chatroom = {name: channelTitle, description: channelDescription, date: channelDate, time: channelTime, price: parseInt(channelPrice), contact: channelContact, ...channelLocation, };
+      const { channelTitle, channelDescription, channelLocation, channelLocationDesc, channelDate, channelTime, channelPrice, channelContact } = this.state;
+      const chatroom = {name: channelTitle, description: channelDescription, locationName: channelLocationDesc, active: true, date: channelDate, time: channelTime, price: parseInt(channelPrice), contact: channelContact, ...channelLocation, };
       if (createChannel) {
         const {data: {createNewChatroom: newChatroomId}} = await createChannel({variables: {chatroom}});
 
@@ -262,8 +263,8 @@ class CreateChannel extends Component {
     this.setState({channelDescription: evt.target.value});
   }
 
-  handleLocationChange = ({ lat, lng }) => {
-    this.setState({channelLocation: {latitude: lat(), longitude: lng()}});
+  handleLocationChange = ( marker ) => {
+    this.setState({channelLocation: {latitude: marker.position.lat(), longitude: marker.position.lng()}, channelLocationDesc: marker.description});
   }
 
   handleDateChange = evt => {

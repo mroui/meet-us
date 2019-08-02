@@ -22,6 +22,9 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   longitude: Number;
 
   @GQLField()
+  locationName: String;
+
+  @GQLField()
   active: Boolean;
 
   @GQLField()
