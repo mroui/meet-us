@@ -8,7 +8,8 @@ import "./ChannelItem.style.scss";
 const ChannelItem = ({ id, title, url, users, active, date, locationName, isLogged, toggleModal }) => {
 
   const newDate = date.substring(0,10);
-  const dateFormat = new Date(newDate).toDateString().substring(4,10);
+  const year = newDate.substring(0,4);
+  const dateFormat = new Date(newDate).toDateString().substring(4,10) + " " + year;
 
   return (
     <div className="channel">

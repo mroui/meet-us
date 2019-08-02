@@ -47,7 +47,7 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    min-width: 72px;
+    min-width: 82px;
   }
 
   &__value {
@@ -55,6 +55,7 @@
     font-size: 15px;
     color: $color-black;
     margin-right: 6px;
+    text-align: center;
   }
 
   &__img {
