@@ -42,7 +42,7 @@ class ChatMessages extends Component {
       return _socketIoNickname || guestName || _graphQlNickname || "Unknown User";
     };
 
-    const isMsgOfMine = (message.from && message.from._id || message.guestId) === (this.loggedUserId() || guestId);
+    const isMsgOfMine = message.guestId!="0" ? (message.from && message.from._id || message.guestId) === (this.loggedUserId() || guestId) : false;
 
     return (
       <Message key={message._id} author={getMsgAuthorNickname()} toRight={isMsgOfMine} timestamp={message.createdAt}>
