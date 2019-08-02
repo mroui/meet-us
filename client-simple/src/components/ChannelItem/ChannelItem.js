@@ -9,25 +9,21 @@ const ChannelItem = ({ id, title, url, users, active, date, locationName, isLogg
 
   const newDate = date.substring(0,10);
   const dateFormat = new Date(newDate).toDateString().substring(4,10);
-  console.log(locationName)
 
   return (
     <div className="channel">
       <h3 className="channel__title">{title}</h3>
         
-      <div className="actions">
+      <span className="channel__location">{locationName}</span>
 
-        <span className="actions__item">
-          <span className="actions__value">{locationName}</span>
-        </span>
-        { 
-          //------------------------------------------------------------------------------------------------------------------------TODO: location
-        }
+      <div className="actions">
+        
         <span className="actions__separator"></span>
 
         <span className="actions__item">
           <span className="actions__value">{dateFormat}</span>
         </span>
+        
         <span className="actions__separator"></span>
 
         <span className="actions__item">

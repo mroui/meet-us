@@ -26,6 +26,14 @@
     flex: 1;
     transition: .25s color ease;
   }
+
+  &__location {
+    font-weight: $font-weight-semibold;
+    font-size: 15px;
+    color: $color-black;
+    padding: 8px 0;
+    transition: .25s color ease;
+  }
 }
 
 // Actions
@@ -39,7 +47,7 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    min-width: 42px;
+    min-width: 72px;
   }
 
   &__value {
