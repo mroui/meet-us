@@ -12,6 +12,7 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
+import { Form, FormInput, FormFooterText } from "../../components/Form/Form";
 
 
 class Chat extends Component {
@@ -20,7 +21,9 @@ class Chat extends Component {
     guestId: localStorage.getItem("guest_ID") || null,
     guestName: localStorage.getItem("guest_Username") || null,
     modalOpen: false,
-    chatroom: null
+    chatroom: null,
+    tempTitle: "",
+    tempDesc: ""
   };
 
 
@@ -158,10 +161,19 @@ class Chat extends Component {
   }
 
 
+  handleTitleInput = (e) => {
+    this.setState({tempTitle: e.target.value});
+  }
+
+  handleDescInput = (e) => {
+    this.setState({tempDesc: e.target.value});
+  }
+
+
   renderModal() {
     const modalOpen = this.state.modalOpen;
-    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom
-    const modalHeading = "Edit \"" + chatroom + "\"";
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    const modalHeading = "Edit \"" + chatroom.name + "\"";
     const modalDesc = "Fill fields which you want to change";
 
     return (
@@ -172,12 +184,38 @@ class Chat extends Component {
         modalOpen={modalOpen}
         closeModal={() => this.toggleModal()}>
         <form className="form">
-          {//-----------------------------------------------------------------------------TODO: add form for edit changes of event
-            /* <FormInput
-            label="Your username"
-            id="username"
-            placeholder="Username"
-          /> */}
+          {
+            //-----------------------------------------------------------------------------TODO: add form edit changes of event
+          }
+          <FormInput
+            label="Title"
+            id="title"
+            onChange={this.handleTitleInput}
+          />
+          <FormInput
+            label="Description"
+            id="description"
+            onChange={this.handleDescInput}
+          />
+          <FormInput
+            label="Date"
+            id="date"
+            type="date"
+          />
+          <FormInput
+            label="Time"
+            id="time"
+            type="time"
+          />
+          <FormInput
+            label="Price"
+            id="price"
+            type="number"
+          />
+          <FormInput
+            label="Contact"
+            id="contact"
+          />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Accept changes</Button>
         </form>
       </Modal>
