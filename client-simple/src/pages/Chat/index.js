@@ -49,6 +49,7 @@ class Chat extends Component {
       time: chatroom.time, 
       price: chatroom.price,
       contact: chatroom.contact, 
+      locationName: chatroom.locationName,
       active: chatroom.active,
       owner: this.props.chatroom.owner,
       users: this.props.chatroom.users}});
@@ -136,10 +137,10 @@ class Chat extends Component {
     const stateChatroom = this.state.chatroom;
 
     const active = stateChatroom ? !stateChatroom.active : !this.props.chatroom.active;
-    const { name, description, latitude, longitude, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
+    const { name, description, latitude, longitude, locationName, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
     const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
 
-    const chatroom = {name, description, latitude, longitude, active, date, time, price: parseInt(price), contact };
+    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
     
     return (
       this.props.updateActivityChatroom({
@@ -159,8 +160,8 @@ class Chat extends Component {
 
   renderModal() {
     const modalOpen = this.state.modalOpen;
-    const eventName = this.state.chatroom ? this.state.chatroom.name : this.props.chatroom.name
-    const modalHeading = "Edit \"" + eventName + "\"";
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom
+    const modalHeading = "Edit \"" + chatroom + "\"";
     const modalDesc = "Fill fields which you want to change";
 
     return (
@@ -241,6 +242,7 @@ const GET_CURRENT_CHATROOM = gql`
             description
             latitude
             longitude
+            locationName
             active
             date
             time
