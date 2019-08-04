@@ -14,16 +14,16 @@ class Register extends Component {
     errorMsg: null
   }
 
-  resetState = () => this.setState({ firstName: "", lastName: "", email: "", password: "", repeatpassword: ""});
+  resetState = () => this.setState({ password: "", repeatpassword: ""});
 
   handleFormSubmit = signUp => async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password, repeatpassword } = this.state;
 
     let errorMsg = "";
-    if(password=="" || firstName=="" || lastName=="" || email=="" || repeatpassword=="") errorMsg = "Fill empty fields!";
-    else if (password !== repeatpassword) errorMsg = "Passwords not match!";
-    else if (firstName.length< 4) errorMsg = "Your firstname is too short";
+    if(password=="" || firstName=="" || lastName=="" || email=="" || repeatpassword=="") errorMsg = "Fill empty fields";
+    else if (password !== repeatpassword) errorMsg = "Passwords not match";
+    else if (firstName.length< 4) errorMsg = "Your first name/Nickname is too short";
     if (errorMsg!=="") return (this.setState({errorMsg}));
 
     console.log("Submitting registration...", { firstName, lastName, email, password });
@@ -37,7 +37,7 @@ class Register extends Component {
 
   handleRegisterError = registerRes => {
     if (registerRes instanceof Error) { //eslint-disable-line valid-typeof
-      const errorMsg = registerRes.message;
+      const errorMsg = registerRes.message.substring(14);
       console.log(`Register. errorMsg: `, errorMsg);
       this.setState({errorMsg});
       return errorMsg;

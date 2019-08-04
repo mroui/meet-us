@@ -16,7 +16,7 @@ class Login extends Component {
 
   handleLoginError = loginRes => {
     if (loginRes instanceof Error) { //eslint-disable-line valid-typeof
-      const errorMsg = loginRes.message;
+      const errorMsg = loginRes.message.substring(14);
       console.log(`login. errorMsg: `, errorMsg);
       this.setState({errorMsg});
       return errorMsg;
@@ -31,7 +31,7 @@ class Login extends Component {
     e.stopPropagation();
     const { email, password } = this.state;
     if (email=="" || password=="") {
-      this.setState({errorMsg: "Fill empty fields!"});
+      this.setState({errorMsg: "Fill empty fields"});
       return;
     }
     console.log("Submitting login...", {email, password});
