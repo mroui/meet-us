@@ -10,6 +10,10 @@
 body {
   font-family: $font-family;
   color: $color-black;
+  background-image: url('../assets/images/background.jpg');
+  background-position: 30% 30%;
+  background-repeat: no-repeat;
+  background-size: auto;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -62,7 +66,8 @@ textarea::placeholder {
 
     &--absolute {
       width: 100%;
-      max-width: 450px;
+      max-width: 500px;
+      background-color: $color-white;
       position: absolute;
       left: 50%;
       top: 0;
