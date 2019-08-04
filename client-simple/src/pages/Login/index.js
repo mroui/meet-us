@@ -12,7 +12,7 @@ class Login extends Component {
     errorMsg: null
   }
 
-  resetState = () => this.setState({ email: "", password: "" });
+  resetState = () => this.setState({ password: "" });
 
   handleLoginError = loginRes => {
     if (loginRes instanceof Error) { //eslint-disable-line valid-typeof
@@ -30,6 +30,10 @@ class Login extends Component {
     e.preventDefault();
     e.stopPropagation();
     const { email, password } = this.state;
+    if (email=="" || password=="") {
+      this.setState({errorMsg: "Fill empty fields!"});
+      return;
+    }
     console.log("Submitting login...", {email, password});
     const loginRes = await logIn(email, password);
     const err = this.handleLoginError(loginRes);
