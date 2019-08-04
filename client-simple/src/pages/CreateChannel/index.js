@@ -161,7 +161,7 @@ class Step1 extends Component {
           onChange={e => this.validChannelPrice(e)} />
 
         <FormInput
-          label="Contact to organizer"
+          label="Contact"
           id="contact"
           placeholder="Telephone number, e-mail address..."
           minLength="3"
