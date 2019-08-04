@@ -4,7 +4,7 @@ import MenuIconSvg from "../../assets/svg/menu.svg";
 import { compose, graphql } from "react-apollo";
 import _ from "lodash";
 import LeaveSvg from "../../assets/svg/leave.svg";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/svg/logo.svg";
 import Button from "../Button/Button";
 import "./Sidebar.style.scss";
 import { UserContext } from "../../services/userContext";
