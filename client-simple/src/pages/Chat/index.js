@@ -112,12 +112,13 @@ class Chat extends Component {
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
 
     if (input.startsWith("/")) {
-      const command = input.substring(1).split(" ")[0];
-      let message = "You have used: " + command + ".  ";
+      const preCommand = input.split(" ")[0];
+      const command = preCommand.substring(1);
+      let message = "You have used: " + preCommand + ".\n";
 
       switch(command) {
       case "desc":
-        message += "Description of the event is: " + chatroom.description;
+        message += "Description of the event is:\n" + chatroom.description;
         break;
       case "date":
         message += "Date of the event is: " + chatroom.date;
@@ -129,17 +130,20 @@ class Chat extends Component {
         message += "Price of the event is: " + chatroom.price;
         break;
       case "contact":
-        message += "Contact: " + chatroom.contact;
+        message += "Contact:\n" + chatroom.contact;
+        break;
+      case "help":
+        message += "List of commands you can use:\n/help\n/desc\n/date\n/time\n/price\n/contact";
         break;
       default:
-        message += "  There's no command like that";
+        message += "There's no command like that";
         break;
       }
-
-      message += ".   Enter /help for more commands"
+      //----------------------------------------------------------------------add HELP command 
+      if(command!=="help") message += ".\n\nEnter /help for more commands";
 
       //EASTEREGG :D
-      if (command==="joke") message = "What is red and smell like blue paint? RED PAINT! :)"
+      if (command==="joke") message = "What is red and smell like blue paint?\n...\nRED PAINT! :)"
 
       return this.props.addMessage({variables: this.addBotMessage(message)});
     }
@@ -188,7 +192,7 @@ class Chat extends Component {
 
     const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
 
-    const msg = active ? "/INFO: Chatroom is enabled by the owner" :  "/INFO: Chatroom is disabled by the owner";
+    const msg = active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
     return (
       this.props.updateChatroom({
@@ -258,7 +262,7 @@ class Chat extends Component {
           variables: { chatroom: newChatroom, chatroomId: id }
         }),
         this.props.addMessage({
-          variables: this.addBotMessage("/INFO: Chatroom is edited by the owner")
+          variables: this.addBotMessage("/INFO:\nEvent is edited by the owner")
         })
       );
     }
