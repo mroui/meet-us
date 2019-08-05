@@ -12,7 +12,7 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
-import { Form, FormInput, FormFooterText } from "../../components/Form/Form";
+import { Form, FormInput } from "../../components/Form/Form";
 
 
 class Chat extends Component {
@@ -162,31 +162,9 @@ class Chat extends Component {
 
   toggleModal = () => {
     this.setState({modalOpen: !this.state.modalOpen});
-  }
 
-
-  handleTitleInput = (e) => {
-    this.setState({tempTitle: e.target.value});
-  }
-
-  handleDescInput = (e) => {
-    this.setState({tempDesc: e.target.value});
-  }
-
-  handleDateInput = (e) => {
-    this.setState({tempDate: e.target.value});
-  }
-
-  handleTimeInput = (e) => {
-    this.setState({tempTime: e.target.value});
-  }
-
-  handlePriceInput = (e) => {
-    this.setState({tempPrice: e.target.value});
-  }
-
-  handleContactInput = (e) => {
-    this.setState({tempContact: e.target.value});
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    this.setTempChatroom(chatroom);
   }
 
 
@@ -198,23 +176,17 @@ class Chat extends Component {
       tempTime: chatroom.time,
       tempPrice: chatroom.price,
       tempContact: chatroom.contact
-    })
-  }
-
-
-  componentDidUpdate() {
-    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-    if(this.state.tempTitle!==chatroom.name) this.setTempChatroom(chatroom);
+    });
   }
 
 
   renderModal() {
     const modalOpen = this.state.modalOpen;
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-
     const modalHeading = "Edit \"" + chatroom.name + "\"";
     const modalDesc = "Fill fields which you want to change";
-    console.log(this.state.tempDate)
+
+    const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
     return (
       <Modal
@@ -222,7 +194,7 @@ class Chat extends Component {
         heading={modalHeading}
         desc={modalDesc}
         modalOpen={modalOpen}
-        closeModal={() => this.toggleModal()}>
+        closeModal={this.toggleModal}>
         <form className="form">
           {
             //-----------------------------------------------------------------------------TODO: add form edit changes of event
@@ -230,41 +202,41 @@ class Chat extends Component {
           <FormInput
             label="Title"
             id="title"
-            onChange={this.handleTitleInput}
-            value={this.state.tempTitle}
+            value={tempTitle}
+            onChange={e => this.setState({tempTitle: e.target.value})}
           />
           <FormInput
             label="Description"
             id="description"
-            onChange={this.handleDescInput}
-            value={this.state.tempDesc}
+            value={tempDesc}
+            onChange={e => this.setState({tempDesc: e.target.value})}
           />
           <FormInput
             label="Date"
             id="date"
-            onChange={this.handleDateInput}
             type="date"
-            value={this.state.tempDate}
+            value={tempDate}
+            onChange={e => this.setState({tempDate: e.target.value})}
           />
           <FormInput
             label="Time"
             id="time"
-            onChange={this.handleTimeInput}
             type="time"
-            value={this.state.tempTime}
+            value={tempTime}
+            onChange={e => this.setState({tempTime: e.target.value})}
           />
           <FormInput
             label="Price"
             id="price"
-            onChange={this.handlePriceInput}
             type="number"
-            value={this.state.tempPrice}
+            value={tempPrice}
+            onChange={e => this.setState({tempPrice: e.target.value})}
           />
           <FormInput
             label="Contact"
             id="contact"
-            onChange={this.handleContactInput}
-            value={this.state.tempContact}
+            value={tempContact}
+            onChange={e => this.setState({tempContact: e.target.value})}
           />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Accept changes</Button>
         </form>
