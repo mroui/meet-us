@@ -85,12 +85,12 @@ export default class ChatRoomResolver {
   }
 
   @Mutation(returns => ChatRoom, { description: "Update and return new chatroom"})
-  async updateActivityChatroom(
+  async updateChatroom(
     @Arg("chatroom", returns => CreateChatRoomInput) chatroom: CreateChatRoomInput,
     @Arg("chatroomId", returns => String) chatroomId: String){
 
       const {socket} = await socketIO();
-      return await this.service.updateActivityChatroom(chatroom, chatroomId)
+      return await this.service.updateChatroom(chatroom, chatroomId)
           .then((chatroom) => { 
             socket.to(chatroomId).emit("chatroomUpdate", chatroom);
               return chatroom

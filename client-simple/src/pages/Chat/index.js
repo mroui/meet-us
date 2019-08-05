@@ -94,11 +94,17 @@ class Chat extends Component {
   };
 
 
-  addBotMessage = () => {
+  addBotMessage = (what) => {
     const guestName = "HELPBOT";
     const chatActive = this.state.chatroom ? this.state.chatroom.active : this.props.chatroom.active;
-    const msg = chatActive ? "/INFO: Chatroom is disabled!" : "/INFO: Chatroom is enabled!";
     const { chatId: chatroom } = this.props.match.params;
+
+    let msg = "";
+    if (what==="activity") {
+      msg = chatActive ? "/INFO: Chatroom is disabled!" : "/INFO: Chatroom is enabled!";
+    } else if (what==="edit") {
+      msg = "/INFO: Chatroom is edited!";
+    }
 
     return {
       guestId: "0",
@@ -150,11 +156,11 @@ class Chat extends Component {
     const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
     
     return (
-      this.props.updateActivityChatroom({
+      this.props.updateChatroom({
         variables: { chatroom, chatroomId: id }
       }),
       this.props.addMessage({
-        variables: this.addBotMessage()
+        variables: this.addBotMessage("activity")
       })
     );
   }
@@ -181,7 +187,46 @@ class Chat extends Component {
 
 
   handleFormEditEvent = () => {
-    if (this.valueValid()) console.log("editing")
+    if (this.valueValid()) {
+      const chatroom =  this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+      const { latitude, longitude, locationName } = chatroom;
+
+      const stateChatroom = this.state.chatroom;
+      const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
+
+      const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
+
+      if(chatroom.name===tempTitle && chatroom.description===tempDesc &&
+        chatroom.date===tempDate && chatroom.time===tempTime &&
+        chatroom.price===tempPrice && chatroom.contact===tempContact) {
+        this.toggleModal();
+        return false;
+      }
+
+      const newChatroom = {
+        name: tempTitle,
+        description: tempDesc,
+        latitude,
+        longitude,
+        locationName,
+        active: true,
+        date: tempDate,
+        time: tempTime,
+        price: parseInt(tempPrice),
+        contact: tempContact
+      };
+
+      this.toggleModal();
+      
+      return (
+        this.props.updateChatroom({
+          variables: { chatroom: newChatroom, chatroomId: id }
+        }),
+        this.props.addMessage({
+          variables: this.addBotMessage("edit")
+        })
+      );
+    }
   }
 
 
@@ -376,9 +421,9 @@ const GET_CURRENT_CHATROOM = gql`
     }
 `;
 
-const UPDATE_CHATROOM_ACTIVITY = gql`
+const UPDATE_CHATROOM = gql`
   mutation ($chatroom: CreateChatRoomInput!, $chatroomId: String!) {
-    updateActivityChatroom(chatroom: $chatroom,  chatroomId: $chatroomId) {
+    updateChatroom(chatroom: $chatroom,  chatroomId: $chatroomId) {
       name
       description
       date
@@ -403,6 +448,6 @@ const withCurrentChatroom = graphql(GET_CURRENT_CHATROOM, {
 
 const withAddMessage = graphql(ADD_MESSAGE, { name: "addMessage"});
 
-const withUpdateActivityChatroom = graphql(UPDATE_CHATROOM_ACTIVITY, { name: "updateActivityChatroom"});
+const withUpdateChatroom = graphql(UPDATE_CHATROOM, { name: "updateChatroom"});
 
-export default compose(withCurrentChatroom, withAddMessage, withUpdateActivityChatroom)(withSocket(withUserContext(Chat)));
+export default compose(withCurrentChatroom, withAddMessage, withUpdateChatroom)(withSocket(withUserContext(Chat)));
