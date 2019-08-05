@@ -27,7 +27,7 @@ const FormFooterText = ({ children }) => {
 const Form = ({ children, heading, formFooter, ...props }) => {
   return (
     <>
-      <h1 className="form__heading">{heading}</h1>
+      {heading ? <h1 className="form__heading">{heading}</h1> : null}
       
       <form className="form" {...props}>
         {children}

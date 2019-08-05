@@ -195,10 +195,7 @@ class Chat extends Component {
         desc={modalDesc}
         modalOpen={modalOpen}
         closeModal={this.toggleModal}>
-        <form className="form">
-          {
-            //-----------------------------------------------------------------------------TODO: add form edit changes of event
-          }
+        <Form onSubmit={this.handleFormSubmit}>
           <FormInput
             label="Title"
             id="title"
@@ -239,7 +236,7 @@ class Chat extends Component {
             onChange={e => this.setState({tempContact: e.target.value})}
           />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Accept changes</Button>
-        </form>
+        </Form>
       </Modal>
     );
   }
