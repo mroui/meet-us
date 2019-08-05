@@ -133,13 +133,14 @@ class Chat extends Component {
         message += "Contact:\n" + chatroom.contact;
         break;
       case "help":
-        message += "List of commands you can use:\n/help\n/desc\n/date\n/time\n/price\n/contact";
+        message += "List of commands you can use:\n/help - list of all comands\n/desc - description of event\n" +
+                  "/date - date of event\n/time - time of event\n/price - price of event\n/contact - contact to organizer, like email or phone number";
         break;
       default:
         message += "There's no command like that";
         break;
       }
-      //----------------------------------------------------------------------add HELP command 
+      
       if(command!=="help") message += ".\n\nEnter /help for more commands";
 
       //EASTEREGG :D
@@ -166,7 +167,7 @@ class Chat extends Component {
       if (inputMessageText.length > 0) {
         this.setState({inputMessageText: ""});
         return (
-          this.props.addMessage({variables: this.prepareDataForMutation()}),
+          this.props.addMessage({variables: this.prepareDataForMutation()}),//======================================TODO: ASYNC PROBLEM
           this.checkCommand(inputMessageText)
         );
       } else {
