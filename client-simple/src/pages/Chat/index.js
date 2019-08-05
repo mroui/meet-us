@@ -12,7 +12,7 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
-import { Form, FormInput } from "../../components/Form/Form";
+import { FormInput } from "../../components/Form/Form"
 
 
 class Chat extends Component {
@@ -94,17 +94,9 @@ class Chat extends Component {
   };
 
 
-  addBotMessage = (what) => {
+  addBotMessage = (msg) => {
     const guestName = "HELPBOT";
-    const chatActive = this.state.chatroom ? this.state.chatroom.active : this.props.chatroom.active;
     const { chatId: chatroom } = this.props.match.params;
-
-    let msg = "";
-    if (what==="activity") {
-      msg = chatActive ? "/INFO: Chatroom is disabled!" : "/INFO: Chatroom is enabled!";
-    } else if (what==="edit") {
-      msg = "/INFO: Chatroom is edited!";
-    }
 
     return {
       guestId: "0",
@@ -113,6 +105,44 @@ class Chat extends Component {
       chatroom,
       nickname: guestName
     };
+  }
+
+
+  checkCommand = (input) => {
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+
+    if (input.startsWith("/")) {
+      const command = input.substring(1).split(" ")[0];
+      let message = "You have used: " + command + ".  ";
+
+      switch(command) {
+      case "desc":
+        message += "Description of the event is: " + chatroom.description;
+        break;
+      case "date":
+        message += "Date of the event is: " + chatroom.date;
+        break;
+      case "time":
+        message += "Time of the event is: " + chatroom.time;
+        break;
+      case "price":
+        message += "Price of the event is: " + chatroom.price;
+        break;
+      case "contact":
+        message += "Contact: " + chatroom.contact;
+        break;
+      default:
+        message += "  There's no command like that";
+        break;
+      }
+
+      message += ".   Enter /help for more commands"
+
+      //EASTEREGG :D
+      if (command==="joke") message = "What is red and smell like blue paint? RED PAINT! :)"
+
+      return this.props.addMessage({variables: this.addBotMessage(message)});
+    }
   }
 
 
@@ -131,7 +161,10 @@ class Chat extends Component {
 
       if (inputMessageText.length > 0) {
         this.setState({inputMessageText: ""});
-        return this.props.addMessage({variables: this.prepareDataForMutation()});
+        return (
+          this.props.addMessage({variables: this.prepareDataForMutation()}),
+          this.checkCommand(inputMessageText)
+        );
       } else {
         message.error("Message is empty");
       }
@@ -154,13 +187,15 @@ class Chat extends Component {
     const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
 
     const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
+
+    const msg = active ? "/INFO: Chatroom is enabled by the owner" :  "/INFO: Chatroom is disabled by the owner";
     
     return (
       this.props.updateChatroom({
         variables: { chatroom, chatroomId: id }
       }),
       this.props.addMessage({
-        variables: this.addBotMessage("activity")
+        variables: this.addBotMessage(msg)
       })
     );
   }
@@ -223,7 +258,7 @@ class Chat extends Component {
           variables: { chatroom: newChatroom, chatroomId: id }
         }),
         this.props.addMessage({
-          variables: this.addBotMessage("edit")
+          variables: this.addBotMessage("/INFO: Chatroom is edited by the owner")
         })
       );
     }
