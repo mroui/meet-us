@@ -59,7 +59,7 @@ class Sidebar extends Component {
     else {
       // DK: NOBODY GOT TIME FOR THAT（╯°□°）╯︵ ┻━┻
       // eslint-disable-next-line jsx-a11y/anchor-is-valid
-      return <p className="sidebar__acc-actions"><a onClick={logOut} className="sidebar__link">Logout</a></p>;
+      return <p className="sidebar__acc-actions"><a href="/" onClick={logOut} className="sidebar__link">Logout</a></p>;
     }
   }
 
