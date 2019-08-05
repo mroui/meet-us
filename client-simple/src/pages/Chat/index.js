@@ -23,7 +23,11 @@ class Chat extends Component {
     modalOpen: false,
     chatroom: null,
     tempTitle: "",
-    tempDesc: ""
+    tempDesc: "",
+    tempDate: "",
+    tempTime: "",
+    tempPrice: "",
+    tempContact: ""
   };
 
 
@@ -169,12 +173,48 @@ class Chat extends Component {
     this.setState({tempDesc: e.target.value});
   }
 
+  handleDateInput = (e) => {
+    this.setState({tempDate: e.target.value});
+  }
+
+  handleTimeInput = (e) => {
+    this.setState({tempTime: e.target.value});
+  }
+
+  handlePriceInput = (e) => {
+    this.setState({tempPrice: e.target.value});
+  }
+
+  handleContactInput = (e) => {
+    this.setState({tempContact: e.target.value});
+  }
+
+
+  setTempChatroom = (chatroom) => {
+    this.setState({
+      tempTitle: chatroom.name,
+      tempDesc: chatroom.description,
+      tempDate: chatroom.date,
+      tempTime: chatroom.time,
+      tempPrice: chatroom.price,
+      tempContact: chatroom.contact
+    })
+  }
+
+
+  componentDidUpdate() {
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    if(this.state.tempTitle!==chatroom.name) this.setTempChatroom(chatroom);
+  }
+
 
   renderModal() {
     const modalOpen = this.state.modalOpen;
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+
     const modalHeading = "Edit \"" + chatroom.name + "\"";
     const modalDesc = "Fill fields which you want to change";
+    console.log(this.state.tempDate)
 
     return (
       <Modal
@@ -191,30 +231,40 @@ class Chat extends Component {
             label="Title"
             id="title"
             onChange={this.handleTitleInput}
+            value={this.state.tempTitle}
           />
           <FormInput
             label="Description"
             id="description"
             onChange={this.handleDescInput}
+            value={this.state.tempDesc}
           />
           <FormInput
             label="Date"
             id="date"
+            onChange={this.handleDateInput}
             type="date"
+            value={this.state.tempDate}
           />
           <FormInput
             label="Time"
             id="time"
+            onChange={this.handleTimeInput}
             type="time"
+            value={this.state.tempTime}
           />
           <FormInput
             label="Price"
             id="price"
+            onChange={this.handlePriceInput}
             type="number"
+            value={this.state.tempPrice}
           />
           <FormInput
             label="Contact"
             id="contact"
+            onChange={this.handleContactInput}
+            value={this.state.tempContact}
           />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Accept changes</Button>
         </form>
