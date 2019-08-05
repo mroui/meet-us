@@ -27,7 +27,13 @@ class Chat extends Component {
     tempDate: "",
     tempTime: "",
     tempPrice: "",
-    tempContact: ""
+    tempContact: "",
+    jokes: [
+      "What is red and smell like blue paint?\n...\nRED PAINT! :)",
+      "What do you call bears with no ears?\n...\nB! :)",
+      "What is orange and sounds like a carrot?\n...\nPARROT! :)",
+      "What is an astronaut's favourite part on a computer?\n...\nTHE SPACE BAR! :)",
+      "Where does Batman go to the bathroom\n...\nTHE BATHROOM! :)"]
   };
 
 
@@ -144,7 +150,8 @@ class Chat extends Component {
       if(command!=="help") message += ".\n\nEnter /help for more commands";
 
       //EASTEREGG :D
-      if (command==="joke") message = "What is red and smell like blue paint?\n...\nRED PAINT! :)"
+      const rand = Math.floor(Math.random() * 5); // 0 - 4
+      if (command==="joke") message = this.state.jokes[rand];
 
       return this.props.addMessage({variables: this.addBotMessage(message)});
     }
