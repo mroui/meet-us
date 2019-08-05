@@ -7,9 +7,8 @@ import "./ChannelItem.style.scss";
 
 const ChannelItem = ({ id, title, url, users, active, date, locationName, isLogged, toggleModal }) => {
 
-  const newDate = date.substring(0,10);
-  const year = newDate.substring(0,4);
-  const dateFormat = new Date(newDate).toDateString().substring(4,10) + " " + year;
+  const newDate = new Date(date);
+  const nicerDateFormat = newDate.getDate() + " " + newDate.toLocaleString("en-us", { month: "short" }) + " " + newDate.getFullYear();
 
   return (
     <div className="channel">
@@ -22,7 +21,7 @@ const ChannelItem = ({ id, title, url, users, active, date, locationName, isLogg
         <span className="actions__separator"></span>
 
         <span className="actions__item">
-          <span className="actions__value">{dateFormat}</span>
+          <span className="actions__value">{nicerDateFormat}</span>
         </span>
         
         <span className="actions__separator"></span>

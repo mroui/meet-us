@@ -28,7 +28,7 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   active: Boolean;
 
   @GQLField()
-  date: Date;
+  date: String;
 
   @GQLField()
   time: String;

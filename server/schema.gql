@@ -13,7 +13,7 @@ type ChatRoom {
   latitude: Float!
   longitude: Float!
   locationName: String!
-  date: DateTime!
+  date: String!
   time: String!
   price: Float!
   contact: String!
@@ -26,7 +26,7 @@ input CreateChatRoomInput {
   longitude: Float!
   locationName: String!
   active: Boolean!
-  date: DateTime!
+  date: String!
   time: String!
   price: Float!
   contact: String!
