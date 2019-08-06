@@ -475,9 +475,14 @@ class Chat extends Component {
   }
 
 
-  checkEventExists = () => {
+  backToHome = () => {
     this.props.history.push("/");
     message.error("Event is deleted or not exists!");
+  }
+
+  
+  componentWillReceiveProps = () => {
+    if(!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
   }
 
 
@@ -488,14 +493,8 @@ class Chat extends Component {
     if (this.state.chatroom)
       chatroom = this.state.chatroom;
 
-    console.log(chatroom.name)
-
-    //this.checkEventExists(chatroom);  //--------------------------------------------------TODO: check if event exists - if chatroom.name is set or sth like that 
-
     return (
       <div className="page">
-        {/* {chatroom && chatroom.name ? 
-        <> */}
         <Sidebar>
           <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} />
         </Sidebar>
@@ -537,8 +536,6 @@ class Chat extends Component {
         {this.renderEditModal()}
         {this.renderHelpModal()}
         {this.renderDeleteModal()}
-        {/* </>
-          : this.checkEventExists()} */}
       </div>
     );
   }
