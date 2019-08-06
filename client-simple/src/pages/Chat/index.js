@@ -30,7 +30,8 @@ class Chat extends Component {
     tempTime: "",
     tempPrice: "",
     tempContact: "",
-    modalHelpOpen: true,
+    modalHelpOpen: false,
+    modalDeleteOpen: false,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
@@ -426,6 +427,45 @@ class Chat extends Component {
   }
 
 
+  toggleDeleteModal = () => {
+    this.setState({modalDeleteOpen: !this.state.modalDeleteOpen});
+  }
+
+
+  deleteEvent = () => {
+    console.log("trying to delete event.")
+    this.props.history.push("/");
+  }
+
+
+  renderDeleteModal = () => {
+    const modalOpen = this.state.modalDeleteOpen;
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    const modalHeading = "Delete \"" + chatroom.name + "\"?";
+    const modalDesc = "Do you want to delete this event? All messages will be lost!";
+
+    return (
+      <Modal
+        id="delete_commands_modal"
+        heading={modalHeading}
+        desc={modalDesc}
+        modalOpen={modalOpen}
+        closeModal={this.toggleDeleteModal}>
+        <Button 
+          variant="primary" 
+          type="submit" 
+          additionalClass="modal__btn" 
+          onClick={this.deleteEvent}>Yes, I know what I'm doing!</Button>
+        <Button 
+          variant="primary" 
+          type="submit" 
+          additionalClass="modal__btn" 
+          onClick={this.toggleDeleteModal}>No, take me away from here!</Button>
+      </Modal>
+    );
+  }
+
+
   render() {
     const { inputMessageText } = this.state;
     let { match, chatroom } = this.props;
@@ -445,7 +485,8 @@ class Chat extends Component {
               <Button href="/" additionalClass="chat__back" isLink>To Event List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
-                  <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button></span>
+                  <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>
+                  <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Delete Event</Button></span>
                 : null}
             </header>
 
@@ -473,6 +514,7 @@ class Chat extends Component {
         </section>
         {this.renderEditModal()}
         {this.renderHelpModal()}
+        {this.renderDeleteModal()}
       </div>
     );
   }
