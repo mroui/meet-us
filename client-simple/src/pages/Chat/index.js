@@ -50,11 +50,34 @@ class Chat extends Component {
   componentDidMount = async () => {
     const { socket } = this.props;
     const { chatId } = this.props.match.params;
+    console.log("did mount")
 
     socket.on("connection", this.emitJoinSocketRoomRequest(chatId));
     socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
     socket.on("chatroomDelete", this.handleDeleteChatroom); 
   };
+  
+
+  componentWillUpdate = () => {
+    console.log("will update")
+    //if(!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
+    if (!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
+  }
+
+  componentWillMount () {
+    console.log("will mount")
+    console.log(this.props.chatroom)
+  }
+
+  componentWillUnmount() {
+    console.log("will unmount")
+  }
+
+  
+  backToHome = () => {
+    this.props.history.push("/");
+    message.error("Event is deleted or not exists!");
+  }
 
 
   handleDeleteChatroom = () => {
@@ -442,7 +465,8 @@ class Chat extends Component {
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
 
     this.props.deleteChatroom({
-      variables: { chatroomId: id }
+      variables: { chatroomId: id },
+      refetchQueries: GET_CHATROOMS
     });
   }
 
@@ -472,17 +496,6 @@ class Chat extends Component {
           onClick={this.toggleDeleteModal}>No, take me away from here!</Button>
       </Modal>
     );
-  }
-
-
-  backToHome = () => {
-    this.props.history.push("/");
-    message.error("Event is deleted or not exists!");
-  }
-
-  
-  componentWillReceiveProps = () => {
-    if(!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
   }
 
 
@@ -577,6 +590,27 @@ const UPDATE_CHATROOM = gql`
       price
       active
       contact
+    }
+  }
+`;
+
+const GET_CHATROOMS = gql`
+  query {
+    chatrooms {
+      _id
+      name
+      description
+      users {
+        _id
+      }
+      owner {
+        _id
+      }
+      date
+      latitude
+      longitude
+      locationName
+      active
     }
   }
 `;
