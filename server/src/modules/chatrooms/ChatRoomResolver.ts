@@ -98,7 +98,7 @@ export default class ChatRoomResolver {
           .catch((e) => console.log('e: ', e));
   }
 
-  @Mutation(returns => String, {description: "Delete chatroom by id"})
+  @Mutation(returns => String, {description: "Delete chatroom and return its ID"})
   async deleteChatroom(@Arg("chatroomId", returns => String) chatroomId: String){
 
     const {socket} = await socketIO();

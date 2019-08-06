@@ -77,7 +77,7 @@ type Mutation {
   """Update and return new chatroom"""
   updateChatroom(chatroomId: String!, chatroom: CreateChatRoomInput!): ChatRoom!
 
-  """Delete chatroom by id"""
+  """Delete chatroom and return its ID"""
   deleteChatroom(chatroomId: String!): String!
 }
 
