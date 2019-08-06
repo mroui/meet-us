@@ -53,11 +53,12 @@ class Chat extends Component {
 
     socket.on("connection", this.emitJoinSocketRoomRequest(chatId));
     socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
+    socket.on("chatroomDelete", this.handleDeleteChatroom); 
   };
 
 
-  componentDidUpdate = () => {
-
+  handleDeleteChatroom = () => {
+    this.props.history.push("/");
   }
 
 
@@ -438,7 +439,11 @@ class Chat extends Component {
 
 
   deleteEvent = () => {
-    console.log("trying to delete event.");
+    const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
+
+    this.props.deleteChatroom({
+      variables: { chatroomId: id }
+    });
   }
 
 
@@ -570,6 +575,12 @@ const ADD_MESSAGE = gql`
   }
 `;
 
+const DELETE_CHATROOM = gql`
+  mutation ($chatroomId: String!) {
+    deleteChatroom(chatroomId: $chatroomId) 
+  }
+`;
+
 const withCurrentChatroom = graphql(GET_CURRENT_CHATROOM, {
   options: (props) => ({ variables: { _id: props.match.params.chatId }}),
   props: ({data: {chatroom, ...others}}) => ({chatroom: {...others, ...chatroom}})
@@ -579,4 +590,6 @@ const withAddMessage = graphql(ADD_MESSAGE, { name: "addMessage"});
 
 const withUpdateChatroom = graphql(UPDATE_CHATROOM, { name: "updateChatroom"});
 
-export default compose(withCurrentChatroom, withAddMessage, withUpdateChatroom)(withSocket(withUserContext(Chat)));
+const withDeleteChatroom = graphql(DELETE_CHATROOM, { name: "deleteChatroom"});
+
+export default compose(withCurrentChatroom, withAddMessage, withUpdateChatroom, withDeleteChatroom)(withSocket(withUserContext(Chat)));

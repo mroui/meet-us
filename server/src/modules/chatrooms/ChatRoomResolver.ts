@@ -102,7 +102,7 @@ export default class ChatRoomResolver {
   async deleteChatroom(@Arg("chatroomId", returns => String) chatroomId: String){
     const {socket} = await socketIO();
     return await this.service.deleteChatroom(chatroomId)
-          .then((chatroom) => {socket.to(chatroomId).emit("chatroomDelete", chatroom); return true;})
+          .then((chatroom) => {socket.to(chatroomId).emit("chatroomDelete"); return true;})
           .catch((e) => console.log('e: ', e));
   }
 }
