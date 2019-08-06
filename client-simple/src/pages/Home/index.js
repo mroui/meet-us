@@ -15,6 +15,7 @@ import Toggler from "../../components/Toggler/Toggler";
 import MapChatrooms from "../../components/GoogleMaps/MapChatrooms/MapChatrooms";
 import withUserContext from "../../components/withUserContext";
 import "./Home.style.scss";
+import withSocket from "../../components/withSocket";
 
 class Home extends Component {
   state = {
@@ -30,6 +31,17 @@ class Home extends Component {
     if (!this.state.isUserLogged && _.get(nextProps, ["context", "userState", "user", "id"], false)) {
       this.setState({isUserLogged: true});
     }
+  }
+
+
+  componentDidMount = async () => {
+    const { socket } = this.props;
+    socket.on("chatroomDelete", chatroomId => this.handleDeleteChatroom(chatroomId)); 
+  };
+
+
+  handleDeleteChatroom = (chatroomId) => {
+    console.log("deleted?", chatroomId, this.props);  //----------------------------------------------TODO: delete from array this deleted chatroom or protect by enter not existing chatroom
   }
 
   renderModal() {
@@ -205,4 +217,4 @@ const GET_CHATROOMS = gql`
 
 const withAllChatrooms = graphql(GET_CHATROOMS);
 
-export default compose(withAllChatrooms)(withUserContext(Home));
+export default compose(withAllChatrooms)(withSocket(withUserContext(Home)));

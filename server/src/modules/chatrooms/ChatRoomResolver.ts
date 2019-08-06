@@ -98,11 +98,12 @@ export default class ChatRoomResolver {
           .catch((e) => console.log('e: ', e));
   }
 
-  @Mutation(returns => Boolean, {description: "Delete chatroom by id"})
+  @Mutation(returns => String, {description: "Delete chatroom by id"})
   async deleteChatroom(@Arg("chatroomId", returns => String) chatroomId: String){
+
     const {socket} = await socketIO();
     return await this.service.deleteChatroom(chatroomId)
-          .then((chatroom) => {socket.to(chatroomId).emit("chatroomDelete"); return true;})
+          .then((chatroom) => {socket.to(chatroomId).emit("chatroomDelete", chatroom); return chatroomId;})
           .catch((e) => console.log('e: ', e));
   }
 }
