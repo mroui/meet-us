@@ -56,6 +56,11 @@ class Chat extends Component {
   };
 
 
+  componentDidUpdate = () => {
+
+  }
+
+
   //owner & users are not changable so there're not in chatroom variable
   handleUpdateChatroom = chatroom => {
     this.setState({chatroom: { 
@@ -429,12 +434,11 @@ class Chat extends Component {
 
   toggleDeleteModal = () => {
     this.setState({modalDeleteOpen: !this.state.modalDeleteOpen});
-  }
+  };
 
 
   deleteEvent = () => {
-    console.log("trying to delete event.")
-    this.props.history.push("/");
+    console.log("trying to delete event.");
   }
 
 

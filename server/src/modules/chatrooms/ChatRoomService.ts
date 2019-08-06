@@ -40,4 +40,8 @@ export class ChatRoomService {
   async updateChatroom(chatroom: Partial<ChatRoom>, chatroomId: String) {
     return this.model.findByIdAndUpdate(chatroomId, chatroom, {new: true}).exec();
   }
+
+  async deleteChatroom(chatroomId: String) {
+    return this.model.findByIdAndDelete(chatroomId).exec();
+  }
 }
