@@ -33,17 +33,6 @@ class Home extends Component {
     }
   }
 
-
-  componentDidMount = async () => {
-    const { socket } = this.props;
-    socket.on("chatroomDelete", chatroomId => this.handleDeleteChatroom(chatroomId)); 
-  };
-
-
-  handleDeleteChatroom = (chatroomId) => {
-    console.log("deleted?", chatroomId, this.props);  //----------------------------------------------TODO: delete from array this deleted chatroom or protect by enter not existing chatroom
-  }
-
   renderModal() {
     const { username, modalOpen } = this.state;
     const guestID = localStorage.getItem("guest_ID");
@@ -217,4 +206,4 @@ const GET_CHATROOMS = gql`
 
 const withAllChatrooms = graphql(GET_CHATROOMS);
 
-export default compose(withAllChatrooms)(withSocket(withUserContext(Home)));
+export default compose(withAllChatrooms)(withUserContext(Home));
