@@ -174,7 +174,6 @@ class Chat extends Component {
       if (inputMessageText.length > 0) {
         this.setState({inputMessageText: ""});
         return (
-          //async problem?
           this.props.addMessage({variables: this.prepareDataForMutation()}),
           this.checkCommand(inputMessageText)
         );

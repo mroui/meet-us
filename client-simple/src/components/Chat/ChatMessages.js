@@ -7,6 +7,12 @@ import withSocket from "../withSocket";
 import withUserContext from "../withUserContext";
 
 class ChatMessages extends Component {
+
+  constructor(props){
+    super(props)
+    this.myDiv = React.createRef()
+  }
+
   state = {
     messages: [],
     guestId: localStorage.getItem("guest_ID") || null,
@@ -17,12 +23,16 @@ class ChatMessages extends Component {
 
   componentDidMount = async () => {
     const { socket } = this.props;
-    
+
     socket.on("message", msg => this.handleIncomingMessage(msg));
   };
 
   componentDidUpdate() {
-    this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
+    //this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
+    //console.log("height of component", this.myDiv.current.offsetHeight)  //component with messages
+    //console.log("scroll", this.myDiv.current.getBoundingClientRect().bottom)
+    if (this.myDiv.current.getBoundingClientRect().bottom - window.innerHeight < window.innerHeight)
+      this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
   }
 
   handleIncomingMessage = msg => {
@@ -57,10 +67,10 @@ class ChatMessages extends Component {
     const newPreviousAndNewMessages = [...previousMessages, ...messages];
 
     return (
-      <>
+      <div ref={this.myDiv}>
         {newPreviousAndNewMessages.map((message) => this.renderMessage(message))}
         <div ref={el => {this.scrollToBottomElement = el; }} />
-      </>
+      </div>
     );
   }
 }
