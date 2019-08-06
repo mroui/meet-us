@@ -13,7 +13,7 @@ import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
 import { FormInput } from "../../components/Form/Form";
-import question from "../../assets/svg/question.svg";
+import question from "../../assets/images/question.png";
 
 
 class Chat extends Component {
