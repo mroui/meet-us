@@ -133,7 +133,7 @@ class Chat extends Component {
         message += "Time of the event is: " + chatroom.time;
         break;
       case "price":
-        message += "Price of the event is: " + chatroom.price;
+        message += "Price of the event is: " + chatroom.price + "$";
         break;
       case "contact":
         message += "Contact:\n" + chatroom.contact;
@@ -174,7 +174,8 @@ class Chat extends Component {
       if (inputMessageText.length > 0) {
         this.setState({inputMessageText: ""});
         return (
-          this.props.addMessage({variables: this.prepareDataForMutation()}),//======================================TODO: ASYNC PROBLEM
+          //async problem?
+          this.props.addMessage({variables: this.prepareDataForMutation()}),
           this.checkCommand(inputMessageText)
         );
       } else {
