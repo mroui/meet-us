@@ -9,8 +9,8 @@ import withUserContext from "../withUserContext";
 class ChatMessages extends Component {
 
   constructor(props){
-    super(props)
-    this.myDiv = React.createRef()
+    super(props);
+    this.myDiv = React.createRef();
   }
 
   state = {
@@ -28,11 +28,9 @@ class ChatMessages extends Component {
   };
 
   componentDidUpdate() {
-    //this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
-    //console.log("height of component", this.myDiv.current.offsetHeight)  //component with messages
-    //console.log("scroll", this.myDiv.current.getBoundingClientRect().bottom)
-    if (this.myDiv.current.getBoundingClientRect().bottom - window.innerHeight < window.innerHeight)
-      this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
+    this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
+    //console.log("height of component",this.myDiv.current.offsetHeight)  //component with messages
+    //console.log("bottom", this.myDiv.current.getBoundingClientRect().bottom)
   }
 
   handleIncomingMessage = msg => {

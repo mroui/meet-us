@@ -12,10 +12,12 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
-import { FormInput } from "../../components/Form/Form"
+import { FormInput } from "../../components/Form/Form";
+import question from "../../assets/svg/question.svg";
 
 
 class Chat extends Component {
+
   state = {
     inputMessageText: "",
     guestId: localStorage.getItem("guest_ID") || null,
@@ -28,12 +30,15 @@ class Chat extends Component {
     tempTime: "",
     tempPrice: "",
     tempContact: "",
+    modalHelpOpen: true,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
       "What is orange and sounds like a carrot?\n...\nPARROT! :)",
       "What is an astronaut's favourite part on a computer?\n...\nTHE SPACE BAR! :)",
-      "Where does Batman go to the bathroom\n...\nTHE BATHROOM! :)"]
+      "Where does Batman go to the bathroom\n...\nTHE BATHROOM! :)"],
+    commandsDescription: "/help - list of all comands\n/desc - description of event\n" +
+      "/date - date of event\n/time - time of event\n/price - price of event\n/contact - contact like email or phone number"
   };
 
 
@@ -139,8 +144,7 @@ class Chat extends Component {
         message += "Contact:\n" + chatroom.contact;
         break;
       case "help":
-        message += "List of commands you can use:\n/help - list of all comands\n/desc - description of event\n" +
-                  "/date - date of event\n/time - time of event\n/price - price of event\n/contact - contact to organizer, like email or phone number";
+        message += "List of commands you can use:\n" + this.state.commandsDescription; 
         break;
       default:
         message += "There's no command like that";
@@ -213,7 +217,7 @@ class Chat extends Component {
   }
 
 
-  toggleModal = () => {
+  toggleEditModal = () => {
     this.setState({modalOpen: !this.state.modalOpen});
 
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
@@ -246,7 +250,7 @@ class Chat extends Component {
       if(chatroom.name===tempTitle && chatroom.description===tempDesc &&
         chatroom.date===tempDate && chatroom.time===tempTime &&
         chatroom.price===tempPrice && chatroom.contact===tempContact) {
-        this.toggleModal();
+        this.toggleEditModal();
         return false;
       }
 
@@ -263,7 +267,7 @@ class Chat extends Component {
         contact: tempContact
       };
 
-      this.toggleModal();
+      this.toggleEditModal();
       
       return (
         this.props.updateChatroom({
@@ -320,7 +324,7 @@ class Chat extends Component {
   }
 
 
-  renderModal() {
+  renderEditModal() {
     const modalOpen = this.state.modalOpen;
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
     const modalHeading = "Edit \"" + chatroom.name + "\"";
@@ -334,7 +338,7 @@ class Chat extends Component {
         heading={modalHeading}
         desc={modalDesc}
         modalOpen={modalOpen}
-        closeModal={this.toggleModal}>
+        closeModal={this.toggleEditModal}>
         <FormInput
           label="Title"
           id="title"
@@ -392,6 +396,36 @@ class Chat extends Component {
   }
 
 
+  toggleHelpModal = () => {
+    this.setState({modalHelpOpen: !this.state.modalHelpOpen});
+  }   
+
+
+  renderHelpModal = () => {
+    const modalOpen = this.state.modalHelpOpen;
+    const modalHeading = "Commands";
+    const modalDesc = "Commands which you can type in a message to HelpBot:";
+
+    return (
+      <Modal
+        id="help_commands_modal"
+        heading={modalHeading}
+        desc={modalDesc}
+        modalOpen={modalOpen}
+        closeModal={this.toggleHelpModal}>
+        <div className="modal__textarea">
+          {this.state.commandsDescription}
+        </div>
+        <Button 
+          variant="primary" 
+          type="submit" 
+          additionalClass="modal__btn" 
+          onClick={this.toggleHelpModal}>I understand</Button>
+      </Modal>
+    );
+  }
+
+
   render() {
     const { inputMessageText } = this.state;
     let { match, chatroom } = this.props;
@@ -411,7 +445,7 @@ class Chat extends Component {
               <Button href="/" additionalClass="chat__back" isLink>To Event List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
-                  <Button additionalClass="chat__back" onClick={() => this.toggleModal()}>Edit Event</Button></span>
+                  <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button></span>
                 : null}
             </header>
 
@@ -431,12 +465,14 @@ class Chat extends Component {
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
+                <img src={ question } className="chat__img" alt="" onClick={() => this.toggleHelpModal()} />
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
             </div>
           </div>
         </section>
-        {this.renderModal()}
+        {this.renderEditModal()}
+        {this.renderHelpModal()}
       </div>
     );
   }

@@ -39,6 +39,15 @@
     border: 1px solid $color-grey-light;
     resize: vertical;
   }
+
+  &__img {
+    width: 35px;
+    margin-right: 20px;
+    &:hover {
+      cursor: pointer;
+    };
+  }
+
   
   &__back {
     margin-left: 40px;
@@ -53,6 +62,25 @@
   &__active {
     margin-left: 40px;
     height: 18px;
+  }
+}
+
+.modal {
+  &__textarea {
+    white-space:pre-wrap;
+    font-weight: $font-weight-regular;
+    font-size: 14px;
+    line-height: 46px;
+    width: 100%;
+    padding: 0 20px;
+    border-radius: 20px;
+    background-color: $color-whiteblue-dark;
+    border: 1px transparent solid;
+    outline: none;
+    margin-bottom: 30px;
+    &:focus {
+      border: 1px $color-whiteblue-dark2 solid;
+    }
   }
 }
 
