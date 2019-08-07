@@ -12,8 +12,8 @@ import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
 import Modal from "../../components/Modal/Modal";
-import { FormInput } from "../../components/Form/Form";
 import question from "../../assets/images/question.png";
+import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatroom";
 
 
 class Chat extends Component {
@@ -295,76 +295,6 @@ class Chat extends Component {
     return (yyyy+"-"+mm+"-"+dd);
   }
 
-  renderEditModal() {
-    const modalOpen = this.state.modalOpen;
-    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-    const modalHeading = "Edit \"" + chatroom.name + "\"";
-    const modalDesc = "Fill fields which you want to change";
-    const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
-
-    return (
-      <Modal
-        id="edit_channel"
-        heading={modalHeading}
-        desc={modalDesc}
-        modalOpen={modalOpen}
-        closeModal={this.toggleEditModal}>
-        <FormInput
-          label="Title"
-          id="title"
-          placeholder="Name your event"
-          minLength="3"
-          value={tempTitle}
-          onChange={e => this.setState({tempTitle: e.target.value})}
-        />
-        <FormInput
-          label="Description"
-          id="description"
-          placeholder="Cool things about your event..."
-          value={tempDesc}
-          onChange={e => this.setState({tempDesc: e.target.value})}
-        />
-        <FormInput
-          label="Date"
-          id="date"
-          type="date"
-          min={this.getTodayDate()}
-          value={tempDate}
-          onChange={e => this.setState({tempDate: e.target.value})}
-        />
-        <FormInput
-          label="Time"
-          id="time"
-          type="time"
-          value={tempTime}
-          onChange={e => this.setState({tempTime: e.target.value})}
-        />
-        <FormInput
-          label="Price [$]"
-          id="price"
-          type="number"
-          min="0"
-          max="10000"
-          value={tempPrice}
-          onChange={e => this.setState({tempPrice: e.target.value})}
-        />
-        <FormInput
-          label="Contact"
-          id="contact"
-          placeholder="Telephone number, e-mail address..."
-          minLength="3"
-          value={tempContact}
-          onChange={e => this.setState({tempContact: e.target.value})}
-        />
-        <Button 
-          variant="primary" 
-          type="submit" 
-          additionalClass="modal__btn" 
-          onClick={this.handleFormEditEvent}>Accept changes</Button>
-      </Modal>
-    );
-  }
-
   toggleHelpModal = () => {
     this.setState({modalHelpOpen: !this.state.modalHelpOpen});
   }   
@@ -432,7 +362,7 @@ class Chat extends Component {
   }
 
   joinEvent = () => {
-    console.log("joined!")
+    console.log("joined!");
   }
 
   render() {
@@ -481,7 +411,20 @@ class Chat extends Component {
             </div>
           </div>
         </section>
-        {this.renderEditModal()}
+        
+        <ModalEditChatroom
+          state={this.state}
+          chatroom={chatroom}
+          toggleEditModal={this.toggleEditModal}
+          onChangeTitleHandler={e => this.setState({tempTitle: e.target.value})}
+          onChangeDescHandler={e => this.setState({tempDesc: e.target.value})}
+          onChangeDateHandler={e => this.setState({tempDate: e.target.value})}
+          onChangeTimeHandler={e => this.setState({tempTime: e.target.value})}
+          onChangePriceHandler={e => this.setState({tempPrice: e.target.value})}
+          onChangeContactHandler={e => this.setState({tempContact: e.target.value})}
+          handleFormEditEvent={this.handleFormEditEvent}
+          getTodayDate={this.getTodayDate()}/>
+
         {this.renderHelpModal()}
         {this.renderDeleteModal()}
       </div>
