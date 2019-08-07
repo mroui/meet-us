@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { graphql, compose } from "react-apollo";
-import { SidebarArea, SidebarItem } from "../Sidebar/Sidebar";
+import { SidebarArea, SidebarItem, SidebarMessage } from "../Sidebar/Sidebar";
 import Loader from "../Loader/Loader";
 import withSocket from "../../components/withSocket";
 import _ from "lodash";
@@ -15,21 +15,23 @@ class EventMembers extends Component {
       componentDidUpdate = async () => await this.handleJoiningToChannelMutation();
     
       handleJoiningToChannelMutation = () => {
-        // const {eventMembers} = this.state;
-        // const {mutate, loggedUserId} = this.props;
-        // const isCurrentUserPresentInChannelUsersArray = !!_.find(eventMembers, (user) => user._id === loggedUserId);
-    
-        // if (!isCurrentUserPresentInChannelUsersArray && loggedUserId) {
-        //   return mutate()
-        //     .then(({ data }) => {
-        //       const {joinToEvent: mutationResponse} = data;
-        //       this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
-        //     })
-        //     .catch((e) => console.log(`e: `, e));
-        // }
-        // return null;
-        //this.props.toggleJoinNewPerson();
-        console.log("updated members", this.props.joinNewPerson)
+        if (this.props.joinNewPerson) {
+
+          const {eventMembers} = this.state;
+          const {mutate, loggedUserId} = this.props;
+          const isCurrentUserPresentInChannelUsersArray = !!_.find(eventMembers, (user) => user._id === loggedUserId);
+      
+          if (!isCurrentUserPresentInChannelUsersArray && loggedUserId) {
+            return mutate()
+              .then(({ data }) => {
+                const {joinToEvent: mutationResponse} = data;
+                this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
+                this.props.endJoiningNewPerson();
+              })
+              .catch((e) => console.log(`e: `, e));
+          }
+          return null;
+        }
       };
     
       membersList() {
@@ -42,7 +44,7 @@ class EventMembers extends Component {
         if (_properChatroomUsersArr && _properChatroomUsersArr.length) {
           return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName}`}/>);
         } else {
-          return <SidebarItem title="Seems like nobody's come?" />;
+          return <SidebarMessage>Seems like nobody's come?</SidebarMessage>;
         }
       }
       

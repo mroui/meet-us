@@ -304,7 +304,9 @@ class Chat extends Component {
   }
 
   joinEvent = () => {
-    console.log("joined!");
+    this.setState({
+      joinNewPerson: true
+    })
   }
 
   render() {
@@ -322,7 +324,7 @@ class Chat extends Component {
             match={match}
             chatroom={chatroom}
             joinNewPerson={joinNewPerson}
-            toggleJoinNewPerson={() => this.setState({joinNewPerson: !this.state.joinNewPerson})}/>
+            endJoiningNewPerson={() => this.setState({joinNewPerson: false})}/>
         </Sidebar>
 
         <section className="page__content">
