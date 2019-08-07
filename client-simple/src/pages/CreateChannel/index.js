@@ -40,7 +40,6 @@ class Step1 extends Component {
       message.error(`Contact details are too short`);
       return false;
     }
-
     return true;
   }
 

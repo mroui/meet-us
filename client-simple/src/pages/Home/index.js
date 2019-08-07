@@ -33,11 +33,9 @@ class Home extends Component {
     this.props.data.refetch();
   }
 
-  
   componentDidMount () {
     this.props.data.refetch();
   }
-
 
   renderModal() {
     const { username, modalOpen } = this.state;
@@ -64,7 +62,6 @@ class Home extends Component {
               onChange={e => this.setState({username: e.target.value})}
             />
           )}
-
           <Button variant="primary" type="submit" additionalClass="modal__btn">Show event</Button>
         </form>
       </Modal>

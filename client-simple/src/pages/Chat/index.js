@@ -17,12 +17,13 @@ import question from "../../assets/images/question.png";
 
 
 class Chat extends Component {
-
   state = {
     inputMessageText: "",
     guestId: localStorage.getItem("guest_ID") || null,
     guestName: localStorage.getItem("guest_Username") || null,
     modalOpen: false,
+    modalHelpOpen: false,
+    modalDeleteOpen: false,
     chatroom: null,
     tempTitle: "",
     tempDesc: "",
@@ -30,8 +31,6 @@ class Chat extends Component {
     tempTime: "",
     tempPrice: "",
     tempContact: "",
-    modalHelpOpen: false,
-    modalDeleteOpen: false,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
@@ -42,10 +41,8 @@ class Chat extends Component {
       "/date - date of event\n/time - time of event\n/price - price of event\n/contact - contact like email or phone number"
   };
 
-
   loggedUserId = () => _.get(this.props, ["context", "userState", "user", "id"], null);
   loggedUserName = () => _.get(this.props, ["context", "userState", "user", "profile", "firstName"], null);
-
 
   componentDidMount = async () => {
     const { socket } = this.props;
@@ -55,20 +52,15 @@ class Chat extends Component {
     socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
     socket.on("chatroomDelete", this.backToHome); 
   };
-  
 
   componentWillUpdate = () => {
-    if (!this.props.chatroom.loading && !this.props.chatroom.name) {
-      this.backToHome();
-    }
+    if (!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
   }
 
-  
   backToHome = () => {
     message.error("Event is deleted or not exists!");
     this.props.history.push("/");
   }
-
 
   //owner & users & members are not changable so there're not in chatroom variable
   handleUpdateChatroom = chatroom => {
@@ -89,7 +81,6 @@ class Chat extends Component {
       members: this.props.chatroom.members}});
   }
 
-
   isValidUserOrGuest = () => {
     const { guestName, guestId } = this.state;
 
@@ -100,12 +91,10 @@ class Chat extends Component {
     return true;
   };
 
-
   emitJoinSocketRoomRequest = chatId => {
     const { socket } = this.props;
     socket.emit("join", chatId);
   };
-
 
   prepareDataForMutation = () => {
     const { inputMessageText: msg, guestId, guestName } = this.state;
@@ -120,7 +109,6 @@ class Chat extends Component {
     };
   };
 
-
   addBotMessage = (msg) => {
     const guestName = "HELPBOT";
     const { chatId: chatroom } = this.props.match.params;
@@ -134,7 +122,6 @@ class Chat extends Component {
     };
   }
 
-
   checkCommand = (input) => {
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
 
@@ -144,29 +131,14 @@ class Chat extends Component {
       let message = "You have used: " + preCommand + ".\n";
 
       switch(command) {
-      case "desc":
-        message += "Description of the event is:\n" + chatroom.description;
-        break;
-      case "date":
-        message += "Date of the event is: " + chatroom.date;
-        break;
-      case "time":
-        message += "Time of the event is: " + chatroom.time;
-        break;
-      case "price":
-        message += "Price of the event is: " + chatroom.price + "$";
-        break;
-      case "contact":
-        message += "Contact:\n" + chatroom.contact;
-        break;
-      case "help":
-        message += "List of commands you can use:\n" + this.state.commandsDescription; 
-        break;
-      default:
-        message += "There's no command like that";
-        break;
+      case "desc": message += "Description of the event is:\n" + chatroom.description; break;
+      case "date": message += "Date of the event is: " + chatroom.date; break;
+      case "time": message += "Time of the event is: " + chatroom.time; break;
+      case "price": message += "Price of the event is: " + chatroom.price + "$"; break;
+      case "contact": message += "Contact:\n" + chatroom.contact; break;
+      case "help": message += "List of commands you can use:\n" + this.state.commandsDescription; break;
+      default: message += "There's no command like that"; break;
       }
-      
       if(command!=="help") message += ".\n\nEnter /help for more commands";
 
       //EASTEREGG :D
@@ -176,7 +148,6 @@ class Chat extends Component {
       return this.props.addMessage({variables: this.addBotMessage(message)});
     }
   }
-
 
   handleFormSubmit = e => {
     e.preventDefault();
@@ -203,28 +174,23 @@ class Chat extends Component {
     }
   }
 
-
   onEnterPress = e => {
     if (e.which === 13 && e.shiftKey === false) {
       this.handleFormSubmit(e);
     }
   };
 
-
   toggleActiveChatroom = e => {
-    const stateChatroom = this.state.chatroom;
+    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
+    const { name, description, latitude, longitude, locationName, date, time, price, contact } = chatroom;
+    const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
+    const newChatroom = {name, description, latitude, longitude, locationName, active: chatroom.active, date, time, price: parseInt(price), contact };
 
-    const active = stateChatroom ? !stateChatroom.active : !this.props.chatroom.active;
-    const { name, description, latitude, longitude, locationName, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
-    const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
-
-    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
-
-    const msg = active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
+    const msg = chatroom.active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
     return (
       this.props.updateChatroom({
-        variables: { chatroom, chatroomId: id }
+        variables: { chatroom: newChatroom, chatroomId: id }
       }),
       this.props.addMessage({
         variables: this.addBotMessage(msg)
@@ -232,14 +198,11 @@ class Chat extends Component {
     );
   }
 
-
   toggleEditModal = () => {
     this.setState({modalOpen: !this.state.modalOpen});
-
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
     this.setTempChatroom(chatroom);
   }
-
 
   setTempChatroom = (chatroom) => {
     this.setState({
@@ -252,15 +215,11 @@ class Chat extends Component {
     });
   }
 
-
   handleFormEditEvent = () => {
     if (this.valueValid()) {
       const chatroom =  this.state.chatroom ? this.state.chatroom : this.props.chatroom;
       const { latitude, longitude, locationName } = chatroom;
-
-      const stateChatroom = this.state.chatroom;
-      const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
-
+      const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
       const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
       this.toggleEditModal();
@@ -295,7 +254,6 @@ class Chat extends Component {
     }
   }
 
-
   valueValid() {
     const { tempTitle, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
@@ -327,7 +285,6 @@ class Chat extends Component {
     return true;
   }
 
-
   getTodayDate = () => {
     const today = new Date();
     let dd = today.getDate();
@@ -338,13 +295,11 @@ class Chat extends Component {
     return (yyyy+"-"+mm+"-"+dd);
   }
 
-
   renderEditModal() {
     const modalOpen = this.state.modalOpen;
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
     const modalHeading = "Edit \"" + chatroom.name + "\"";
     const modalDesc = "Fill fields which you want to change";
-
     const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
     return (
@@ -410,11 +365,9 @@ class Chat extends Component {
     );
   }
 
-
   toggleHelpModal = () => {
     this.setState({modalHelpOpen: !this.state.modalHelpOpen});
   }   
-
 
   renderHelpModal = () => {
     const modalOpen = this.state.modalHelpOpen;
@@ -440,20 +393,16 @@ class Chat extends Component {
     );
   }
 
-
   toggleDeleteModal = () => {
     this.setState({modalDeleteOpen: !this.state.modalDeleteOpen});
   };
 
-
   deleteEvent = () => {
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
-
     this.props.deleteChatroom({
       variables: { chatroomId: id }
     });
   }
-
 
   renderDeleteModal = () => {
     const modalOpen = this.state.modalDeleteOpen;
@@ -482,18 +431,15 @@ class Chat extends Component {
     );
   }
 
-
   joinEvent = () => {
     console.log("joined!")
   }
-
 
   render() {
     const { inputMessageText } = this.state;
     let { match, chatroom } = this.props;
 
-    if (this.state.chatroom)
-      chatroom = this.state.chatroom;
+    if (this.state.chatroom) chatroom = this.state.chatroom;
 
     return (
       <div className="page">
