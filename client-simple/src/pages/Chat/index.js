@@ -70,7 +70,7 @@ class Chat extends Component {
   }
 
 
-  //owner & users are not changable so there're not in chatroom variable
+  //owner & users & members are not changable so there're not in chatroom variable
   handleUpdateChatroom = chatroom => {
     this.setState({chatroom: { 
       _id: chatroom._id, 
@@ -85,7 +85,8 @@ class Chat extends Component {
       locationName: chatroom.locationName,
       active: chatroom.active,
       owner: this.props.chatroom.owner,
-      users: this.props.chatroom.users}});
+      users: this.props.chatroom.users,
+      members: this.props.chatroom.members}});
   }
 
 
@@ -504,7 +505,7 @@ class Chat extends Component {
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>
                   <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Delete Event</Button></span>
-                : null}
+                : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Join Event</Button> : null)}
             </header>
 
             <div className="chat__content">

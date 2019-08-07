@@ -111,7 +111,7 @@ class Step1 extends Component {
 
   render() {
     const { canGoNext, title, description, onDescriptionChange, nextStep, 
-      date, time, price, contact, onContactChange } = this.props;
+      date, time, price, contact } = this.props;
 
     const { validTitle } = this.state;
     const isStepValid = canGoNext();
@@ -239,7 +239,7 @@ class CreateChannel extends Component {
 
     if (this.canSubmitForm()) {
       const { channelTitle, channelDescription, channelLocation, channelLocationDesc, channelDate, channelTime, channelPrice, channelContact } = this.state;
-      const chatroom = {name: channelTitle, description: channelDescription, locationName: channelLocationDesc, active: true, date: channelDate, time: channelTime, price: parseInt(channelPrice), contact: channelContact, ...channelLocation, };
+      const chatroom = {name: channelTitle, description: channelDescription, locationName: channelLocationDesc, active: true, date: channelDate, time: channelTime, price: parseFloat(channelPrice).toFixed(2), contact: channelContact, ...channelLocation, };
       if (createChannel) {
         const {data: {createNewChatroom: newChatroomId}} = await createChannel({variables: {chatroom}});
 
