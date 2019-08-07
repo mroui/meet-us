@@ -262,10 +262,11 @@ class Chat extends Component {
 
       const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
+      this.toggleEditModal();
+
       if(chatroom.name===tempTitle && chatroom.description===tempDesc &&
         chatroom.date===tempDate && chatroom.time===tempTime &&
         chatroom.price===tempPrice && chatroom.contact===tempContact) {
-        this.toggleEditModal();
         return false;
       }
 
@@ -281,8 +282,6 @@ class Chat extends Component {
         price: parseInt(tempPrice),
         contact: tempContact
       };
-
-      this.toggleEditModal();
       
       return (
         this.props.updateChatroom({
