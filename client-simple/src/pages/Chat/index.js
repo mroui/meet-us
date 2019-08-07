@@ -217,7 +217,7 @@ class Chat extends Component {
     const { name, description, latitude, longitude, locationName, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
     const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
 
-    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseFloat(price), contact };
+    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseFloat(price).toFixed(2), contact };
 
     const msg = active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
@@ -279,7 +279,7 @@ class Chat extends Component {
         active: true,
         date: tempDate,
         time: tempTime,
-        price: parseFloat(tempPrice),
+        price: parseFloat(tempPrice).toFixed(2),
         contact: tempContact
       };
       
