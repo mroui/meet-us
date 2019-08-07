@@ -1,6 +1,6 @@
 {
   "0": {
-    "users": {
+    "members": {
       "ref": "User",
       "fieldIsArray": true,
       "query": {
@@ -15,7 +15,7 @@
     }
   },
   "1": {
-    "users": {
+    "members": {
       "ref": "User",
       "fieldIsArray": true,
       "query": {
@@ -37,7 +37,7 @@
     }
   },
   "2": {
-    "users": {
+    "members": {
       "ref": "User",
       "fieldIsArray": true,
       "query": {

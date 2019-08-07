@@ -14,7 +14,7 @@ export class ChatRoomService {
   }
 
   async findOneById(_id: string) {
-    return this.model.findOne({ _id }).populate("users").exec();
+    return this.model.findOne({ _id }).populate("members").exec();
   }
 
   async remove(_id: string) {
@@ -27,14 +27,14 @@ export class ChatRoomService {
   }
 
   async createNewChatroom(chatroom: Partial<ChatRoom>, ownerId: Ref<User>) {
-    const finalChatroom = {...chatroom, owner: ownerId, users: ownerId};
+    const finalChatroom = {...chatroom, owner: ownerId, members: ownerId};
     console.log(`finalChatroom: `, finalChatroom);
     return this.model.create(finalChatroom)
         .then((createdChatroom) => createdChatroom._id)
   }
 
-  async joinToChatroom(chatroomId: String, user: Ref<User>) {
-    return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {users: user}}, {new: true}).populate("users").exec();
+  async joinToChatroom(chatroomId: String, member: Ref<User>) {
+    return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {members: member}}, {new: true}).populate("members").exec();
   }
 
   async updateChatroom(chatroom: Partial<ChatRoom>, chatroomId: String) {

@@ -18,7 +18,7 @@ export class ChatRoom extends Typegoose {
 
   @DBArrayProp({ itemsRef: User })
   @GQLField(type => [User], { nullable: true })
-  users?: Ref<User>[];
+  members?: Ref<User>[];
 
   @DBProp({ ref: User })
   @GQLField(type => User)
@@ -55,10 +55,6 @@ export class ChatRoom extends Typegoose {
   @DBProp({ required: true})
   @GQLField()
   contact: String;
-
-  @DBArrayProp({ itemsRef: User })
-  @GQLField(type => [User], { nullable: true })
-  participants?: Ref<User>[];
 
 }
 

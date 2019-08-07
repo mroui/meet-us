@@ -7,7 +7,7 @@ type ChatRoom {
   _id: ID!
   name: String!
   description: String
-  users: [User!]
+  members: [User!]
   owner: User!
   active: Boolean!
   latitude: Float!
@@ -17,7 +17,6 @@ type ChatRoom {
   time: String!
   price: Float!
   contact: String!
-  participants: [User!]
 }
 
 input CreateChatRoomInput {
