@@ -17,7 +17,7 @@ type ChatRoom {
   time: String!
   price: Float!
   contact: String!
-  members: [User!]
+  participants: [User!]
 }
 
 input CreateChatRoomInput {
