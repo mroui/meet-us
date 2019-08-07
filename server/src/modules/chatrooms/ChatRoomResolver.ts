@@ -72,8 +72,8 @@ export default class ChatRoomResolver {
 
   @Mutation(returns => ChatRoom, { description: "Adds user to existing chatroom" })
   @Authorized()
-  async joinToChatroom(@Arg("chatroom") chatroom: string, @Ctx() ctx: Context) {
-    return await this.service.joinToChatroom(chatroom, ctx.userId)
+  async joinToEvent(@Arg("chatroom") chatroom: string, @Ctx() ctx: Context) {
+    return await this.service.joinToEvent(chatroom, ctx.userId)
   }
 
   @Mutation(returns => ID, { description: "Creates and return new chatroom id" })

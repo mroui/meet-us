@@ -33,7 +33,7 @@ export class ChatRoomService {
         .then((createdChatroom) => createdChatroom._id)
   }
 
-  async joinToChatroom(chatroomId: String, member: Ref<User>) {
+  async joinToEvent(chatroomId: String, member: Ref<User>) {
     return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {members: member}}, {new: true}).populate("members").exec();
   }
 

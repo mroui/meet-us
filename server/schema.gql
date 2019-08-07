@@ -69,7 +69,7 @@ type Mutation {
   addMessage(message: MessageInput!): ID
 
   """Adds user to existing chatroom"""
-  joinToChatroom(chatroom: String!): ChatRoom!
+  joinToEvent(chatroom: String!): ChatRoom!
 
   """Creates and return new chatroom id"""
   createNewChatroom(chatroom: CreateChatRoomInput!): ID!
