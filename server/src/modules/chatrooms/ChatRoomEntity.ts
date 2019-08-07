@@ -55,6 +55,11 @@ export class ChatRoom extends Typegoose {
   @DBProp({ required: true})
   @GQLField()
   contact: String;
+
+  @DBArrayProp({ itemsRef: User })
+  @GQLField(type => [User], { nullable: true })
+  members?: Ref<User>[];
+
 }
 
 export default new ChatRoom().getModelForClass(ChatRoom, {
