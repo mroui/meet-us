@@ -11,7 +11,6 @@ import "./Chat.style.scss";
 import _ from "lodash";
 import withUserContext from "../../components/withUserContext";
 import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/TogglerActiveChatroom";
-import Modal from "../../components/Modal/Modal";
 import question from "../../assets/images/question.png";
 import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatroom";
 import ModalHelpCommand from "../../components/ModalHelpCommand/ModalHelpCommand";
@@ -95,7 +94,7 @@ class Chat extends Component {
 
   emitJoinSocketRoomRequest = chatId => {
     const { socket } = this.props;
-    socket.emit("join", chatId);
+    //socket.emit("join", chatId);
   };
 
   prepareDataForMutation = () => {
@@ -317,7 +316,7 @@ class Chat extends Component {
     return (
       <div className="page">
         <Sidebar>
-          <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} />
+          {/* <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} /> */}
         </Sidebar>
 
         <section className="page__content">
@@ -372,7 +371,7 @@ class Chat extends Component {
           modalOpen={this.state.modalHelpOpen}
           toggleHelpModal={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})}
           commandsDescription={this.state.commandsDescription}/>
-          
+
         <ModalDeleteChatroom
           state={this.state}
           chatroom={chatroom}
