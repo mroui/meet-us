@@ -4,7 +4,7 @@ import { graphql, compose } from "react-apollo";
 import { message } from "antd";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ChatMessages from "../../components/Chat/ChatMessages";
-import ChatUsers from "../../components/Chat/ChatUsers";
+import EventMembers from "../../components/Event/EventMembers";
 import Button from "../../components/Button/Button";
 import withSocket from "../../components/withSocket";
 import "./Chat.style.scss";
@@ -32,6 +32,7 @@ class Chat extends Component {
     tempTime: "",
     tempPrice: "",
     tempContact: "",
+    joinNewPerson: false,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
@@ -93,7 +94,7 @@ class Chat extends Component {
 
   emitJoinSocketRoomRequest = chatId => {
     const { socket } = this.props;
-    //socket.emit("join", chatId);
+    socket.emit("join", chatId);
   };
 
   prepareDataForMutation = () => {
@@ -307,7 +308,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { inputMessageText } = this.state;
+    const { inputMessageText, joinNewPerson } = this.state;
     let { match, chatroom } = this.props;
 
     if (this.state.chatroom) chatroom = this.state.chatroom;
@@ -316,6 +317,12 @@ class Chat extends Component {
       <div className="page">
         <Sidebar>
           {/* <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} /> */}
+          <EventMembers 
+            loggedUserId={this.loggedUserId()}
+            match={match}
+            chatroom={chatroom}
+            joinNewPerson={joinNewPerson}
+            toggleJoinNewPerson={() => this.setState({joinNewPerson: !this.state.joinNewPerson})}/>
         </Sidebar>
 
         <section className="page__content">

@@ -22,7 +22,7 @@ class ChatUsers extends Component {
     if (!isCurrentUserPresentInChannelUsersArray && loggedUserId) {
       return mutate()
         .then(({ data }) => {
-          const {joinToChatroom: mutationResponse} = data;
+          const {joinToEvent: mutationResponse} = data;
           this.setState({chatroomUsers: mutationResponse && mutationResponse.members || []});
         })
         .catch((e) => console.log(`e: `, e));
@@ -55,7 +55,7 @@ class ChatUsers extends Component {
 
 const JOIN_TO_CHANNEL = gql`
   mutation ($chatroom: String!) {
-    joinToChatroom(chatroom: $chatroom){
+    joinToEvent(chatroom: $chatroom){
       _id
       name
       members {
