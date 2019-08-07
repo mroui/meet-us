@@ -15,6 +15,7 @@ import Modal from "../../components/Modal/Modal";
 import question from "../../assets/images/question.png";
 import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatroom";
 import ModalHelpCommand from "../../components/ModalHelpCommand/ModalHelpCommand";
+import ModalDeleteChatroom from "../../components/ModalDeleteChatroom/ModalDeleteChatroom";
 
 
 class Chat extends Component {
@@ -296,42 +297,11 @@ class Chat extends Component {
     return (yyyy+"-"+mm+"-"+dd);
   }
 
-  toggleDeleteModal = () => {
-    this.setState({modalDeleteOpen: !this.state.modalDeleteOpen});
-  };
-
   deleteEvent = () => {
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
     this.props.deleteChatroom({
       variables: { chatroomId: id }
     });
-  }
-
-  renderDeleteModal = () => {
-    const modalOpen = this.state.modalDeleteOpen;
-    const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-    const modalHeading = "Delete \"" + chatroom.name + "\"?";
-    const modalDesc = "Do you want to delete this event? All messages will be lost!";
-
-    return (
-      <Modal
-        id="delete_commands_modal"
-        heading={modalHeading}
-        desc={modalDesc}
-        modalOpen={modalOpen}
-        closeModal={this.toggleDeleteModal}>
-        <Button 
-          variant="primary" 
-          type="submit" 
-          additionalClass="modal__btn" 
-          onClick={this.deleteEvent}>Yes, I know what I'm doing!</Button>
-        <Button 
-          variant="primary" 
-          type="submit" 
-          additionalClass="modal__btn" 
-          onClick={this.toggleDeleteModal}>No, take me away from here!</Button>
-      </Modal>
-    );
   }
 
   joinEvent = () => {
@@ -358,7 +328,7 @@ class Chat extends Component {
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>
-                  <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Delete Event</Button></span>
+                  <Button additionalClass="chat__back" onClick={() => this.setState({modalDeleteOpen: !this.state.modalDeleteOpen})}>Delete Event</Button></span>
                 : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.joinEvent()}>Join Event</Button> : null)}
             </header>
 
@@ -402,7 +372,12 @@ class Chat extends Component {
           modalOpen={this.state.modalHelpOpen}
           toggleHelpModal={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})}
           commandsDescription={this.state.commandsDescription}/>
-        {this.renderDeleteModal()}
+          
+        <ModalDeleteChatroom
+          state={this.state}
+          chatroom={chatroom}
+          toggleDeleteModal={() => this.setState({modalDeleteOpen: !this.state.modalDeleteOpen})}
+          deleteEvent={this.deleteEvent}/>
       </div>
     );
   }
