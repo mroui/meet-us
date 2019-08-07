@@ -38,7 +38,7 @@ class ChatUsers extends Component {
     if (!_properChatroomUsersArr) return <Loader>Loading users...</Loader>;
 
     if (_properChatroomUsersArr && _properChatroomUsersArr.length) {
-      return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName}`} url={`/user/${_id}`}/>);
+      return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName}`}/>);
     } else {
       return <SidebarItem title="Seems like chat is empty?" />;
     }
