@@ -23,7 +23,7 @@ class ChatUsers extends Component {
       return mutate()
         .then(({ data }) => {
           const {joinToChatroom: mutationResponse} = data;
-          this.setState({chatroomUsers: mutationResponse && mutationResponse.users || []});
+          this.setState({chatroomUsers: mutationResponse && mutationResponse.members || []});
         })
         .catch((e) => console.log(`e: `, e));
     }
@@ -32,10 +32,10 @@ class ChatUsers extends Component {
 
   usersList() {
     const {chatroomUsers: chatRoomUsersFromState} = this.state;
-    const {users: chatRoomUsersFromProps} = this.props.chatroom;
+    const {members: chatRoomUsersFromProps} = this.props.chatroom;
 
     const _properChatroomUsersArr = chatRoomUsersFromState || chatRoomUsersFromProps;
-    if (!_properChatroomUsersArr) return <Loader>Loading users...</Loader>;
+    if (!_properChatroomUsersArr) return <Loader>Loading members...</Loader>;
 
     if (_properChatroomUsersArr && _properChatroomUsersArr.length) {
       return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName}`}/>);
@@ -58,7 +58,7 @@ const JOIN_TO_CHANNEL = gql`
     joinToChatroom(chatroom: $chatroom){
       _id
       name
-      users {
+      members {
         _id
         profile {
           firstName

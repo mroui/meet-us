@@ -63,7 +63,7 @@ class Chat extends Component {
     this.props.history.push("/");
   }
 
-  //owner & users & participants are not changable so there're not in chatroom variable
+  //owner & members are not changable so there're not in chatroom variable
   handleUpdateChatroom = chatroom => {
     this.setState({chatroom: { 
       _id: chatroom._id, 
@@ -78,8 +78,7 @@ class Chat extends Component {
       locationName: chatroom.locationName,
       active: chatroom.active,
       owner: this.props.chatroom.owner,
-      users: this.props.chatroom.users,
-      participants: this.props.chatroom.participants}});
+      members: this.props.chatroom.members}});
   }
 
   isValidUserOrGuest = () => {
@@ -395,7 +394,7 @@ const GET_CURRENT_CHATROOM = gql`
             time
             price
             contact
-            users {
+            members {
                 _id
                 profile {
                     firstName
