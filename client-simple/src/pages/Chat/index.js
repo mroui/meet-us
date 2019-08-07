@@ -50,37 +50,22 @@ class Chat extends Component {
   componentDidMount = async () => {
     const { socket } = this.props;
     const { chatId } = this.props.match.params;
-    console.log("did mount")
 
     socket.on("connection", this.emitJoinSocketRoomRequest(chatId));
     socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
-    socket.on("chatroomDelete", this.handleDeleteChatroom); 
+    socket.on("chatroomDelete", this.backToHome); 
   };
   
 
   componentWillUpdate = () => {
-    console.log("will update")
-    //if(!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
-    if (!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
-  }
-
-  componentWillMount () {
-    console.log("will mount")
-    console.log(this.props.chatroom)
-  }
-
-  componentWillUnmount() {
-    console.log("will unmount")
+    if (!this.props.chatroom.loading && !this.props.chatroom.name) {
+      this.backToHome();
+    }
   }
 
   
   backToHome = () => {
-    this.props.history.push("/");
     message.error("Event is deleted or not exists!");
-  }
-
-
-  handleDeleteChatroom = () => {
     this.props.history.push("/");
   }
 
@@ -465,8 +450,7 @@ class Chat extends Component {
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
 
     this.props.deleteChatroom({
-      variables: { chatroomId: id },
-      refetchQueries: GET_CHATROOMS
+      variables: { chatroomId: id }
     });
   }
 
@@ -594,27 +578,6 @@ const UPDATE_CHATROOM = gql`
   }
 `;
 
-const GET_CHATROOMS = gql`
-  query {
-    chatrooms {
-      _id
-      name
-      description
-      users {
-        _id
-      }
-      owner {
-        _id
-      }
-      date
-      latitude
-      longitude
-      locationName
-      active
-    }
-  }
-`;
-
 const ADD_MESSAGE = gql`
   mutation ($guestId: String, $guestName: String, $msg: String!, $chatroom: ID!, $nickname: String!) {
     addMessage(message: {guestId: $guestId, guestName: $guestName, msg: $msg, chatroom: $chatroom, nickname: $nickname})
@@ -636,6 +599,6 @@ const withAddMessage = graphql(ADD_MESSAGE, { name: "addMessage"});
 
 const withUpdateChatroom = graphql(UPDATE_CHATROOM, { name: "updateChatroom"});
 
-const withDeleteChatroom = graphql(DELETE_CHATROOM, { name: "deleteChatroom"});
+const withDeleteChatroom = graphql(DELETE_CHATROOM, {name: "deleteChatroom"});
 
 export default compose(withCurrentChatroom, withAddMessage, withUpdateChatroom, withDeleteChatroom)(withSocket(withUserContext(Chat)));

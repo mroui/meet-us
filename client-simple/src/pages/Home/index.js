@@ -27,13 +27,17 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     // DK: Maybe make it less deeper in withUserContext (props.userState) and then skip whole method
-    console.log("props", this.props)
     if (!this.state.isUserLogged && _.get(nextProps, ["context", "userState", "user", "id"], false)) {
       this.setState({isUserLogged: true});
     }
-
     this.props.data.refetch();
   }
+
+  
+  componentDidMount () {
+    this.props.data.refetch();
+  }
+
 
   renderModal() {
     const { username, modalOpen } = this.state;
@@ -66,6 +70,7 @@ class Home extends Component {
       </Modal>
     );
   }
+  
 
   setGuestData = e => {
     e.preventDefault();
