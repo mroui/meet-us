@@ -18,10 +18,10 @@ const SidebarMessage = ({ children }) => {
   );
 };
 
-const SidebarItem = ({ title, url, exitUrl }) => {
+const SidebarItem = ({ title, exitUrl }) => {
   return (
     <div className="sidebar__item">
-      <a href={url} className="sidebar__title">{title}</a>
+      <div className="sidebar__title">{title}</div>
 
       {exitUrl && (
         <a href={exitUrl}>

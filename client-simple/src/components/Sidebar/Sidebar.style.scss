@@ -87,14 +87,8 @@
   &__title {
     font-weight: $font-weight-semibold;
     font-size: 13px;
-    color: $color-grey-light;
-    padding: 8px 0;
-    flex: 1;
-    transition: .25s color ease; 
-
-    &:hover {
-      color: $color-blue-light2;
-    }
+    color: $color-whiteblue-dark2;
+    padding: 4px 0;
   }
 
   &__icon {
