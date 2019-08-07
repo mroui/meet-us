@@ -218,7 +218,7 @@ class Chat extends Component {
     const { name, description, latitude, longitude, locationName, date, time, price, contact } = stateChatroom ? stateChatroom : this.props.chatroom;
     const id = stateChatroom ? stateChatroom._id : this.props.chatroom.variables._id;
 
-    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseFloat(price).toFixed(2), contact };
+    const chatroom = {name, description, latitude, longitude, locationName, active, date, time, price: parseInt(price), contact };
 
     const msg = active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
@@ -280,7 +280,7 @@ class Chat extends Component {
         active: true,
         date: tempDate,
         time: tempTime,
-        price: parseFloat(tempPrice).toFixed(2),
+        price: parseInt(tempPrice),
         contact: tempContact
       };
       
@@ -483,6 +483,11 @@ class Chat extends Component {
   }
 
 
+  joinEvent = () => {
+    console.log("joined!")
+  }
+
+
   render() {
     const { inputMessageText } = this.state;
     let { match, chatroom } = this.props;
@@ -505,7 +510,7 @@ class Chat extends Component {
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>
                   <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Delete Event</Button></span>
-                : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.toggleDeleteModal()}>Join Event</Button> : null)}
+                : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.joinEvent()}>Join Event</Button> : null)}
             </header>
 
             <div className="chat__content">
