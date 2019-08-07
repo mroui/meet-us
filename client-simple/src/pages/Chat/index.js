@@ -14,6 +14,7 @@ import TogglerActiveChatroom from "../../components/TogglerActiveChatroom/Toggle
 import Modal from "../../components/Modal/Modal";
 import question from "../../assets/images/question.png";
 import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatroom";
+import ModalHelpCommand from "../../components/ModalHelpCommand/ModalHelpCommand";
 
 
 class Chat extends Component {
@@ -295,34 +296,6 @@ class Chat extends Component {
     return (yyyy+"-"+mm+"-"+dd);
   }
 
-  toggleHelpModal = () => {
-    this.setState({modalHelpOpen: !this.state.modalHelpOpen});
-  }   
-
-  renderHelpModal = () => {
-    const modalOpen = this.state.modalHelpOpen;
-    const modalHeading = "Commands";
-    const modalDesc = "Commands which you can type in a message to HelpBot:";
-
-    return (
-      <Modal
-        id="help_commands_modal"
-        heading={modalHeading}
-        desc={modalDesc}
-        modalOpen={modalOpen}
-        closeModal={this.toggleHelpModal}>
-        <div className="modal__textarea">
-          {this.state.commandsDescription}
-        </div>
-        <Button 
-          variant="primary" 
-          type="submit" 
-          additionalClass="modal__btn" 
-          onClick={this.toggleHelpModal}>I understand</Button>
-      </Modal>
-    );
-  }
-
   toggleDeleteModal = () => {
     this.setState({modalDeleteOpen: !this.state.modalDeleteOpen});
   };
@@ -405,7 +378,7 @@ class Chat extends Component {
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
-                <img src={ question } className="chat__img" alt="" onClick={() => this.toggleHelpModal()} />
+                <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
             </div>
@@ -425,7 +398,10 @@ class Chat extends Component {
           handleFormEditEvent={this.handleFormEditEvent}
           getTodayDate={this.getTodayDate()}/>
 
-        {this.renderHelpModal()}
+        <ModalHelpCommand
+          modalOpen={this.state.modalHelpOpen}
+          toggleHelpModal={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})}
+          commandsDescription={this.state.commandsDescription}/>
         {this.renderDeleteModal()}
       </div>
     );
