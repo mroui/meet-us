@@ -318,7 +318,6 @@ class Chat extends Component {
     return (
       <div className="page">
         <Sidebar>
-          {/* <ChatUsers loggedUserId={this.loggedUserId()} match={match} chatroom={chatroom} /> */}
           <EventMembers 
             loggedUserId={this.loggedUserId()}
             match={match}

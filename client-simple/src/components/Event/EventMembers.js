@@ -17,7 +17,8 @@ class EventMembers extends Component {
     }
 
     handleJoiningToChannelMutation = () => {
-      if (this.props.joinNewPerson) {
+      console.log(this.props.chatroom)
+      if (this.props.joinNewPerson || (this.props.chatroom.owner && (this.props.chatroom.owner._id === this.props.loggedUserId))) {
 
         const {eventMembers} = this.state;
         const {mutate, loggedUserId} = this.props;
