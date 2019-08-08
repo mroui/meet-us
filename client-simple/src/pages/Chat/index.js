@@ -192,9 +192,9 @@ class Chat extends Component {
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
     const { name, description, latitude, longitude, locationName, date, time, price, contact } = chatroom;
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
-    const newChatroom = {name, description, latitude, longitude, locationName, active: chatroom.active, date, time, price: parseInt(price), contact };
+    const newChatroom = {name, description, latitude, longitude, locationName, active: !chatroom.active, date, time, price: parseInt(price), contact };
 
-    const msg = chatroom.active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
+    const msg = !chatroom.active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
     return (
       this.props.updateChatroom({
