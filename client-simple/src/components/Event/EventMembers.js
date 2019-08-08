@@ -17,8 +17,7 @@ class EventMembers extends Component {
     }
 
     handleJoiningToChannelMutation = () => {
-      console.log(this.props.chatroom)
-      if (this.props.joinNewPerson || (this.props.chatroom.owner && (this.props.chatroom.owner._id === this.props.loggedUserId))) {
+      if (this.props.joinPerson || (this.props.chatroom.owner && (this.props.chatroom.owner._id === this.props.loggedUserId))) {
 
         const {eventMembers} = this.state;
         const {mutate, loggedUserId} = this.props;
@@ -29,11 +28,14 @@ class EventMembers extends Component {
             .then(({ data }) => {
               const {joinToEvent: mutationResponse} = data;
               this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
-              this.props.endJoiningNewPerson();
+              this.props.endJoinLeaveEvent();
             })
             .catch((e) => console.log(`e: `, e));
         }
         return null;
+      } else if (this.props.leavePerson) {
+        console.log("logged out");
+        this.props.endJoinLeaveEvent();
       }
     };
 

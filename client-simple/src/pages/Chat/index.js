@@ -15,6 +15,7 @@ import question from "../../assets/images/question.png";
 import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatroom";
 import ModalHelpCommand from "../../components/ModalHelpCommand/ModalHelpCommand";
 import ModalDeleteChatroom from "../../components/ModalDeleteChatroom/ModalDeleteChatroom";
+import ModalJoinEvent from "../../components/ModalJoinEvent/ModalJoinEvent";
 
 
 class Chat extends Component {
@@ -25,6 +26,7 @@ class Chat extends Component {
     modalOpen: false,
     modalHelpOpen: false,
     modalDeleteOpen: false,
+    modalJoinOpen: false,
     chatroom: null,
     tempTitle: "",
     tempDesc: "",
@@ -32,7 +34,8 @@ class Chat extends Component {
     tempTime: "",
     tempPrice: "",
     tempContact: "",
-    joinNewPerson: false,
+    joinPerson: false,
+    leavePerson: false,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
@@ -57,6 +60,10 @@ class Chat extends Component {
 
   componentWillUpdate = () => {
     if (!this.props.chatroom.loading && !this.props.chatroom.name) this.backToHome();
+  }
+
+  componentDidUpdate() {
+    this.props.chatroom.refetch();
   }
 
   backToHome = () => {
@@ -303,27 +310,39 @@ class Chat extends Component {
     });
   }
 
-  joinEvent = () => {
+  joinLeaveEvent = (isCurrentUserInMembers) => {
+    if (isCurrentUserInMembers) this.setState({leavePerson: true});
+    else this.setState({joinPerson: true});
+  }
+
+  endJoinLeaveEvent = () => {
     this.setState({
-      joinNewPerson: true
-    })
+      joinPerson: false,
+      leavePerson: false,
+      modalJoinOpen: false
+    });
   }
 
   render() {
-    const { inputMessageText, joinNewPerson } = this.state;
+    const { inputMessageText, joinPerson, leavePerson } = this.state;
     let { match, chatroom } = this.props;
 
     if (this.state.chatroom) chatroom = this.state.chatroom;
+
+    const isCurrentUserInMembers = chatroom.members ? chatroom.members.find((user) => {return user._id === this.loggedUserId();}) : false;
+    const joinEventTitle = !isCurrentUserInMembers  ? "Join Event" : "Leave Event";
 
     return (
       <div className="page">
         <Sidebar>
           <EventMembers 
             loggedUserId={this.loggedUserId()}
+            loggedUserName={this.loggedUserName()}
             match={match}
             chatroom={chatroom}
-            joinNewPerson={joinNewPerson}
-            endJoiningNewPerson={() => this.setState({joinNewPerson: false})}/>
+            joinPerson={joinPerson}
+            leavePerson={leavePerson}
+            endJoinLeaveEvent={this.endJoinLeaveEvent}/>
         </Sidebar>
 
         <section className="page__content">
@@ -335,7 +354,7 @@ class Chat extends Component {
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>
                   <Button additionalClass="chat__back" onClick={() => this.setState({modalDeleteOpen: !this.state.modalDeleteOpen})}>Delete Event</Button></span>
-                : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.joinEvent()}>Join Event</Button> : null)}
+                : (this.loggedUserId() ? <Button additionalClass="chat__back" onClick={() => this.setState({modalJoinOpen: !this.state.modalJoinOpen})}>{joinEventTitle}</Button> : null)}
             </header>
 
             <div className="chat__content">
@@ -384,6 +403,13 @@ class Chat extends Component {
           chatroom={chatroom}
           toggleDeleteModal={() => this.setState({modalDeleteOpen: !this.state.modalDeleteOpen})}
           deleteEvent={this.deleteEvent}/>
+
+        <ModalJoinEvent
+          modalOpen={this.state.modalJoinOpen}
+          toggleJoinModal={() => this.setState({modalJoinOpen: !this.state.modalJoinOpen})}
+          title={chatroom.name}
+          joinLeaveEvent={() => this.joinLeaveEvent(isCurrentUserInMembers)}
+          isCurrentUserInMembers={isCurrentUserInMembers}/>
       </div>
     );
   }
