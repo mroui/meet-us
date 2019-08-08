@@ -124,9 +124,8 @@ class Home extends Component {
       const loggedUserJoinedEvents = chatrooms.filter(chatroom => {
         let chatroomOwnerId = chatroom.owner._id;
         chatroom.members.filter(member => {
-          console.log(member._id === user.id, user.id !== chatroomOwnerId)
-          return (member._id === user.id && user.id !== chatroomOwnerId)
-        })
+          return (member._id === user.id && user.id !== chatroomOwnerId);
+        });
       });
       if (loggedUserJoinedEvents.length > 0) {
         return loggedUserJoinedEvents.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);

@@ -36,7 +36,6 @@ class EventMembers extends Component {
       } else if (this.props.leavePerson) {
         return this.props.leaveEvent()
           .then(({ data }) => {
-            console.log("data", data)
             const {leaveEvent: mutationResponse} = data;
             this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
             this.props.endJoinLeaveEvent();
