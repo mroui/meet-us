@@ -76,6 +76,12 @@ export default class ChatRoomResolver {
     return await this.service.joinToEvent(chatroom, ctx.userId)
   }
 
+  @Mutation(returns => ChatRoom, { description: "Remove user from existing chatroom" })
+  @Authorized()
+  async leaveEvent(@Arg("chatroom") chatroom: string, @Ctx() ctx: Context) {
+    return await this.service.leaveEvent(chatroom, ctx.userId)
+  }
+
   @Mutation(returns => ID, { description: "Creates and return new chatroom id" })
   @Authorized()
   async createNewChatroom(

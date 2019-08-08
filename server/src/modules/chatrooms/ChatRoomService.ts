@@ -37,6 +37,10 @@ export class ChatRoomService {
     return this.model.findByIdAndUpdate(chatroomId, {$addToSet: {members: member}}, {new: true}).populate("members").exec();
   }
 
+  async leaveEvent(chatroomId: String, member: Ref<User>) {
+    return this.model.findByIdAndUpdate(chatroomId, {$pop: {members: member}}, {new: true}).populate("members").exec();
+  }
+
   async updateChatroom(chatroom: Partial<ChatRoom>, chatroomId: String) {
     return this.model.findByIdAndUpdate(chatroomId, chatroom, {new: true}).exec();
   }

@@ -71,6 +71,9 @@ type Mutation {
   """Adds user to existing chatroom"""
   joinToEvent(chatroom: String!): ChatRoom!
 
+  """Remove user from existing chatroom"""
+  leaveEvent(chatroom: String!): ChatRoom!
+
   """Creates and return new chatroom id"""
   createNewChatroom(chatroom: CreateChatRoomInput!): ID!
 

@@ -77,6 +77,21 @@ const JOIN_TO_EVENT = gql`
   }
 `;
 
-const withJoinToChannel = graphql(JOIN_TO_EVENT, {options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
+const LEAVE_EVENT = gql`
+mutation($chatroom: String!) {
+  leaveEvent(chatroom: $chatroom){
+    _id
+    members {
+      _id
+      profile {
+        firstname
+      }
+    }
+  }
+}
+`;
 
-export default compose(withJoinToChannel)(withUserContext(withSocket(EventMembers)));
+const withJoinToEvent = graphql(JOIN_TO_EVENT, {options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
+const withLeaveEvent = graphql(LEAVE_EVENT, {options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
+
+export default compose(withJoinToEvent)(withUserContext(withSocket(EventMembers)));
