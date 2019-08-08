@@ -26,6 +26,12 @@ class Login extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   handleFormSubmit = logIn => async (e) => {
     e.preventDefault();
     e.stopPropagation();

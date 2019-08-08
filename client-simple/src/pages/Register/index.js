@@ -16,6 +16,12 @@ class Register extends Component {
 
   resetState = () => this.setState({ password: "", repeatpassword: ""});
 
+  componentWillUnmount() {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   handleFormSubmit = signUp => async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password, repeatpassword } = this.state;

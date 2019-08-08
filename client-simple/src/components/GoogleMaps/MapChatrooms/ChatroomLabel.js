@@ -16,7 +16,7 @@ class ChatroomLabel extends Component {
     console.log(`gotoChatroom.id: `, roomId);
 
     if (roomId)
-      this.props.history.push(`/chat/${roomId}`); // DK: This causes react error
+      this.props.history.push(`/chat/${roomId}`);
   }
 
   toggleMarkerLabel() {
