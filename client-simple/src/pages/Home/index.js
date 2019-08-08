@@ -105,7 +105,7 @@ class Home extends Component {
     });
   }
 
-  renderLoggedUserChatrooms = () => {
+  renderLoggedUserEvents = (whichEvents) => {
     const { isUserLogged } = this.state;
     const { chatrooms, loading, error } = this.props.data;
     const { user } = this.props.context.userState;
@@ -113,11 +113,26 @@ class Home extends Component {
     if (loading && isUserLogged) return <Loader>Loading events...</Loader>;
     if (error || !isUserLogged) return null;
 
-    const loggedUserChatrooms = chatrooms.filter(chatroom => chatroom.owner._id === user.id);
-
-    if (loggedUserChatrooms.length > 0) {
-      return loggedUserChatrooms.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);
-    } else return <SidebarMessage>You don't have any events yet</SidebarMessage>;
+    switch(whichEvents) {
+    case "yours": {
+      const loggedUserEvents = chatrooms.filter(chatroom => chatroom.owner._id === user.id);
+      if (loggedUserEvents.length > 0) {
+        return loggedUserEvents.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);
+      } else return <SidebarMessage>You don't have any events yet</SidebarMessage>;
+    }
+    case "joined": {
+      const loggedUserJoinedEvents = chatrooms.filter(chatroom => {
+        let chatroomOwnerId = chatroom.owner._id;
+        chatroom.members.filter(member => {
+          console.log(member._id === user.id, user.id !== chatroomOwnerId)
+          return (member._id === user.id && user.id !== chatroomOwnerId)
+        })
+      });
+      if (loggedUserJoinedEvents.length > 0) {
+        return loggedUserJoinedEvents.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);
+      } else return <SidebarMessage>You don't join any events yet</SidebarMessage>;
+    }
+    }
   };
 
   renderAllChatrooms = () => {
@@ -162,9 +177,14 @@ class Home extends Component {
       <div className="page">
         <Sidebar userName={null}>
           {userState.user && (
-            <SidebarArea heading="Your Events">
-              {this.renderLoggedUserChatrooms()}
-            </SidebarArea>
+            <>
+              <SidebarArea heading="Your Events">
+                {this.renderLoggedUserEvents("yours")}
+              </SidebarArea>
+              <SidebarArea heading="Events which you joined">
+                {this.renderLoggedUserEvents("joined")}
+              </SidebarArea>
+            </>
           )}
         </Sidebar>
 

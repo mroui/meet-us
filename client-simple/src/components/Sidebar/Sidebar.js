@@ -18,16 +18,10 @@ const SidebarMessage = ({ children }) => {
   );
 };
 
-const SidebarItem = ({ title, url, exitUrl }) => {
+const SidebarItem = ({ title, url }) => {
   return (
     <div className="sidebar__item">
       <a href={url} className="sidebar__title">{title}</a>
-
-      {exitUrl && (
-        <a href={exitUrl}>
-          <img src={LeaveSvg} className="sidebar__icon" alt="Leave Channel" />
-        </a>
-      )}
     </div>
   );
 };
