@@ -121,12 +121,11 @@ class Home extends Component {
       } else return <SidebarMessage>You don't have any events yet</SidebarMessage>;
     }
     case "joined": {
-      const loggedUserJoinedEvents = chatrooms.filter(chatroom => {
-        let chatroomOwnerId = chatroom.owner._id;
-        chatroom.members.filter(member => {
-          return (member._id === user.id && user.id !== chatroomOwnerId);
-        });
-      });
+      const loggedUserEvents = chatrooms.filter(chatroom => chatroom.owner._id !== user.id);
+      let loggedUserJoinedEvents = [];//remove
+      console.log(loggedUserEvents) //tu powinno sie filtrowac potem po chatroomsach i w nich filtrowac membersow z id == user id
+      //let loggedUserJoinedEvents = loggedUserEvents.members.filter(member => member._id === user.id);
+      
       if (loggedUserJoinedEvents.length > 0) {
         return loggedUserJoinedEvents.map(({ _id, name }) => <SidebarItem key={_id} title={name} url={`/chat/${_id}`} exitUrl="/"/>);
       } else return <SidebarMessage>You don't join any events yet</SidebarMessage>;
