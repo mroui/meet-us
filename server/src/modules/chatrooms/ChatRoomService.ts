@@ -38,7 +38,7 @@ export class ChatRoomService {
   }
 
   async leaveEvent(chatroomId: String, member: Ref<User>) {
-    return this.model.findByIdAndUpdate(chatroomId, {$pop: {members: member}}, {new: true}).populate("members").exec();
+    return this.model.findByIdAndUpdate(chatroomId, {$pull: {members: member}}, {new: true}).populate("members").exec();
   }
 
   async updateChatroom(chatroom: Partial<ChatRoom>, chatroomId: String) {

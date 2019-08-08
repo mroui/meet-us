@@ -20,11 +20,11 @@ class EventMembers extends Component {
       if (this.props.joinPerson || (this.props.chatroom.owner && (this.props.chatroom.owner._id === this.props.loggedUserId))) {
 
         const {eventMembers} = this.state;
-        const {mutate, loggedUserId} = this.props;
+        const {loggedUserId} = this.props;
         const isCurrentUserPresentInChannelUsersArray = !!_.find(eventMembers, (user) => user._id === loggedUserId);
     
         if (!isCurrentUserPresentInChannelUsersArray && loggedUserId) {
-          return mutate()
+          return this.props.joinEvent()
             .then(({ data }) => {
               const {joinToEvent: mutationResponse} = data;
               this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
@@ -34,8 +34,14 @@ class EventMembers extends Component {
         }
         return null;
       } else if (this.props.leavePerson) {
-        console.log("logged out");
-        this.props.endJoinLeaveEvent();
+        return this.props.leaveEvent()
+          .then(({ data }) => {
+            console.log("data", data)
+            const {leaveEvent: mutationResponse} = data;
+            this.setState({eventMembers: mutationResponse && mutationResponse.members || []});
+            this.props.endJoinLeaveEvent();
+          })
+          .catch((e) => console.log(`e: `, e));
       }
     };
 
@@ -84,14 +90,14 @@ mutation($chatroom: String!) {
     members {
       _id
       profile {
-        firstname
+        firstName
       }
     }
   }
 }
 `;
 
-const withJoinToEvent = graphql(JOIN_TO_EVENT, {options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
-const withLeaveEvent = graphql(LEAVE_EVENT, {options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
+const withJoinToEvent = graphql(JOIN_TO_EVENT, {name: "joinEvent", options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
+const withLeaveEvent = graphql(LEAVE_EVENT, {name: "leaveEvent", options: (props) => ({ variables: { chatroom: props.match.params.chatId }})});
 
-export default compose(withJoinToEvent)(withUserContext(withSocket(EventMembers)));
+export default compose(withJoinToEvent, withLeaveEvent)(withUserContext(withSocket(EventMembers)));
