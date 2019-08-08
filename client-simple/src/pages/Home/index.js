@@ -181,7 +181,7 @@ class Home extends Component {
               <SidebarArea heading="Your Events">
                 {this.renderLoggedUserEvents("yours")}
               </SidebarArea>
-              <SidebarArea heading="Events which you joined">
+              <SidebarArea heading="Joined Events">
                 {this.renderLoggedUserEvents("joined")}
               </SidebarArea>
             </>
