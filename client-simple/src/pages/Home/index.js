@@ -142,10 +142,11 @@ class Home extends Component {
     }
   };
 
-  renderAllChatrooms = () => {
+  renderAllChatrooms = (sortedChatrooms) => {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
-    const { chatrooms, loading, error } = this.props.data;
+    let { chatrooms, loading, error } = this.props.data;
+    if (sortedChatrooms) chatrooms = sortedChatrooms;
 
     if (loading) return <Loader isDark>Loading events...</Loader>;
     if (error) return null;
@@ -179,6 +180,7 @@ class Home extends Component {
   render() {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
+    const { chatrooms } = this.props.data;
 
     return (
       <div className="page">
@@ -199,7 +201,7 @@ class Home extends Component {
           <header className="page__header">
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
-            <SortBar/>
+            <SortBar chatrooms={chatrooms} renderAllChatrooms={this.renderAllChatrooms}/>
           </header>
           {!mapVisible && <Legend/>}
 

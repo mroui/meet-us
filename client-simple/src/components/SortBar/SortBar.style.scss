@@ -7,8 +7,17 @@
     display: flex;
     align-items: center;
 
-    &__button {
+    &__select {
         margin-left: 20px;
         padding: 5px 25px;
+        font-weight: $font-weight-semibold;
+        font-size: 14px;
+        color: $color-black;
+        background-color: $color-white;
+        display: inline-block;
+        border: 2px solid $color-whiteblue-dark;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: .25s color ease, .25s background-color ease, .25s border-color ease; 
     }
 }
