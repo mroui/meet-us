@@ -1,0 +1,16 @@
+@import '../../styles/variables';
+
+.bar {
+    padding: 15px 25px;
+    background-color: $color-white;
+    border-bottom: 1px solid $color-whiteblue-dark;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+
+    &__sortbutton {
+        margin-left: 15px;
+        padding: 5px 25px
+    }
+}

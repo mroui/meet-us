@@ -78,6 +78,11 @@ textarea::placeholder {
       transform: translate(-50%, 0);
     }
   }
+
+  &__sortbar {
+    display: flex;
+    align-items: center;
+  }
 }
 
 // Media queries
