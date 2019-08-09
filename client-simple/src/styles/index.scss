@@ -29,6 +29,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: $color-white;
+}
+
 input::placeholder {
   color: $color-whiteblue-dark2;
 }

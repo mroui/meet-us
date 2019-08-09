@@ -21,7 +21,7 @@ const SidebarMessage = ({ children }) => {
 const SidebarItem = ({ title, url }) => {
   return (
     <div className="sidebar__item">
-      <a href={url} className="sidebar__title">{title}</a>
+      {url ? <a href={url} className="sidebar__title">{title}</a> : <div className="sidebar__title">{title}</div>}
     </div>
   );
 };
