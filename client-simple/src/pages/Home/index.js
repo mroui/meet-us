@@ -15,6 +15,7 @@ import Toggler from "../../components/Toggler/Toggler";
 import MapChatrooms from "../../components/GoogleMaps/MapChatrooms/MapChatrooms";
 import withUserContext from "../../components/withUserContext";
 import "./Home.style.scss";
+import FilterBar from "../../components/FilterBar/FilterBar";
 
 class Home extends Component {
   state = {
@@ -195,7 +196,7 @@ class Home extends Component {
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
           </header>
-
+          {!mapVisible &&<FilterBar/>}
           {!mapVisible && <Legend/>}
 
           <div className={mapVisible ? "page__wrapper chatrooms-map__wrapper" : "page__wrapper"}>
