@@ -23,7 +23,11 @@ class Home extends Component {
     modalOpen: false,
     channelID: null,
     mapVisible: false,
-    isUserLogged: false
+    isUserLogged: false,
+    sortDate: false,
+    sortDistance: false,
+    sortPrice: false,
+    sortDateAdded: false
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -195,10 +199,8 @@ class Home extends Component {
           <header className="page__header">
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
+            <SortBar/>
           </header>
-          <section>
-            {!mapVisible &&<SortBar/>}
-          </section>
           {!mapVisible && <Legend/>}
 
           <div className={mapVisible ? "page__wrapper chatrooms-map__wrapper" : "page__wrapper"}>
