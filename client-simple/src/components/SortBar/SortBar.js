@@ -14,34 +14,24 @@ class SortBar extends Component {
       "Location: the farthest",
       "Price: the cheapest",
       "Price: the expensive ones"
-    ],
-    chatroomsFromOldest: []
+    ]
   }
 
-  componentWillReceiveProps() {
-    console.log("props", this.props.chatrooms)
-    this.setState({
-      chatroomsFromOldest: this.props.chatrooms
-    })
-  }
-
-  sortAddedDateOldest = (a, b) => {
-    console.log(a, b);  //--------------------TODO: hasnt got access to createdAt
-    return a.createdAt < b.createdAt;
+  sortDateOLatest = (a, b) => {
+    console.log(a.date, b.date, a.date>b.date)
+    return a.date > b.date;
   }
 
   sortList = (event) => {
     let chatrooms = this.props.chatrooms;
-    console.log(chatrooms)
 
     switch(event.target.value) {
-    case this.state.sortOptions[0]: {
-      chatrooms = this.state.chatroomsFromOldest
+    case this.state.sortOptions[2]: {
+      chatrooms = chatrooms.sort(this.sortDateOLatest);
       break;
     }
     }
     console.log(chatrooms)
-    //this.props.renderAllChatrooms(chatrooms);
   }
 
 
