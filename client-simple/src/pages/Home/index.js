@@ -206,7 +206,7 @@ class Home extends Component {
           <header className="page__header">
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
-            <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/>
+            {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
           </header>
           {!mapVisible && <Legend/>}
 
