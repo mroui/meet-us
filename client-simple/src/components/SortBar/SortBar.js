@@ -17,21 +17,25 @@ class SortBar extends Component {
     ]
   }
 
-  sortDateOLatest = (a, b) => {
-    console.log(a.date, b.date, a.date>b.date)
-    return a.date > b.date;
+  sortDateLatest = (a, b) => {
+    return a.date > b.date ? -1 : a.date < b.date ? 1 : a.time <= b.time ? 1 : -1;
   }
 
   sortList = (event) => {
     let chatrooms = this.props.chatrooms;
+    let newChatrooms = [];
+    var keys = Object.keys(chatrooms);
+    keys.forEach(function(key){
+      newChatrooms.push(chatrooms[key]);
+    });
 
     switch(event.target.value) {
     case this.state.sortOptions[2]: {
-      chatrooms = chatrooms.sort(this.sortDateOLatest);
+      newChatrooms = newChatrooms.sort(this.sortDateLatest);
       break;
     }
     }
-    console.log(chatrooms)
+    this.props.setSortedChatrooms(newChatrooms);
   }
 
 
@@ -41,12 +45,12 @@ class SortBar extends Component {
         <h3>Sort by:</h3>
         <select className="bar__select" onChange={this.sortList}>
           {this.state.sortOptions.map( (title, index) => {
-            return <option key={index} value={title}>{title}</option>
+            return <option key={index} value={title}>{title}</option>;
           })}
         </select>
       </div>
-    )
+    );
   }
 }
 
-export default SortBar
+export default SortBar;

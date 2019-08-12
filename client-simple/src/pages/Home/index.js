@@ -27,7 +27,8 @@ class Home extends Component {
     sortDate: false,
     sortDistance: false,
     sortPrice: false,
-    sortDateAdded: false
+    sortDateAdded: false,
+    sortedChatrooms: []
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -142,11 +143,11 @@ class Home extends Component {
     }
   };
 
-  renderAllChatrooms = (sortedChatrooms) => {
+  renderAllChatrooms = () => {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
     let { chatrooms, loading, error } = this.props.data;
-    if (sortedChatrooms) chatrooms = sortedChatrooms;
+    if (this.state.sortedChatrooms.length) chatrooms = this.state.sortedChatrooms;
 
     if (loading) return <Loader isDark>Loading events...</Loader>;
     if (error) return null;
@@ -177,6 +178,10 @@ class Home extends Component {
     return <div>There are no events at the moment</div>;
   };
 
+  setSortedChatrooms = (sortedChatrooms) => {
+    this.setState({sortedChatrooms: sortedChatrooms});
+  }
+
   render() {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
@@ -201,7 +206,7 @@ class Home extends Component {
           <header className="page__header">
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
-            <SortBar chatrooms={chatrooms} renderAllChatrooms={this.renderAllChatrooms}/>
+            <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/>
           </header>
           {!mapVisible && <Legend/>}
 
@@ -229,6 +234,7 @@ const GET_CHATROOMS = gql`
         _id
       }
       date
+      time
       latitude
       longitude
       locationName
