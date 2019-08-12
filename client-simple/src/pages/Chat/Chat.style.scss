@@ -41,7 +41,8 @@
   }
 
   &__img {
-    width: 25px;
+    width: 20px;
+    height: 20px;
     margin-right: 20px;
     margin-top: 10px;
     &:hover {
@@ -57,7 +58,6 @@
   &__btn {
     height: 46px;
     min-width: 150px;
-    margin-top: 15px;
   }
 
   &__active {

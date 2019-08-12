@@ -376,7 +376,10 @@ class Chat extends Component {
                   disabled={!chatroom.active}
                 />
                 {/* <Picker/> //TODO--------------------------------------------------------------------------------------------*/}
-                <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
+                <p style={{display: "flex", margin: "0px"}}>
+                  <p className="chat__img">{String.fromCodePoint(0x1f60a)}</p>
+                  <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
+                </p>
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
             </div>
