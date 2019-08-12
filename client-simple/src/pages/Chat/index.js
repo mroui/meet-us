@@ -38,6 +38,7 @@ class Chat extends Component {
     tempContact: "",
     joinPerson: false,
     leavePerson: false,
+    showEmoji: false,
     jokes: [
       "What is red and smell like blue paint?\n...\nRED PAINT! :)",
       "What do you call bears with no ears?\n...\nB! :)",
@@ -325,6 +326,12 @@ class Chat extends Component {
     });
   }
 
+  toggleShowEmoji = () => {
+    this.setState({
+      showEmoji: !this.state.showEmoji
+    })
+  }
+
   render() {
     const { inputMessageText, joinPerson, leavePerson } = this.state;
     let { match, chatroom } = this.props;
@@ -376,10 +383,10 @@ class Chat extends Component {
                   disabled={!chatroom.active}
                 />
                 {/* <Picker/> //TODO--------------------------------------------------------------------------------------------*/}
-                <p style={{display: "flex", margin: "0px"}}>
-                  <p className="chat__img">{String.fromCodePoint(0x1f60a)}</p>
+                <div style={{display: "flex", margin: "0px"}}>
+                  <p className="chat__img" onClick={this.toggleShowEmoji}>{String.fromCodePoint(0x1f60a)}</p>
                   <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
-                </p>
+                </div>
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
             </div>
