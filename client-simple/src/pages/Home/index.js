@@ -195,6 +195,7 @@ class Home extends Component {
               <SidebarArea heading="Your Events">
                 {this.renderLoggedUserEvents("yours")}
               </SidebarArea>
+              <div className="page__separator"/>
               <SidebarArea heading="Joined Events">
                 {this.renderLoggedUserEvents("joined")}
               </SidebarArea>
