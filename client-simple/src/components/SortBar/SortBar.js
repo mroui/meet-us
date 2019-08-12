@@ -43,11 +43,10 @@ class SortBar extends Component {
 
     switch(event.target.value) {
     case this.state.sortOptions[0]: {
-      //TODO: by the oldest
       break;
     }
     case this.state.sortOptions[1]: {
-      //TODO: the newest
+      newChatrooms = newChatrooms.reverse();
       break;
     }
     case this.state.sortOptions[2]: {
@@ -67,11 +66,11 @@ class SortBar extends Component {
       break;
     }
     case this.state.sortOptions[6]: {
-      newChatrooms = newChatrooms.sort(this.sortPriceCheapest)
+      newChatrooms = newChatrooms.sort(this.sortPriceCheapest);
       break;
     }
     case this.state.sortOptions[7]: {
-      newChatrooms = newChatrooms.sort(this.sortPriceExpensive)
+      newChatrooms = newChatrooms.sort(this.sortPriceExpensive);
       break;
     }
     }
