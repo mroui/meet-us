@@ -16,6 +16,8 @@ import ModalEditChatroom from "../../components/ModalEditChatroom/ModalEditChatr
 import ModalHelpCommand from "../../components/ModalHelpCommand/ModalHelpCommand";
 import ModalDeleteChatroom from "../../components/ModalDeleteChatroom/ModalDeleteChatroom";
 import ModalJoinEvent from "../../components/ModalJoinEvent/ModalJoinEvent";
+import "../../../node_modules/emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart/dist-modern/index";
 
 
 class Chat extends Component {
@@ -373,6 +375,7 @@ class Chat extends Component {
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
+                {/* <Picker/> //TODO--------------------------------------------------------------------------------------------*/}
                 <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
                 <Button variant="primary" additionalClass="chat__btn">Send</Button>
               </form>
