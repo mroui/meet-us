@@ -21,6 +21,18 @@ class SortBar extends Component {
     return a.date > b.date ? -1 : a.date < b.date ? 1 : a.time <= b.time ? 1 : -1;
   }
 
+  sortDateEarliest = (a, b) => {
+    return a.date < b.date ? -1 : a.date > b.date ? 1 : a.time >= b.time ? 1 : -1;
+  }
+
+  sortPriceCheapest = (a, b) => {
+    return a.price >= b.price ? 1 : -1;
+  }
+
+  sortPriceExpensive = (a, b) => {
+    return a.price < b.price ? 1 : -1;
+  }
+
   sortList = (event) => {
     let chatrooms = this.props.chatrooms;
     let newChatrooms = [];
@@ -30,8 +42,36 @@ class SortBar extends Component {
     });
 
     switch(event.target.value) {
+    case this.state.sortOptions[0]: {
+      //TODO: by the oldest
+      break;
+    }
+    case this.state.sortOptions[1]: {
+      //TODO: the newest
+      break;
+    }
     case this.state.sortOptions[2]: {
       newChatrooms = newChatrooms.sort(this.sortDateLatest);
+      break;
+    }
+    case this.state.sortOptions[3]: {
+      newChatrooms = newChatrooms.sort(this.sortDateEarliest);
+      break;
+    }
+    case this.state.sortOptions[4]: {
+      //TODO: by the nearest
+      break;
+    }
+    case this.state.sortOptions[5]: {
+      //TODO: the farthest
+      break;
+    }
+    case this.state.sortOptions[6]: {
+      newChatrooms = newChatrooms.sort(this.sortPriceCheapest)
+      break;
+    }
+    case this.state.sortOptions[7]: {
+      newChatrooms = newChatrooms.sort(this.sortPriceExpensive)
       break;
     }
     }

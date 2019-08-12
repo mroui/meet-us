@@ -239,6 +239,7 @@ const GET_CHATROOMS = gql`
       longitude
       locationName
       active
+      price
     }
   }
 `;
