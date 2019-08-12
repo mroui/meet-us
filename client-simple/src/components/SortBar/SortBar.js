@@ -33,6 +33,36 @@ class SortBar extends Component {
     return a.price < b.price ? 1 : -1;
   }
 
+  sortLocationNearest = (a, b, coords) => {
+    const first = this.getDistanceFromLatLonInKm(a.latitude, a.longitude, coords.latitude, coords.longitude);
+    const second = this.getDistanceFromLatLonInKm(b.latitude, b.longitude, coords.latitude, coords.longitude);
+    return first >= second ? 1 : -1;
+  }
+
+  sortLocationFarthest = (a, b, coords) => {
+    const first = this.getDistanceFromLatLonInKm(a.latitude, a.longitude, coords.latitude, coords.longitude);
+    const second = this.getDistanceFromLatLonInKm(b.latitude, b.longitude, coords.latitude, coords.longitude);
+    return first <= second ? 1 : -1;
+  }
+
+  getDistanceFromLatLonInKm = ( lat1, lon1, lat2, lon2) => {
+    const R = 6371; //radius of the earth in km
+    const dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+    const dLon = this.deg2rad(lon2-lon1); 
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    const d = R * c; // Distance in km
+    return d;
+  }
+
+  deg2rad = (deg) => {
+    return deg * (Math.PI/180);
+  }
+
   sortList = (event) => {
     let chatrooms = this.props.chatrooms;
     let newChatrooms = [];
@@ -58,11 +88,21 @@ class SortBar extends Component {
       break;
     }
     case this.state.sortOptions[4]: {
-      //TODO: by the nearest
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          newChatrooms = newChatrooms.sort((a,b) => this.sortLocationNearest(a, b, position.coords));
+          this.props.setSortedChatrooms(newChatrooms);
+        });
+      }
       break;
     }
     case this.state.sortOptions[5]: {
-      //TODO: the farthest
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          newChatrooms = newChatrooms.sort((a,b) => this.sortLocationFarthest(a, b, position.coords));
+          this.props.setSortedChatrooms(newChatrooms);
+        });
+      }
       break;
     }
     case this.state.sortOptions[6]: {
