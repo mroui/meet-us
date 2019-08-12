@@ -13,7 +13,9 @@ class SortBar extends Component {
       "Location: the nearest",
       "Location: the farthest",
       "Price: the cheapest",
-      "Price: the expensive ones"
+      "Price: the expensive ones",
+      "Popular: the most",
+      "Popular: the least"
     ]
   }
 
@@ -43,6 +45,15 @@ class SortBar extends Component {
     const first = this.getDistanceFromLatLonInKm(a.latitude, a.longitude, coords.latitude, coords.longitude);
     const second = this.getDistanceFromLatLonInKm(b.latitude, b.longitude, coords.latitude, coords.longitude);
     return first <= second ? 1 : -1;
+  }
+
+  sortPopularMost = (a, b) => {
+    return a.members.length <= b.members.length ? 1 : -1;
+  }
+
+  sortPopularLeast = (a, b) => { 
+    return a.members.length >= b.members.length ? 1 : -1;
+
   }
 
   getDistanceFromLatLonInKm = ( lat1, lon1, lat2, lon2) => {
@@ -111,6 +122,14 @@ class SortBar extends Component {
     }
     case this.state.sortOptions[7]: {
       newChatrooms = newChatrooms.sort(this.sortPriceExpensive);
+      break;
+    }
+    case this.state.sortOptions[8]: {
+      newChatrooms = newChatrooms.sort(this.sortPopularMost);
+      break;
+    }
+    case this.state.sortOptions[9]: {
+      newChatrooms = newChatrooms.sort(this.sortPopularLeast);
       break;
     }
     }
