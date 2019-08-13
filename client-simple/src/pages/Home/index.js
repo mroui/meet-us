@@ -30,7 +30,10 @@ class Home extends Component {
     sortPrice: false,
     sortDateAdded: false,
     sortedChatrooms: [],
-    openFilterModal: false
+    openFilterModal: false,
+
+    filterTags: "",
+    filterActivity: ""
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -82,15 +85,22 @@ class Home extends Component {
 
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
+    const { filterTags, filterActivity } = this.state;
 
     return (
       <Modal
-        heading="temp"
-        desc="temp"
+        heading="Filter events by:"
+        desc="Set properties of event which you want to filter."
         modalOpen={modalOpen}
         closeModal={this.toggleFilterModal}>
         <form className="form">
-          <Button variant="primary" type="submit" additionalClass="modal__btn">temp</Button>
+          <FormInput
+            label="Key words, tags"
+            placeholder="After the commas like: cats, dogs, foxes..."
+            value={filterTags}
+            onChange={e => this.setState({filterTags: e.target.value})}
+          />
+          <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>
         </form>
       </Modal>
     );

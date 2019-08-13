@@ -1,7 +1,7 @@
 import React from "react";
 import "./Form.style.scss";
 
-const FormInput = ({ label, id, type = "text", additionalClass = "", ...props }) => {
+const FormInput = ({ label, id, type = "text", title, additionalClass = "", ...props }) => {
   return (
     <div className="form__group">
       {label ? <label htmlFor={id} className="form__label">{label}</label> : ""}
@@ -10,8 +10,8 @@ const FormInput = ({ label, id, type = "text", additionalClass = "", ...props })
         type={type}
         id={id}
         className={"form__input " + additionalClass}
-        {...props}
-      />
+        {...props}/>
+      <> {title}</>
     </div>
   );
 };
