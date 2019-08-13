@@ -20,7 +20,7 @@ class SearchBar extends Component {
     newChatrooms = newChatrooms.filter((chatroom) => chatroom.name.includes(this.state.title));
 
     if (newChatrooms.length>0) this.props.setSortedChatrooms(newChatrooms);
-    else this.setState({error: "No results!"})
+    else this.setState({error: "No results!"});
   }
 
   handleInput = (e) => {
