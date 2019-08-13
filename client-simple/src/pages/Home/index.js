@@ -16,6 +16,7 @@ import MapChatrooms from "../../components/GoogleMaps/MapChatrooms/MapChatrooms"
 import withUserContext from "../../components/withUserContext";
 import "./Home.style.scss";
 import SortBar from "../../components/SortBar/SortBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 class Home extends Component {
   state = {
@@ -208,6 +209,7 @@ class Home extends Component {
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
             {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
+            {!mapVisible && <SearchBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
           </header>
           {!mapVisible && <Legend/>}
 
