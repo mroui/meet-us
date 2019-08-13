@@ -30,11 +30,17 @@ class SearchBar extends Component {
     });
   }
 
+  onEnterPress = e => {
+    if (e.which === 13 && e.shiftKey === false) {
+      this.searchEvent();
+    }
+  };
+
   render() {
     return (
       <>
       <div className="bar">
-        <input type="text" className="bar__search" onChange={this.handleInput} placeholder="Find event..."/>
+        <input type="text" className="bar__search" onChange={this.handleInput} placeholder="Find event..." onKeyPress={this.onEnterPress}/>
         <img src={search} className="bar__icon" onClick={this.searchEvent} alt="Search button"/>
       </div>
       <span className="bar__error">{this.state.error}</span>
