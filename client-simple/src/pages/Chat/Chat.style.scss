@@ -15,6 +15,12 @@
     overflow-y: auto;
   }
 
+  &__emoji {
+    position: absolute;
+    right: 0;
+    bottom: 12%
+  }
+
   &__footer {
     background-color: $color-white;
     border-top: 1px solid $color-whiteblue-dark;

@@ -56,6 +56,13 @@ class Chat extends Component {
     const { socket } = this.props;
     const { chatId } = this.props.match.params;
 
+    document.querySelector(".chat__content").addEventListener("click", (e) => {
+      if(this.state.showEmoji) this.setState({showEmoji: false});
+    });
+    document.querySelector(".chat__footer").addEventListener("click", (e) => {
+      if(this.state.showEmoji) this.setState({showEmoji: false});
+    });
+
     socket.on("connection", this.emitJoinSocketRoomRequest(chatId));
     socket.on("chatroomUpdate", chatroom => this.handleUpdateChatroom(chatroom));
     socket.on("chatroomDelete", this.backToHome); 
@@ -329,7 +336,14 @@ class Chat extends Component {
   toggleShowEmoji = () => {
     this.setState({
       showEmoji: !this.state.showEmoji
-    })
+    });
+  }
+
+  addEmoji = e => {
+    const emoji = e.native;
+    this.setState({
+      inputMessageText: this.state.inputMessageText + emoji
+    });
   }
 
   render() {
@@ -367,8 +381,12 @@ class Chat extends Component {
             </header>
 
             <div className="chat__content">
-              <ChatMessages match={match} />
+              <ChatMessages match={match} />        
             </div>
+
+            <span className="chat__emoji">
+              {this.state.showEmoji && <Picker title="Pick your emoji" set="facebook" emoji='point_up' onSelect={this.addEmoji} emojiTooltip={true}/>}
+            </span>
 
             <div className="chat__footer">
               <form className="form chat__form" onSubmit={this.handleFormSubmit}>
@@ -382,7 +400,6 @@ class Chat extends Component {
                   onChange={e => this.setState({inputMessageText: e.target.value})}
                   disabled={!chatroom.active}
                 />
-                {/* <Picker/> //TODO--------------------------------------------------------------------------------------------*/}
                 <div style={{display: "flex", margin: "0px"}}>
                   <p className="chat__img" onClick={this.toggleShowEmoji}>{String.fromCodePoint(0x1f60a)}</p>
                   <img src={ question } className="chat__img" alt="" onClick={() => this.setState({modalHelpOpen: !this.state.modalHelpOpen})} />
