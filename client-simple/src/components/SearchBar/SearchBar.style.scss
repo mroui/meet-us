@@ -26,6 +26,10 @@
         border-radius: 6px;
         cursor: pointer;
     }
+    
+    &__icon:active {
+        box-shadow: 0 0 2px 1px $color-blue;
+    }
 
     &__error {
         color: $color-red;
