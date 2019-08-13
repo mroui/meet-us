@@ -29,7 +29,8 @@ class Home extends Component {
     sortDistance: false,
     sortPrice: false,
     sortDateAdded: false,
-    sortedChatrooms: []
+    sortedChatrooms: [],
+    openFilterModal: false
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -70,6 +71,26 @@ class Home extends Component {
             />
           )}
           <Button variant="primary" type="submit" additionalClass="modal__btn">Show event</Button>
+        </form>
+      </Modal>
+    );
+  }
+
+  toggleFilterModal = () => {
+    this.setState({openFilterModal: !this.state.openFilterModal});
+  }
+
+  renderFilterModal = () => { 
+    const modalOpen = this.state.openFilterModal;
+
+    return (
+      <Modal
+        heading="temp"
+        desc="temp"
+        modalOpen={modalOpen}
+        closeModal={this.toggleFilterModal}>
+        <form className="form">
+          <Button variant="primary" type="submit" additionalClass="modal__btn">temp</Button>
         </form>
       </Modal>
     );
@@ -210,6 +231,7 @@ class Home extends Component {
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
             {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
             {!mapVisible && <SearchBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
+            {!mapVisible && <Button type="submit" onClick={this.toggleFilterModal}>Filter Chatrooms</Button> }
           </header>
           {!mapVisible && <Legend/>}
 
@@ -219,6 +241,7 @@ class Home extends Component {
         </section>
 
         {this.renderModal()}
+        {this.state.openFilterModal && this.renderFilterModal()}
       </div>
     );
   }
