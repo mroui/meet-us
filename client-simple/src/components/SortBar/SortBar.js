@@ -139,9 +139,9 @@ class SortBar extends Component {
 
   render() {
     return (
-      <div className="bar">
+      <div className="barsort">
         <h3>Sort by:</h3>
-        <select className="bar__select" onChange={this.sortList}>
+        <select className="barsort__select" onChange={this.sortList}>
           {this.state.sortOptions.map( (title, index) => {
             return <option key={index} value={title}>{title}</option>;
           })}

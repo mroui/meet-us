@@ -231,7 +231,7 @@ class Home extends Component {
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
             {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
             {!mapVisible && <SearchBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
-            {!mapVisible && <Button type="submit" onClick={this.toggleFilterModal}>Filter Chatrooms</Button> }
+            {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Chatrooms</Button> }
           </header>
           {!mapVisible && <Legend/>}
 

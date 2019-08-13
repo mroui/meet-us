@@ -1,13 +1,12 @@
 @import '../../styles/variables';
 
 .bar {
-    padding: 15px 25px;
+    padding-left: 25px;
     background-color: $color-white;
     display: flex;
     align-items: center;
 
     &__search {
-        height: 36px;
         padding: 5px 20px;
         font-weight: $font-weight-semibold;
         font-size: 14px;

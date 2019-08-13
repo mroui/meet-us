@@ -1,12 +1,13 @@
 @import '../../styles/variables';
 
-.bar {
-    padding: 15px 25px;
+.barsort {
+    padding-left: 25px;
     background-color: $color-white;
     display: flex;
     align-items: center;
 
     &__select {
+        height: 36px;
         margin-left: 10px;
         padding: 5px 25px;
         font-weight: $font-weight-semibold;
