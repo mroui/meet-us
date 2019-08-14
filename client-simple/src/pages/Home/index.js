@@ -7,7 +7,7 @@ import _ from "lodash";
 import Sidebar, {SidebarArea, SidebarItem, SidebarMessage} from "../../components/Sidebar/Sidebar";
 import ChannelItem from "../../components/ChannelItem/ChannelItem";
 import Modal from "../../components/Modal/Modal";
-import { FormInput, FormRadios } from "../../components/Form/Form";
+import { FormInput, FormRadios, FormInputSelect } from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import Legend from "../../components/Legend/Legend";
@@ -33,7 +33,8 @@ class Home extends Component {
     openFilterModal: false,
 
     filterTags: "",
-    filterActivity: ""
+    filterActivity: "",
+    filterDistance: "",
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -96,9 +97,14 @@ class Home extends Component {
     this.setState({filterTags: e.target.value});
   }
 
+  handleFilterDistance = (e) => {
+    this.setState({filterDistance: e.target.value});
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
-    const { filterTags } = this.state;
+    const { filterTags, filterDistance } = this.state;
+    const options = [2, 5, 10, 25, 50, 100, 250, 500, 1000];
 
     return (
       <Modal
@@ -110,6 +116,8 @@ class Home extends Component {
           <div className="form__group">
             <FormRadios
               label="Chatroom activity"
+              val1="Active"
+              val2="Inactive"
               title1="Active"
               title2="Inactive"
               onClick={this.handleFilterActivity}/>
@@ -120,6 +128,13 @@ class Home extends Component {
             value={filterTags}
             onChange={this.handleFilterTags}
           />
+          <FormInputSelect
+            label="Max distance"
+            value={filterDistance}
+            options={options}
+            onChange={this.handleFilterDistance}
+          />
+          
           <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>
         </form>
       </Modal>

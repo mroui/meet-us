@@ -16,15 +16,15 @@ const FormInput = ({ label, id, type = "text", title, additionalClass = "", ...p
   );
 };
 
-const FormRadios = ({ label, title1, title2, additionalClass = "", ...props }) => {
+const FormRadios = ({ label, val1, val2, title1, title2, additionalClass = "", ...props }) => {
   return (
     <>
       {label ? <label htmlFor={"radios"} className="form__label">{label}</label> : ""}
       <input
         type="radio"
         id="radios"
-        name="activity"
-        value="active"
+        name="radios"
+        value={val1}
         className={"form__input " + additionalClass}
         {...props}/>
       <div className="form__inputtitle">{title1}</div>
@@ -32,14 +32,29 @@ const FormRadios = ({ label, title1, title2, additionalClass = "", ...props }) =
       <input
         type="radio"
         id="radios"
-        value="inactive"
-        name="activity"
+        name="radios"
+        value={val2}
         className={"form__input " + additionalClass}
         {...props}/>
       <div className="form__inputtitle">{title2}</div>
     </>
   );
 };
+
+const FormInputSelect = ({ label, additionalClass, options, ...props}) => {
+  return (
+    <>
+      {label ? <label htmlFor={"select"} className="form__label">{label}</label> : ""}
+      <select
+        id="select"
+        className={"form__input " + additionalClass}
+        {...props}>
+        <option value="">--Choose an option--</option>
+        {options.map((option, key) => <option key={key} value={option}>{option + "km"}</option>)}
+      </select>
+    </>
+  );
+}
 
 const FormFooterText = ({ children }) => {
   return (
@@ -67,4 +82,4 @@ const Form = ({ children, heading, formFooter, ...props }) => {
   );
 };
 
-export { Form, FormInput, FormFooterText, FormRadios };
+export { Form, FormInput, FormFooterText, FormRadios, FormInputSelect };
