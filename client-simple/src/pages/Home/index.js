@@ -7,7 +7,7 @@ import _ from "lodash";
 import Sidebar, {SidebarArea, SidebarItem, SidebarMessage} from "../../components/Sidebar/Sidebar";
 import ChannelItem from "../../components/ChannelItem/ChannelItem";
 import Modal from "../../components/Modal/Modal";
-import { FormInput } from "../../components/Form/Form";
+import { FormInput, FormRadios } from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import Legend from "../../components/Legend/Legend";
@@ -83,9 +83,22 @@ class Home extends Component {
     this.setState({openFilterModal: !this.state.openFilterModal});
   }
 
+  handleFilterActivity = (e) => {
+    if (this.state.filterActivity === e.target.value) {
+      this.setState({filterActivity: ""});
+      document.getElementsByName("activity").forEach(radio => { radio.checked = false; });
+    } else {
+      this.setState({filterActivity: e.target.value});
+    }
+  }
+
+  handleFilterTags = (e) => {
+    this.setState({filterTags: e.target.value});
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
-    const { filterTags, filterActivity } = this.state;
+    const { filterTags } = this.state;
 
     return (
       <Modal
@@ -94,11 +107,18 @@ class Home extends Component {
         modalOpen={modalOpen}
         closeModal={this.toggleFilterModal}>
         <form className="form">
+          <div className="form__group">
+            <FormRadios
+              label="Chatroom activity"
+              title1="Active"
+              title2="Inactive"
+              onClick={this.handleFilterActivity}/>
+          </div>
           <FormInput
             label="Key words, tags"
             placeholder="After the commas like: cats, dogs, foxes..."
             value={filterTags}
-            onChange={e => this.setState({filterTags: e.target.value})}
+            onChange={this.handleFilterTags}
           />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>
         </form>
@@ -161,7 +181,7 @@ class Home extends Component {
     case "joined": {
       let userJoinedEvents = [];
       const notOwnerEvents = chatrooms.filter(chatroom => chatroom.owner._id !== user.id);
-      //not really optimal :v
+      //not really optimal :v but how?
       notOwnerEvents.map((chatroom) => {
         chatroom.members.map(member => {
           if (member._id === user.id) return userJoinedEvents.push(chatroom);

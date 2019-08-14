@@ -18,6 +18,17 @@
   &__group {
     margin-bottom: 25px;
     width: 100%;
+    display: block;
+    align-content: center;
+    align-items: center;
+  }
+
+  &__inputtitle {
+    display: inline-flex;
+    align-content: center;
+    align-items: center;
+    margin-right: 30px;
+    padding-left: 8px;
   }
 
   &__label {
