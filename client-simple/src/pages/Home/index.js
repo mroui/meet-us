@@ -38,7 +38,9 @@ class Home extends Component {
     filterDateFrom: "",
     filterDateTo: "",
     filterTimeFrom: "",
-    filterTimeTo: ""
+    filterTimeTo: "",
+    filterPriceFrom: "",
+    filterPriceTo: ""
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -121,9 +123,17 @@ class Home extends Component {
     this.setState({filterTimeTo: e.target.value});
   }
 
+  handleFilterPriceFrom = (e) => {
+    this.setState({filterPriceFrom: e.target.value});
+  }
+
+  handleFilterPriceTo = (e) => {
+    this.setState({filterPriceTo: e.target.value});
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
-    const { filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo } = this.state;
+    const { filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
     const options = [2, 5, 10, 25, 50, 100, 250, 500, 1000];
 
     return (
@@ -171,6 +181,16 @@ class Home extends Component {
             val2={filterTimeTo}
             onChangeFrom={this.handleFilterTimeFrom}
             onChangeTo={this.handleFilterTimeTo}
+          />
+          <FormInputBetween
+            label="Price"
+            id="filterPrice"
+            type="number"
+            val1={filterPriceFrom}
+            val2={filterPriceTo}
+            min1="0"
+            onChangeFrom={this.handleFilterPriceFrom}
+            onChangeTo={this.handleFilterPriceTo}
           />
           <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>
         </form>

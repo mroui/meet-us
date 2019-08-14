@@ -56,7 +56,7 @@ const FormInputSelect = ({ label, additionalClass, options, ...props}) => {
   );
 };
 
-const FormInputBetween = ({ label, id, val1, val2, onChangeFrom, onChangeTo, type = "text", additionalClass, ...props }) => {
+const FormInputBetween = ({ label, id, val1, val2, onChangeFrom, min1, onChangeTo, type = "text", additionalClass, ...props }) => {
   return (
     <div className="form__group">
 
@@ -67,6 +67,7 @@ const FormInputBetween = ({ label, id, val1, val2, onChangeFrom, onChangeTo, typ
           type={type}
           id={id}
           value={val1}
+          min={min1}
           className={"form__input form__between " + additionalClass}
           onChange={onChangeFrom}
           {...props}/>
