@@ -131,6 +131,25 @@ class Home extends Component {
     this.setState({filterPriceTo: e.target.value});
   }
 
+  handleFiltering = () => {
+
+    let { chatrooms } = this.props.data;
+    let newChatrooms = [];
+    var keys = Object.keys(chatrooms);
+    keys.forEach(function(key){
+      newChatrooms.push(chatrooms[key]);
+    });
+
+    const { filterActivity, filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
+
+    
+    // newChatrooms = newchatrooms.filter((chatroom) => {
+    //   return chatroom.
+    // });
+
+    // this.setSortedChatrooms(newChatrooms);
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
     const { filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
@@ -142,7 +161,7 @@ class Home extends Component {
         desc="Set properties of event which you want to filter."
         modalOpen={modalOpen}
         closeModal={this.toggleFilterModal}>
-        <form className="form">
+        <form className="form" onSubmit={this.handleFiltering}>
           <div className="form__group">
             <FormRadios
               label="Chatroom activity"
@@ -189,10 +208,11 @@ class Home extends Component {
             val1={filterPriceFrom}
             val2={filterPriceTo}
             min1="0"
+            max="10000"
             onChangeFrom={this.handleFilterPriceFrom}
             onChangeTo={this.handleFilterPriceTo}
           />
-          <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>
+          <Button variant="primary" additionalClass="modal__btn">Filter with my options</Button>
         </form>
       </Modal>
     );
