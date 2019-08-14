@@ -7,7 +7,7 @@ import _ from "lodash";
 import Sidebar, {SidebarArea, SidebarItem, SidebarMessage} from "../../components/Sidebar/Sidebar";
 import ChannelItem from "../../components/ChannelItem/ChannelItem";
 import Modal from "../../components/Modal/Modal";
-import { FormInput, FormRadios, FormInputSelect } from "../../components/Form/Form";
+import { FormInput, FormRadios, FormInputSelect, FormInputBetween } from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import Legend from "../../components/Legend/Legend";
@@ -35,6 +35,8 @@ class Home extends Component {
     filterTags: "",
     filterActivity: "",
     filterDistance: "",
+    filterDateFrom: "",
+    filterDateTo: "",
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -101,9 +103,17 @@ class Home extends Component {
     this.setState({filterDistance: e.target.value});
   }
 
+  handleFilterDateFrom = (e) => {
+    this.setState({filterDateFrom: e.target.value});
+  }
+
+  handleFilterDateTo = (e) => {
+    this.setState({filterDateTo: e.target.value});
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
-    const { filterTags, filterDistance } = this.state;
+    const { filterTags, filterDistance, filterDateFrom, filterDateTo } = this.state;
     const options = [2, 5, 10, 25, 50, 100, 250, 500, 1000];
 
     return (
@@ -133,6 +143,15 @@ class Home extends Component {
             value={filterDistance}
             options={options}
             onChange={this.handleFilterDistance}
+          />
+          <FormInputBetween
+            label="Time"
+            id="filterDate"
+            type="date"
+            val1={filterDateFrom}
+            val2={filterDateTo}
+            onChangeFrom={this.handleFilterDateFrom}
+            onChangeTo={this.handleFilterDateTo}
           />
           
           <Button variant="primary" type="submit" additionalClass="modal__btn">Go on</Button>

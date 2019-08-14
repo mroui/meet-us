@@ -43,7 +43,7 @@ const FormRadios = ({ label, val1, val2, title1, title2, additionalClass = "", .
 
 const FormInputSelect = ({ label, additionalClass, options, ...props}) => {
   return (
-    <>
+    <div className="form__group">
       {label ? <label htmlFor={"select"} className="form__label">{label}</label> : ""}
       <select
         id="select"
@@ -52,9 +52,38 @@ const FormInputSelect = ({ label, additionalClass, options, ...props}) => {
         <option value="">--Choose an option--</option>
         {options.map((option, key) => <option key={key} value={option}>{option + "km"}</option>)}
       </select>
-    </>
+    </div>
   );
-}
+};
+
+const FormInputBetween = ({ label, id, val1, val2, onChangeFrom, onChangeTo, type = "text", additionalClass, ...props }) => {
+  return (
+    <div className="form__group">
+
+      {label ? <label htmlFor={id} className="form__label">{label}</label> : ""}
+
+      <div className="form__group center">
+        <input
+          type={type}
+          id={id}
+          value={val1}
+          className={"form__input form__between " + additionalClass}
+          onChange={onChangeFrom}
+          {...props}/>
+        <label> to </label>
+        <input
+          type={type}
+          id={id}
+          value={val2}
+          min={val1}
+          className={"form__input form__between " + additionalClass}
+          onChange={onChangeTo}
+          {...props}/>
+      </div>
+
+    </div>
+  );
+};
 
 const FormFooterText = ({ children }) => {
   return (
@@ -82,4 +111,4 @@ const Form = ({ children, heading, formFooter, ...props }) => {
   );
 };
 
-export { Form, FormInput, FormFooterText, FormRadios, FormInputSelect };
+export { Form, FormInput, FormFooterText, FormRadios, FormInputSelect, FormInputBetween };
