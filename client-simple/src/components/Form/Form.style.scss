@@ -21,6 +21,13 @@
     display: block;
   }
 
+  &__radios {
+    display: inline-flex;
+    padding-inline: 10px;
+    align-content: space-around;
+    align-items: center;
+  }
+
   &__inputtitle {
     display: inline-flex;
     align-content: center;

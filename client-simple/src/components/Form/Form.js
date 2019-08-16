@@ -16,27 +16,31 @@ const FormInput = ({ label, id, type = "text", title, additionalClass = "", ...p
   );
 };
 
-const FormRadios = ({ label, val1, val2, title1, title2, additionalClass = "", ...props }) => {
+const FormRadios = ({ id, label, val1, val2, title1, title2, additionalClass = "", ...props }) => {
   return (
     <>
-      {label ? <label htmlFor={"radios"} className="form__label">{label}</label> : ""}
-      <input
-        type="radio"
-        id="radios"
-        name="radios"
-        value={val1}
-        className={"form__input " + additionalClass}
-        {...props}/>
-      <div className="form__inputtitle">{title1}</div>
+      {label ? <label htmlFor={id} className="form__label">{label}</label> : ""}
+      <div className="form__radios">
+        <input
+          type="radio"
+          id={id}
+          name="activity"
+          value={val1}
+          className={"form__input " + additionalClass}
+          {...props}/>
+        <div className="form__inputtitle">{title1}</div>
+      </div>
 
-      <input
-        type="radio"
-        id="radios"
-        name="radios"
-        value={val2}
-        className={"form__input " + additionalClass}
-        {...props}/>
-      <div className="form__inputtitle">{title2}</div>
+      <div className="form__radios">
+        <input
+          type="radio"
+          id={id}
+          name="activity"
+          value={val2}
+          className={"form__input " + additionalClass}
+          {...props}/>
+        <div className="form__inputtitle">{title2}</div>
+      </div>
     </>
   );
 };

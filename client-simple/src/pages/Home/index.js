@@ -142,12 +142,15 @@ class Home extends Component {
 
     const { filterActivity, filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
 
+    console.log(filterActivity, filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo)
     
     // newChatrooms = newchatrooms.filter((chatroom) => {
     //   return chatroom.
     // });
 
+
     // this.setSortedChatrooms(newChatrooms);
+    this.setState({openFilterModal: !this.state.openFilterModal});
   }
 
   renderFilterModal = () => { 
@@ -161,16 +164,15 @@ class Home extends Component {
         desc="Set properties of event which you want to filter."
         modalOpen={modalOpen}
         closeModal={this.toggleFilterModal}>
-        <form className="form" onSubmit={this.handleFiltering}>
-          <div className="form__group">
-            <FormRadios
-              label="Chatroom activity"
-              val1="Active"
-              val2="Inactive"
-              title1="Active"
-              title2="Inactive"
-              onClick={this.handleFilterActivity}/>
-          </div>
+        <div className="form">
+          <FormRadios
+            label="Chatroom activity"
+            id="radios"
+            val1="Active"
+            val2="Inactive"
+            title1="Active"
+            title2="Inactive"
+            onClick={this.handleFilterActivity}/>
           <FormInput
             label="Key words, tags"
             placeholder="After the commas like: cats, dogs, foxes..."
@@ -212,8 +214,8 @@ class Home extends Component {
             onChangeFrom={this.handleFilterPriceFrom}
             onChangeTo={this.handleFilterPriceTo}
           />
-          <Button variant="primary" additionalClass="modal__btn">Filter with my options</Button>
-        </form>
+          <Button variant="primary" additionalClass="modal__btn" onClick={this.handleFiltering}>Filter with my options</Button>
+        </div>
       </Modal>
     );
   }
@@ -353,7 +355,7 @@ class Home extends Component {
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
             {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
             {!mapVisible && <SearchBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
-            {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Chatrooms</Button> }
+            {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Events</Button> }
           </header>
           {!mapVisible && <Legend/>}
 
