@@ -131,6 +131,24 @@ class Home extends Component {
     this.setState({filterPriceTo: e.target.value});
   }
 
+  getDistanceFromLatLonInKm = ( lat1, lon1, lat2, lon2) => {
+    const R = 6371; //radius of the earth in km
+    const dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+    const dLon = this.deg2rad(lon2-lon1); 
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    const d = R * c; // Distance in km
+    return d;
+  }
+
+  deg2rad = (deg) => {
+    return deg * (Math.PI/180);
+  }
+
   handleFiltering = () => {
 
     let { chatrooms } = this.props.data;
@@ -142,14 +160,51 @@ class Home extends Component {
 
     const { filterActivity, filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
 
-    console.log(filterActivity, filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo)
-    
-    // newChatrooms = newchatrooms.filter((chatroom) => {
-    //   return chatroom.
-    // });
+    const active = filterActivity==="Active" ? true : false;
+    const tags = filterTags.replace(/ /g, "").split(",");
 
+    if (filterActivity) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.active === active;});
+    }
+    if (filterTags) {
+      let filtered = [];
+      newChatrooms.map(chatroom => {
+        tags.map(tag => {
+          if (chatroom.name.toLowerCase().includes(tag.toString().toLowerCase()) || chatroom.description.toLowerCase().includes(tag.toString().toLowerCase())) 
+            return filtered.push(chatroom);
+        });
+      });
+      newChatrooms = filtered;
+    }
+    if (filterDistance && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        newChatrooms = newChatrooms.filter(chatroom => {
+          const distance = this.getDistanceFromLatLonInKm(chatroom.latitude, chatroom.longitude, position.coords.latitude, position.coords.longitude);
+          return distance <= filterDistance;
+        });
+        this.setSortedChatrooms(newChatrooms);
+      });
+    }
+    if (filterDateFrom) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.date >= filterDateFrom;});
+    }
+    if (filterDateTo) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.date <= filterDateTo;});
+    }
+    if (filterTimeFrom) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.time >= filterTimeFrom;});
+    }
+    if (filterTimeTo) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.time <= filterTimeTo;});
+    }
+    if (filterPriceFrom) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.price >= filterPriceFrom;});
+    }
+    if (filterPriceTo) {
+      newChatrooms = newChatrooms.filter(chatroom => {return chatroom.price <= filterPriceTo;});
+    }
 
-    // this.setSortedChatrooms(newChatrooms);
+    this.setSortedChatrooms(newChatrooms);
     this.setState({openFilterModal: !this.state.openFilterModal});
   }
 
