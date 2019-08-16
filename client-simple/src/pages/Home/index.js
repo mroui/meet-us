@@ -16,7 +16,7 @@ import MapChatrooms from "../../components/GoogleMaps/MapChatrooms/MapChatrooms"
 import withUserContext from "../../components/withUserContext";
 import "./Home.style.scss";
 import SortBar from "../../components/SortBar/SortBar";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import search from "../../assets/svg/search.svg";
 
 class Home extends Component {
   state = {
@@ -32,6 +32,8 @@ class Home extends Component {
     sortDistance: false,
     sortPrice: false,
     sortDateAdded: false,
+
+    searchName: "",
 
     openFilterModal: false,
     filterTags: "",
@@ -206,7 +208,10 @@ class Home extends Component {
     }
 
     this.setNewChatrooms(newChatrooms);
-    this.setState({openFilterModal: !this.state.openFilterModal});
+    this.setState({
+      openFilterModal: !this.state.openFilterModal,
+      searchName: ""
+    });
   }
 
   renderFilterModal = () => { 
@@ -384,6 +389,33 @@ class Home extends Component {
     this.setState({newChatrooms: newChatrooms});
   }
 
+  searchEvent = () => {
+    let chatrooms = this.props.data.chatrooms;
+    let newChatrooms = [];
+    var keys = Object.keys(chatrooms);
+    keys.forEach(function(key){
+      newChatrooms.push(chatrooms[key]);
+    });
+
+    if (this.state.searchName !== "") {
+      newChatrooms = newChatrooms.filter((chatroom) => chatroom.name.toString().toLowerCase().includes(this.state.searchName.toLowerCase()));
+      this.setNewChatrooms(newChatrooms);
+    }
+    else this.setNewChatrooms(null);
+  }
+
+  handleInput = (e) => {
+    this.setState({
+      searchName: e.target.value
+    });
+  }
+
+  onEnterPress = e => {
+    if (e.which === 13 && e.shiftKey === false) {
+      this.searchEvent();
+    }
+  };
+
   render() {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
@@ -411,7 +443,11 @@ class Home extends Component {
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
             {!mapVisible && <SortBar chatrooms={chatrooms} setNewChatrooms={this.setNewChatrooms}/> }
-            {!mapVisible && <SearchBar chatrooms={chatrooms} setNewChatrooms={this.setNewChatrooms}/> }
+            {!mapVisible && 
+              <div className="bar">
+                <input type="text" className="bar__search" value={this.state.searchName} onChange={this.handleInput} placeholder="Find event..." onKeyPress={this.onEnterPress}/>
+                <img src={search} className="bar__icon" onClick={this.searchEvent} alt="Search button"/>
+              </div> }
             {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Events</Button> }
           </header>
           {!mapVisible && <Legend/>}
