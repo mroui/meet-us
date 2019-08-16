@@ -53,7 +53,14 @@ class SortBar extends Component {
 
   sortPopularLeast = (a, b) => { 
     return a.members.length >= b.members.length ? 1 : -1;
+  }
 
+  sortAddedDateNewest = (a, b) => {
+    return a.createdAt >= b.createdAt ? 1 : -1;
+  }
+
+  sortAddedDateOldest = (a, b) => {
+    return a.createdAt <= b.createdAt ? 1 : -1;
   }
 
   getDistanceFromLatLonInKm = ( lat1, lon1, lat2, lon2) => {
@@ -74,6 +81,7 @@ class SortBar extends Component {
     return deg * (Math.PI/180);
   }
 
+
   sortList = (event) => {
     let chatrooms = this.props.chatrooms;
     let newChatrooms = [];
@@ -84,10 +92,11 @@ class SortBar extends Component {
 
     switch(event.target.value) {
     case this.state.sortOptions[0]: {
+      newChatrooms = newChatrooms.sort(this.sortAddedDateOldest);
       break;
     }
     case this.state.sortOptions[1]: {
-      newChatrooms = newChatrooms.reverse();
+      newChatrooms = newChatrooms.sort(this.sortAddedDateNewest);
       break;
     }
     case this.state.sortOptions[2]: {
@@ -102,7 +111,7 @@ class SortBar extends Component {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           newChatrooms = newChatrooms.sort((a,b) => this.sortLocationNearest(a, b, position.coords));
-          this.props.setSortedChatrooms(newChatrooms);
+          this.props.setNewChatrooms(newChatrooms);
         });
       }
       break;
@@ -111,7 +120,7 @@ class SortBar extends Component {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           newChatrooms = newChatrooms.sort((a,b) => this.sortLocationFarthest(a, b, position.coords));
-          this.props.setSortedChatrooms(newChatrooms);
+          this.props.setNewChatrooms(newChatrooms);
         });
       }
       break;
@@ -133,7 +142,7 @@ class SortBar extends Component {
       break;
     }
     }
-    this.props.setSortedChatrooms(newChatrooms);
+    this.props.setNewChatrooms(newChatrooms);
   }
 
 

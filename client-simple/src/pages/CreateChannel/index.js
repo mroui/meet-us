@@ -238,7 +238,7 @@ class CreateChannel extends Component {
 
     if (this.canSubmitForm()) {
       const { channelTitle, channelDescription, channelLocation, channelLocationDesc, channelDate, channelTime, channelPrice, channelContact } = this.state;
-      const chatroom = {name: channelTitle, description: channelDescription, locationName: channelLocationDesc, active: true, date: channelDate, time: channelTime, price: parseInt(channelPrice), contact: channelContact, ...channelLocation, };
+      const chatroom = {name: channelTitle, description: channelDescription, locationName: channelLocationDesc, active: true, date: channelDate, time: channelTime, price: parseInt(channelPrice), contact: channelContact, createdAt: Date.now(), ...channelLocation, };
       if (createChannel) {
         const {data: {createNewChatroom: newChatroomId}} = await createChannel({variables: {chatroom}});
 

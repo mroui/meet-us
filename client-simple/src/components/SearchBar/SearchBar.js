@@ -5,8 +5,7 @@ import search from "../../assets/svg/search.svg";
 class SearchBar extends Component {
 
   state = {
-    title: "",
-    error: ""
+    title: ""
   }
 
   searchEvent = () => {
@@ -17,16 +16,16 @@ class SearchBar extends Component {
       newChatrooms.push(chatrooms[key]);
     });
 
-    newChatrooms = newChatrooms.filter((chatroom) => chatroom.name.includes(this.state.title));
-
-    if (newChatrooms.length>0) this.props.setSortedChatrooms(newChatrooms);
-    else this.setState({error: "No results!"});
+    if (this.state.title !== "") {
+      newChatrooms = newChatrooms.filter((chatroom) => chatroom.name.toString().toLowerCase().includes(this.state.title.toLowerCase()));
+      this.props.setNewChatrooms(newChatrooms);
+    }
+    else this.props.setNewChatrooms(null);
   }
 
   handleInput = (e) => {
     this.setState({
-      title: e.target.value,
-      error: ""
+      title: e.target.value
     });
   }
 
@@ -38,13 +37,10 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <>
       <div className="bar">
         <input type="text" className="bar__search" onChange={this.handleInput} placeholder="Find event..." onKeyPress={this.onEnterPress}/>
         <img src={search} className="bar__icon" onClick={this.searchEvent} alt="Search button"/>
       </div>
-      <span className="bar__error">{this.state.error}</span>
-      </>
     );
   }
 }

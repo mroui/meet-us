@@ -96,6 +96,7 @@ class Chat extends Component {
       locationName: chatroom.locationName,
       active: chatroom.active,
       owner: this.props.chatroom.owner,
+      createdAt: this.props.chatroom.createdAt,
       members: this.props.chatroom.members}});
   }
 
@@ -200,9 +201,9 @@ class Chat extends Component {
 
   toggleActiveChatroom = e => {
     const chatroom = this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-    const { name, description, latitude, longitude, locationName, date, time, price, contact } = chatroom;
+    const { name, description, latitude, longitude, locationName, date, time, price, contact, createdAt } = chatroom;
     const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
-    const newChatroom = {name, description, latitude, longitude, locationName, active: !chatroom.active, date, time, price: parseInt(price), contact };
+    const newChatroom = {name, description, latitude, longitude, locationName, active: !chatroom.active, date, time, createdAt, price: parseInt(price), contact };
 
     const msg = !chatroom.active ? "/INFO:\nChatroom is enabled by the owner" :  "/INFO:\nChatroom is disabled by the owner";
     
@@ -236,7 +237,7 @@ class Chat extends Component {
   handleFormEditEvent = () => {
     if (this.valueValid()) {
       const chatroom =  this.state.chatroom ? this.state.chatroom : this.props.chatroom;
-      const { latitude, longitude, locationName } = chatroom;
+      const { latitude, longitude, locationName, createdAt } = chatroom;
       const id = this.state.chatroom ? this.state.chatroom._id : this.props.chatroom.variables._id;
       const { tempTitle, tempDesc, tempDate, tempTime, tempPrice, tempContact } = this.state;
 
@@ -258,7 +259,8 @@ class Chat extends Component {
         date: tempDate,
         time: tempTime,
         price: parseInt(tempPrice),
-        contact: tempContact
+        contact: tempContact,
+        createdAt: createdAt
       };
       
       return (
@@ -467,6 +469,7 @@ const GET_CURRENT_CHATROOM = gql`
             owner {
               _id 
             }
+            createdAt
         }
     }
 `;
@@ -481,6 +484,7 @@ const UPDATE_CHATROOM = gql`
       price
       active
       contact
+      createdAt
     }
   }
 `;

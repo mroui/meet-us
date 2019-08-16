@@ -25,13 +25,15 @@ class Home extends Component {
     channelID: null,
     mapVisible: false,
     isUserLogged: false,
+
+    newChatrooms: null,
+
     sortDate: false,
     sortDistance: false,
     sortPrice: false,
     sortDateAdded: false,
-    sortedChatrooms: [],
-    openFilterModal: false,
 
+    openFilterModal: false,
     filterTags: "",
     filterActivity: "",
     filterDistance: "",
@@ -150,7 +152,6 @@ class Home extends Component {
   }
 
   handleFiltering = () => {
-
     let { chatrooms } = this.props.data;
     let newChatrooms = [];
     var keys = Object.keys(chatrooms);
@@ -182,7 +183,7 @@ class Home extends Component {
           const distance = this.getDistanceFromLatLonInKm(chatroom.latitude, chatroom.longitude, position.coords.latitude, position.coords.longitude);
           return distance <= filterDistance;
         });
-        this.setSortedChatrooms(newChatrooms);
+        this.setNewChatrooms(newChatrooms);
       });
     }
     if (filterDateFrom) {
@@ -204,7 +205,7 @@ class Home extends Component {
       newChatrooms = newChatrooms.filter(chatroom => {return chatroom.price <= filterPriceTo;});
     }
 
-    this.setSortedChatrooms(newChatrooms);
+    this.setNewChatrooms(newChatrooms);
     this.setState({openFilterModal: !this.state.openFilterModal});
   }
 
@@ -348,7 +349,7 @@ class Home extends Component {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
     let { chatrooms, loading, error } = this.props.data;
-    if (this.state.sortedChatrooms.length) chatrooms = this.state.sortedChatrooms;
+    if (this.state.newChatrooms) chatrooms = this.state.newChatrooms;
 
     if (loading) return <Loader isDark>Loading events...</Loader>;
     if (error) return null;
@@ -379,14 +380,15 @@ class Home extends Component {
     return <div>There are no events at the moment</div>;
   };
 
-  setSortedChatrooms = (sortedChatrooms) => {
-    this.setState({sortedChatrooms: sortedChatrooms});
+  setNewChatrooms = (newChatrooms) => {
+    this.setState({newChatrooms: newChatrooms});
   }
 
   render() {
     const { mapVisible } = this.state;
     const { userState } = this.props.context;
-    const { chatrooms } = this.props.data;
+    let { chatrooms }  = this.props.data;
+    if (this.state.newChatrooms) chatrooms = this.state.newChatrooms;
 
     return (
       <div className="page">
@@ -408,8 +410,8 @@ class Home extends Component {
           <header className="page__header">
             <h2 className="page__heading">Event List</h2>
             <Toggler isChecked={mapVisible} toggleMap={this.toggleMapView} />
-            {!mapVisible && <SortBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
-            {!mapVisible && <SearchBar chatrooms={chatrooms} setSortedChatrooms={this.setSortedChatrooms}/> }
+            {!mapVisible && <SortBar chatrooms={chatrooms} setNewChatrooms={this.setNewChatrooms}/> }
+            {!mapVisible && <SearchBar chatrooms={chatrooms} setNewChatrooms={this.setNewChatrooms}/> }
             {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Events</Button> }
           </header>
           {!mapVisible && <Legend/>}
@@ -445,6 +447,7 @@ const GET_CHATROOMS = gql`
       locationName
       active
       price
+      createdAt
     }
   }
 `;
