@@ -56,6 +56,10 @@ export class ChatRoom extends Typegoose {
   @GQLField()
   contact: String;
 
+  @DBProp()
+  @GQLField()
+  createdAt: Date;
+
 }
 
 export default new ChatRoom().getModelForClass(ChatRoom, {

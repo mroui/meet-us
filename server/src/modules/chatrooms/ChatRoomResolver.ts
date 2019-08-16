@@ -39,6 +39,9 @@ class CreateChatRoomInput implements Partial<ChatRoom> {
   @GQLField()
   contact: String;
 
+  @GQLField()
+  createdAt: Date;
+
 }
 
 

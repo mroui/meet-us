@@ -17,6 +17,7 @@ type ChatRoom {
   time: String!
   price: Float!
   contact: String!
+  createdAt: DateTime!
 }
 
 input CreateChatRoomInput {
@@ -30,6 +31,7 @@ input CreateChatRoomInput {
   time: String!
   price: Float!
   contact: String!
+  createdAt: DateTime!
 }
 
 input CreateUserInput {
