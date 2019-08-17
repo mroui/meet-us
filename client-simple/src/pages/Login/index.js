@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Form, FormInput, FormFooterText } from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import "./Login.style.scss";
+import withUserContext from "../../components/withUserContext";
 
 class Login extends Component {
   state = {
@@ -24,6 +25,11 @@ class Login extends Component {
       this.setState({errorMsg: null});
       return null;
     }
+  }
+
+  componentDidUpdate() {
+    const { user } = this.props.context.userState;
+    if (user) this.props.history.push("/");
   }
 
   componentWillUnmount() {
@@ -95,4 +101,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default (withUserContext(withRouter(Login)));

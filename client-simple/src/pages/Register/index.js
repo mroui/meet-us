@@ -3,6 +3,7 @@ import { Form, FormInput, FormFooterText } from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import "./Register.style.scss";
 import { UserContext } from "../../services/userContext";
+import withUserContext from "../../components/withUserContext";
 
 class Register extends Component {
   state = {
@@ -40,6 +41,11 @@ class Register extends Component {
     if (!err) this.props.history.push("/");
     this.resetState();
   };
+  
+  componentDidUpdate() {
+    const { user } = this.props.context.userState;
+    if (user) this.props.history.push("/");
+  }
 
   handleRegisterError = registerRes => {
     if (registerRes instanceof Error) { //eslint-disable-line valid-typeof
@@ -123,4 +129,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default (withUserContext(Register));
