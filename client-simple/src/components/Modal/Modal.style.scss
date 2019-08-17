@@ -11,7 +11,9 @@
   transform: translate(-50%, -50%);
   z-index: 99;
   width: 90%;
+  height: 100%;
   max-width: 450px;
+  overflow-y: auto;
 
   &__wrapper {
     width: 100%;
@@ -71,6 +73,7 @@
 
   &__content {
     padding-top: 25px;
+    padding-bottom: 25px;
   }
 
   &__inline {

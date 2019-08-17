@@ -1,6 +1,12 @@
 @import '../../styles/variables';
 
-// Chatrooms wrapper
-.chatrooms {
-  animation: show .5s;
+@media (min-height: 800px) {
+  .chatrooms {
+    animation: show .5s;
+
+    &__wrapper {
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+  }
 }

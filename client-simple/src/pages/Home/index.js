@@ -235,6 +235,9 @@ class Home extends Component {
     const modalOpen = this.state.openFilterModal;
     const { filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
     const options = [2, 5, 10, 25, 50, 100, 250, 500, 1000];
+    
+    if (modalOpen) document.body.style.overflowY = "hidden";
+    else document.body.style.overflowY = "auto";
 
     return (
       <Modal
@@ -242,60 +245,58 @@ class Home extends Component {
         desc="Set properties of event which you want to filter."
         modalOpen={modalOpen}
         closeModal={this.toggleFilterModal}>
-        <div className="form">
-          <FormRadios
-            label="Chatroom activity"
-            id="radios"
-            val1="Active"
-            val2="Inactive"
-            title1="Active"
-            title2="Inactive"
-            onClick={this.handleFilterActivity}/>
-          <FormInput
-            label="Key words, tags"
-            placeholder="After the commas like: cats, dogs, foxes..."
-            value={filterTags}
-            onChange={this.handleFilterTags}
-          />
-          <FormInputSelect
-            label="Max distance"
-            value={filterDistance}
-            options={options}
-            onChange={this.handleFilterDistance}
-          />
-          <FormInputBetween
-            label="Date"
-            id="filterDate"
-            type="date"
-            val1={filterDateFrom}
-            val2={filterDateTo}
-            onChangeFrom={this.handleFilterDateFrom}
-            onChangeTo={this.handleFilterDateTo}
-          />
-          <FormInputBetween
-            label="Time"
-            id="filterTime"
-            type="time"
-            val1={filterTimeFrom}
-            val2={filterTimeTo}
-            onChangeFrom={this.handleFilterTimeFrom}
-            onChangeTo={this.handleFilterTimeTo}
-          />
-          <FormInputBetween
-            label="Price"
-            id="filterPrice"
-            type="number"
-            val1={filterPriceFrom}
-            val2={filterPriceTo}
-            min1="0"
-            max="10000"
-            onChangeFrom={this.handleFilterPriceFrom}
-            onChangeTo={this.handleFilterPriceTo}
-          />
-          <div className="modal__inline">
-            <Button variant="primary" additionalClass="modal__btn" onClick={this.clearFilters}>Clear filters</Button>
-            <Button variant="primary" additionalClass="modal__btn" onClick={this.handleFiltering}>Filter events</Button>
-          </div>
+        <FormRadios
+          label="Chatroom activity"
+          id="radios"
+          val1="Active"
+          val2="Inactive"
+          title1="Active"
+          title2="Inactive"
+          onClick={this.handleFilterActivity}/>
+        <FormInput
+          label="Key words, tags"
+          placeholder="After the commas like: cats, dogs, foxes..."
+          value={filterTags}
+          onChange={this.handleFilterTags}
+        />
+        <FormInputSelect
+          label="Max distance"
+          value={filterDistance}
+          options={options}
+          onChange={this.handleFilterDistance}
+        />
+        <FormInputBetween
+          label="Date"
+          id="filterDate"
+          type="date"
+          val1={filterDateFrom}
+          val2={filterDateTo}
+          onChangeFrom={this.handleFilterDateFrom}
+          onChangeTo={this.handleFilterDateTo}
+        />
+        <FormInputBetween
+          label="Time"
+          id="filterTime"
+          type="time"
+          val1={filterTimeFrom}
+          val2={filterTimeTo}
+          onChangeFrom={this.handleFilterTimeFrom}
+          onChangeTo={this.handleFilterTimeTo}
+        />
+        <FormInputBetween
+          label="Price"
+          id="filterPrice"
+          type="number"
+          val1={filterPriceFrom}
+          val2={filterPriceTo}
+          min1="0"
+          max="10000"
+          onChangeFrom={this.handleFilterPriceFrom}
+          onChangeTo={this.handleFilterPriceTo}
+        />
+        <div className="modal__inline">
+          <Button variant="primary" additionalClass="modal__btn" onClick={this.clearFilters}>Clear filters</Button>
+          <Button variant="primary" additionalClass="modal__btn" onClick={this.handleFiltering}>Filter events</Button>
         </div>
       </Modal>
     );
@@ -476,9 +477,8 @@ class Home extends Component {
             {this.renderAllChatrooms()}
           </div>
         </section>
-
         {this.renderModal()}
-        {this.state.openFilterModal && this.renderFilterModal()}
+        {this.renderFilterModal()}
       </div>
     );
   }
