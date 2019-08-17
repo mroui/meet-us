@@ -469,7 +469,7 @@ class Home extends Component {
                 <input type="text" className="bar__search" value={this.state.searchName} onChange={this.handleInput} placeholder="Quick search event..." onKeyPress={this.onEnterPress}/>
                 <img src={search} className="bar__icon" onClick={this.searchEvent} alt="Search button"/>
               </div> }
-            {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Events</Button> }
+            {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter</Button> }
           </header>
           {!mapVisible && <Legend/>}
 
