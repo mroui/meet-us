@@ -50,7 +50,7 @@ class Chat extends Component {
   };
 
   loggedUserId = () => _.get(this.props, ["context", "userState", "user", "id"], null);
-  loggedUserName = () => _.get(this.props, ["context", "userState", "user", "profile", "firstName"], null);
+  loggedUserName = () => _.get(this.props, ["context", "userState", "user", "profile", "firstName"], null) + " " + _.get(this.props, ["context", "userState", "user", "profile", "lastName"], null);
 
   componentDidMount = async () => {
     const { socket } = this.props;
@@ -374,7 +374,7 @@ class Chat extends Component {
           <div className="chat__wrapper">
             <header className="page__header">
               <h2 className="page__heading">{chatroom && chatroom.name}</h2>
-              <Button href="/" additionalClass="chat__back" isLink>To Event List</Button>
+              <Button href="/" additionalClass="chat__back" isLink>Back to Event List</Button>
               {(chatroom.owner && chatroom.owner._id === this.loggedUserId()) 
                 ? <span style={{display: "flex"}}><TogglerActiveChatroom isChecked={chatroom.active} toggleActive={this.toggleActiveChatroom} />
                   <Button additionalClass="chat__back" onClick={() => this.toggleEditModal()}>Edit Event</Button>

@@ -25,6 +25,7 @@ query getUser {
   }
   profile {
     firstName
+    lastName
   }
   username
   __typename
@@ -38,7 +39,6 @@ const _UserProvider = props => {
     try {
       const {data: {getUser}} = await props.client.query({query: GET_USER, fetchPolicy: "network-only"});
       user = getUser;
-      console.log(`getUser: `, getUser);
     } catch (error) {
       _handleAuthError(error, user);
 

@@ -43,9 +43,8 @@ class ChatMessages extends Component {
 
     const getMsgAuthorNickname = () => {
       const _socketIoNickname = message.from && message.from.nickname;
-      const _graphQlNickname = _.get(message, ["from", "profile", "firstName"], null);
+      const _graphQlNickname = _.get(message, ["from", "profile", "firstName"], null) + " " + _.get(message, ["from", "profile", "lastName"], null);
       const {guestName} = message;
-
       return _socketIoNickname || guestName || _graphQlNickname || "Unknown User";
     };
 

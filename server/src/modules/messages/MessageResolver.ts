@@ -79,7 +79,7 @@ export default class MessageResolver {
       const {socket} = await socketIO();
       return await this.service.addMessage(userId, msg, chatroom, guestId, guestName)
           .then(({_id: messageId, msg, chatroom, guestId, guestName, createdAt}) => {
-              const nickname = guestName || user.profile.firstName;
+              const nickname = guestName || user.profile.firstName + " " + user.profile.lastName;
               const _userId = guestId || userId;
               socket.to(chatroom).emit("message", {_id: messageId, from: {_id: _userId, nickname}, msg, createdAt});
               return messageId
