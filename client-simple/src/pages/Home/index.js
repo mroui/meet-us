@@ -214,6 +214,22 @@ class Home extends Component {
     });
   }
 
+  clearFilters = () => {
+    this.setState({
+      openFilterModal: !this.state.openFilterModal,
+      newChatrooms: null,
+      filterActivity: "",
+      filterDateFrom: "",
+      filterDateTo: "",
+      filterDistance: "",
+      filterTags: "",
+      filterTimeFrom: "",
+      filterTimeTo: "",
+      filterPriceFrom: "",
+      filterPriceTo: ""
+    });
+  }
+
   renderFilterModal = () => { 
     const modalOpen = this.state.openFilterModal;
     const { filterTags, filterDistance, filterDateFrom, filterDateTo, filterTimeFrom, filterTimeTo, filterPriceFrom, filterPriceTo } = this.state;
@@ -275,7 +291,10 @@ class Home extends Component {
             onChangeFrom={this.handleFilterPriceFrom}
             onChangeTo={this.handleFilterPriceTo}
           />
-          <Button variant="primary" additionalClass="modal__btn" onClick={this.handleFiltering}>Filter with my options</Button>
+          <div className="modal__inline">
+            <Button variant="primary" additionalClass="modal__btn" onClick={this.clearFilters}>Clear filters</Button>
+            <Button variant="primary" additionalClass="modal__btn" onClick={this.handleFiltering}>Filter events</Button>
+          </div>
         </div>
       </Modal>
     );
@@ -445,7 +464,7 @@ class Home extends Component {
             {!mapVisible && <SortBar chatrooms={chatrooms} setNewChatrooms={this.setNewChatrooms}/> }
             {!mapVisible && 
               <div className="bar">
-                <input type="text" className="bar__search" value={this.state.searchName} onChange={this.handleInput} placeholder="Find event..." onKeyPress={this.onEnterPress}/>
+                <input type="text" className="bar__search" value={this.state.searchName} onChange={this.handleInput} placeholder="Quick search event..." onKeyPress={this.onEnterPress}/>
                 <img src={search} className="bar__icon" onClick={this.searchEvent} alt="Search button"/>
               </div> }
             {!mapVisible && <Button additionalClass="page__button" type="submit" onClick={this.toggleFilterModal}>Filter Events</Button> }

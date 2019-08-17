@@ -73,6 +73,12 @@
     padding-top: 25px;
   }
 
+  &__inline {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
+
   &__login {
     font-weight: $font-weight-bold;
     font-size: 18px;
