@@ -30,7 +30,9 @@ const SidebarArea = ({ heading, children }) => {
   return (
     <div className="sidebar__area">
       <h2 className="sidebar__heading sidebar__heading--small">{heading}</h2> 
-      {children}
+      <div className="sidebar__area__content">
+        {children}
+      </div>
     </div>
   );
 };

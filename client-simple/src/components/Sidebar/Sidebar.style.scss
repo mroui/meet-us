@@ -76,6 +76,11 @@
   &__area {
     margin-bottom: 30px;
     height: 40%;
+
+    &__content {
+      height: 80%;
+      overflow-y: auto;
+    }
   }
 
   &__item {
