@@ -52,7 +52,7 @@ class EventMembers extends Component {
       if (!_properChatroomUsersArr) return <Loader>Loading members...</Loader>;
 
       if (_properChatroomUsersArr && _properChatroomUsersArr.length) {
-        return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName}`}/>);
+        return _properChatroomUsersArr.map(({_id, profile}) => <SidebarItem key={_id} title={`${profile.firstName + " " + profile.lastName}`}/>);
       } else {
         return <SidebarMessage>Seems like nobody's come?</SidebarMessage>;
       }
@@ -76,6 +76,7 @@ const JOIN_TO_EVENT = gql`
         _id
         profile {
           firstName
+          lastName
         }
       }
     }
