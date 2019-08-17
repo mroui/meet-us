@@ -178,6 +178,7 @@ class Home extends Component {
         });
       });
       newChatrooms = filtered;
+      this.setNewChatrooms(newChatrooms);
     }
     if (filterDistance && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
