@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { graphql, compose } from "react-apollo";
 import _ from "lodash";
-import { Message, MessageText } from "../Message/Message";
+import { Message, MessageText, MessageImage } from "../Message/Message";
 import withSocket from "../withSocket";
 import withUserContext from "../withUserContext";
 
@@ -38,6 +38,10 @@ class ChatMessages extends Component {
     this.setState({messages: [...this.state.messages, msg]});
   }
 
+  checkURLImage(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+  }
+
   renderMessage = (message) => {
     const {guestId } = this.state;
 
@@ -53,7 +57,11 @@ class ChatMessages extends Component {
 
     return (
       <Message key={message._id} author={getMsgAuthorNickname()} toRight={isMsgOfMine} timestamp={message.createdAt}>
-        <MessageText variant={variant}>{message.msg}</MessageText>
+        { 
+          this.checkURLImage(message.msg) 
+            ? <MessageImage variant={variant}>{message.msg}</MessageImage> 
+            : <MessageText variant={variant}>{message.msg}</MessageText>
+        }
       </Message>
     );
   };

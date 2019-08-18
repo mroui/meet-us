@@ -8,6 +8,12 @@ const MessageText = ({ children, variant = "" }) => {
   );
 };
 
+const MessageImage = ({ children, variant = "" }) => {
+  return (
+    <img src={children} alt={children} className={"message__text " + (variant && `message__text--${variant}`) + " message__image"}/>
+  );
+};
+
 const Message = ({ author, timestamp, toRight = "", children }) => {
   return (
     <div className={"message " + (toRight && "message--right")}>
@@ -20,4 +26,4 @@ const Message = ({ author, timestamp, toRight = "", children }) => {
   );
 };
 
-export { Message, MessageText};
+export { Message, MessageImage, MessageText};
