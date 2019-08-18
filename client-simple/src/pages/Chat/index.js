@@ -464,6 +464,7 @@ const GET_CURRENT_CHATROOM = gql`
                 _id
                 profile {
                     firstName
+                    lastName
                 }
             }
             owner {
