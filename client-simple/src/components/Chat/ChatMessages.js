@@ -29,8 +29,6 @@ class ChatMessages extends Component {
 
   componentDidUpdate() {
     this.scrollToBottomElement.scrollIntoView({behavior: "smooth"});
-    //console.log("height of component",this.myDiv.current.offsetHeight)  //component with messages
-    //console.log("bottom", this.myDiv.current.getBoundingClientRect().bottom)
   }
 
   handleIncomingMessage = msg => {
