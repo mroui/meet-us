@@ -9,7 +9,7 @@ const FormInput = ({ label, id, type = "text", title, additionalClass = "", ...p
       <input
         type={type}
         id={id}
-        className={"form__input " + additionalClass}
+        className={"form form__input " + additionalClass}
         {...props}/>
       <> {title}</>
     </div>
@@ -27,7 +27,8 @@ const FormRadios = ({ id, label, val1, val2, title1, title2, additionalClass = "
           name="activity"
           value={val1}
           className={"form__input " + additionalClass}
-          {...props}/>
+          {...props}
+        />
         <div className="form__inputtitle">{title1}</div>
       </div>
 
@@ -51,7 +52,7 @@ const FormInputSelect = ({ label, additionalClass, options, ...props}) => {
       {label ? <label htmlFor={"select"} className="form__label">{label}</label> : ""}
       <select
         id="select"
-        className={"form__input " + additionalClass}
+        className={"form form__input " + additionalClass}
         {...props}>
         <option value="">--Choose an option--</option>
         {options.map((option, key) => <option key={key} value={option}>{option + "km"}</option>)}
