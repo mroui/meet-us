@@ -56,11 +56,11 @@ class SortBar extends Component {
   }
 
   sortAddedDateNewest = (a, b) => {
-    return a.createdAt >= b.createdAt ? 1 : -1;
+    return a.createdAt <= b.createdAt ? 1 : -1;
   }
 
   sortAddedDateOldest = (a, b) => {
-    return a.createdAt <= b.createdAt ? 1 : -1;
+    return a.createdAt >= b.createdAt ? 1 : -1;
   }
 
   getDistanceFromLatLonInKm = ( lat1, lon1, lat2, lon2) => {

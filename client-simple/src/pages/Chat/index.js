@@ -19,7 +19,6 @@ import ModalJoinEvent from "../../components/ModalJoinEvent/ModalJoinEvent";
 import "../../../node_modules/emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart/dist-modern/index";
 
-
 class Chat extends Component {
   state = {
     inputMessageText: "",
