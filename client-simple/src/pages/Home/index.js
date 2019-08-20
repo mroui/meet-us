@@ -97,7 +97,10 @@ class Home extends Component {
   handleFilterActivity = (e) => {
     if (this.state.filterActivity === e.target.value) {
       this.setState({filterActivity: ""});
-      document.getElementsByName("activity").forEach(radio => { radio.checked = false; });
+      for (let index = 0; index < document.getElementsByName("activity").length; index++) {
+        document.getElementsByName("activity")[index].checked = false;
+        
+      }
     } else {
       this.setState({filterActivity: e.target.value});
     }
