@@ -43,6 +43,10 @@ For the proper operation of an application, **internet connection is required** 
 </br>
 *Project was made as a part of an internship education in [TDSoft](https://tdsoft.pl). Developers from company have created a basic chat application with geolocation and basic database. My task was to expand the whole project with my own idea.*
 
+## Documentation
+More about communication sites in those README files:
+- [Serwer](/server/README.md)
+- [Client](/client-simple/README.md)
 
 
 ## README IN PROGRESS...
