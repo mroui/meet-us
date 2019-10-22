@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./client-simple/src/assets/svg/logo.svg" alt="MeetUs logo"/>
+  <img src="./client-simple/src/assets/svg/logo.svg" width="200px" alt="MeetUs logo"/>
 </p>
 
 > Web application, event organizer with chat feature pointed in every possible place in the world. Growing community and archive of events from the whole world.
