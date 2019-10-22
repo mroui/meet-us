@@ -48,5 +48,24 @@ More about communication sites in those README files:
 - [Serwer](/server/README.md)
 - [Client](/client-simple/README.md)
 
+## Setup
+* [Install Node.js](https://nodejs.org/en/download/)
+* Clone repository
+```
+git clone https://github.com/mroui/meet-us.git
+```
+* Enter the main folder `meet-us`
+```
+cd meet-us
+```
+* Update npm, just in case (Node Package Manager, it comes with node.js installation)
+```
+npm install -g npm
+```
+* Run command to install all needed packages
+```
+npm run install:all
+```
+
 
 ## README IN PROGRESS...
