@@ -44,6 +44,39 @@ An application was tested with *node.js 10* and corresponding *npm 6*.
 For the proper operation of an application, **internet connection is required** and **access location permission**.
 </br>
 
+## Features
+* Creating account with intuitive validation
+* Two types of users:
+  * without created account - guest - access to limited functions like:
+    * browsing events
+    * searching, sorting, filtering
+    * using map
+    * taking part in chats
+  * with created account - registered - access to all guest functions and addictionally:
+    * creating, editing, deleting, deactivating own events
+    * joining to events
+    * creating lists with own events and those joined
+* Guest is identified by set nickname, user with account by name
+* Sorting events by: added date, event date, location, price, popularity
+* Quick search by title
+* Filtering events by: chatroom activity, key words, tags, max distance, scopes of: dates, times, prices
+* Browsing the map with placed events by pin on the whole world, what additionally allows to view the statistics about the most popular places
+* Creating own event: title, event name, optional description, date, time, price (which can be also equal to 0), contact details (f.e. email address or phone number) and event location, which is set pin on a map
+* Access to event details, like:
+  * Chat field, messages, photos, urls
+  * Members list
+  * Using emoji
+  * Using commands to get to know about event's informations
+  * Access to *secret command* "/joke" 
+  * Using helpbot assistance
+  * Sending photos by url
+* Creating communities and archives on each chat
+* Joining to events and becoming one of the members
+* Leaving from events
+* As event's owner, there is possibility to:
+  * Activating/Deactivating event
+  * Removing event forever
+
 ## Documentation
 More about communication sites in those README files:
 - [Serwer](/server/README.md)
