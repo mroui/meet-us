@@ -12,6 +12,7 @@
 ## Table of contents
 * [Introduction](#introduction)
 * [Features](#features)
+* [Development](#development)
 * [Technologies](#technologies)
 * [Documentation](#documentation)
 * [Presentation](#presentation)
