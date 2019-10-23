@@ -62,7 +62,7 @@ For the proper operation of an application, **internet connection is required** 
 * Quick search by title
 * Filtering events by: chatroom activity, key words, tags, max distance, scopes of: dates, times, prices
 * Browsing the map with placed events by pin on the whole world, what additionally allows to view the statistics about the most popular places
-* Creating own event: title, event name, optional description, date, time, price (which can be also equal to 0), contact details (f.e. email address or phone number) and event location, which is set pin on a map
+* Creating own event: title, event name, optional description, date, time, price (which can be also equal to 0), contact details (e.g. email address or phone number) and event location, which is set pin on a map
 * Access to event details and all functions on chatroom, like:
   * Chat field, messages, photos, urls
   * Members list
@@ -83,7 +83,7 @@ An application is created to have opportunity to develop it with new functionali
 A few functionalities that can develop application:
 * **Event categories** - something that can be easier way to find what interests people and it is kind of event organization
 * **Users' profiles** - something what can deepen the communities that are created here, interest and could keep users for longer
-* **Notifications** - f.e. reminds that event starting soon, notification about edited informations or someone added message to chat
+* **Notifications** - e.g. reminds that event starting soon, notification about edited informations or someone added message to chat
 * **Paid promotion, subscription** - the fee for event advertisement to be more higher on search list, which results in a wider availability of reception and popularity
 ...And more. The project is quite universal, there are a lot of possibilities and ideas that can be implemented to develop an application.
 
