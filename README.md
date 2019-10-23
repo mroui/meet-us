@@ -7,6 +7,8 @@
 
 > Web application, event calendar with chat feature pointed in every possible place in the world. Growing community and archive of events from the whole world.
 
+*Project was made as a part of an internship education in [TDSoft](https://tdsoft.pl). Developers from company have created a basic chat application with geolocation and basic database. My task was to expand the whole project with my own idea.*
+
 ## Table of contents
 * [Introduction](#introduction)
 * [Features](#features)
@@ -41,7 +43,6 @@ An application was tested with *node.js 10* and corresponding *npm 6*.
 </br>
 For the proper operation of an application, **internet connection is required** and **access location permission**.
 </br>
-*Project was made as a part of an internship education in [TDSoft](https://tdsoft.pl). Developers from company have created a basic chat application with geolocation and basic database. My task was to expand the whole project with my own idea.*
 
 ## Documentation
 More about communication sites in those README files:
