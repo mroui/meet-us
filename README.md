@@ -14,10 +14,10 @@
 * [Features](#features)
 * [Development](#development)
 * [Technologies](#technologies)
-* [Documentation](#documentation)
 * [Presentation](#presentation)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
+* [Documentation](#documentation)
 * [Credits](#credits)
 * [License](#license)
 
@@ -107,11 +107,6 @@ A few functionalities that can develop application:
 * React Router Dom 5.0.1
 * Emoji Mart 2.11.1
 
-## Documentation
-More about communication sites in those README files:
-- [Serwer](/server/README.md)
-- [Client](/client-simple/README.md)
-
 ## Setup
 * [Install Node.js](https://nodejs.org/en/download/)
 * Clone repository
@@ -131,5 +126,9 @@ npm install -g npm
 npm run install:all
 ```
 
+## Documentation
+More about communication sites in those README files:
+- [Serwer](/server/README.md)
+- [Client](/client-simple/README.md)
 
 ## README IN PROGRESS...
