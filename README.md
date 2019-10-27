@@ -87,6 +87,26 @@ A few functionalities that can develop application:
 * **Paid promotion, subscription** - the fee for event advertisement to be more higher on search list, which results in a wider availability of reception and popularity
 ...And more. The project is quite universal, there are a lot of possibilities and ideas that can be implemented to develop an application.
 
+## Technologies
+* Node.js 10.15.3
+* Javascript (ES6)
+* Typescript 3.5.1
+* React 16.8.6
+* MongoDB 4.0.11
+* Mongoose 5.5.12
+* Typegoose 5.6.0
+* GraphQL 14.4.0
+* TypeGraphQL 0.17.4
+* Apollo Server Express 2.7.0
+* Socket.io 2.2.0
+* Account.js 0.13.0
+* EsLint 5.12.0
+* antd 3.20.3
+* Webpack 4.28.3
+* React Google Maps 9.4.5
+* React Router Dom 5.0.1
+* Emoji Mart 2.11.1
+
 ## Documentation
 More about communication sites in those README files:
 - [Serwer](/server/README.md)
