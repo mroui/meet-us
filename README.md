@@ -128,6 +128,9 @@ A few functionalities that can develop application:
 * **Paid promotion, subscription** - the fee for event advertisement to be more higher on search list, which results in a wider availability of reception and popularity
 ...And more. The project is quite universal, there are a lot of possibilities and ideas that can be implemented to develop an application.
 
+## Screenshots
+##### ...IN PROGRESS...
+
 ## Setup
 * [Install Node.js](https://nodejs.org/en/download/)
 * Clone repository
@@ -147,9 +150,15 @@ npm install -g npm
 npm run install:all
 ```
 
+##### ...IN PROGRESS...
+
 ## Documentation
 More about communication sites in those README files:
 - [Serwer](/server/README.md)
 - [Client](/client-simple/README.md)
 
-## README IN PROGRESS...
+## Credits
+##### ...IN PROGRESS...
+
+## License
+##### ...IN PROGRESS...
