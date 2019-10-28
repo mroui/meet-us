@@ -11,10 +11,12 @@
 
 ## Table of contents
 * [Introduction](#introduction)
+* [Presentation](#presentation)
+* [Aims](#aims)
+* [Technologies](#technologies)
+* [Database](#database)
 * [Features](#features)
 * [Development](#development)
-* [Technologies](#technologies)
-* [Presentation](#presentation)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Documentation](#documentation)
@@ -44,6 +46,45 @@ An application was tested with *node.js 10* and corresponding *npm 6*.
 </br>
 For the proper operation of an application, **internet connection is required** and **access location permission**.
 </br>
+
+## Presentation
+[Full presentation in PDF](/presentation/meetus-presentation.pdf)
+
+## Aims
+* Primarily, development of a working web application that meets the project idea.
+* Development and analysis of functionalities that should be included in this type of application, what possibilities should be preserved, which could be added as additional, facilitating navigation on the site, etc.
+* The database, and more precisely the orientation of the supplied application database by mentors on internship for the main idea.
+* User Experience and User Interface, and more precisely the creation of an intuitive interface with the necessary additional functionalities at which potential users would stay for longer and to which they would gladly return. This kind of application does not necessarily need to "hold" the user - they can only use such an event app to join to events and my goal is to keep them for longer.
+* Creation a kind of community. Users have at their disposal a chat, where they can meet new people or discuss. The chat itself leads to the creation of a "story", an archive of events with participants and their messages. It is also possible to add pictures' urls e.g. pictures from the event. In addition, if an event is periodic, an owner can simply deactivate the chat and reactivate it after a certain period of time. All history, archive and community are available all the time.
+* Evolution, or more specifically to create a product that can be further expanded, developed with new functionalities. In addiction, I want to make money on this product.
+
+## Technologies
+The enormity of technologies selected in terms of popularity and functionality, providing the best solutions based on this project.
+* Node.js 10.15.3
+* Javascript (ES6)
+* Typescript 3.5.1
+* React 16.8.6
+* MongoDB 4.0.11
+* Mongoose 5.5.12
+* Typegoose 5.6.0
+* GraphQL 14.4.0
+* TypeGraphQL 0.17.4
+* Apollo Server Express 2.7.0
+* Socket.io 2.2.0
+* Account.js 0.13.0
+* EsLint 5.12.0
+* antd 3.20.3
+* Webpack 4.28.3
+* React Google Maps 9.4.5
+* React Router Dom 5.0.1
+* Emoji Mart 2.11.1
+
+## Database
+The database mainly consists of three main models: user, event and messages.
+* User - Everyone has their unique ID, profile, which consists of first name and last, has an array of email addresses in case of, for example, their changes and we have two fields informing about the date of account creation and the date of possible updating.
+* Event - more extensive model with a unique id, title or name and description. There is also the list of members, participants, owner, event activity, latitude and longitude which can be get after setting the place on a map, and the name of the location e.g. street, city, country.
+Next, there is date, time and price fields and a contact -  i.e. some form of contact if interested persons want to personally ask for something, e.g. email address, phone number. And the last there is a date field that the event was created.
+* Message - it is about the message in the event chat. Here we have following fields: ID, message content, event to which it is assigned, from whom the message is sent, possible guest id in the case of a user without an account, by analogy the name of the guest and of course date of creation and possible update fields.
 
 ## Features
 * Creating an account with intuitive validation
@@ -86,26 +127,6 @@ A few functionalities that can develop application:
 * **Notifications** - e.g. reminds that event starting soon, notification about edited informations or someone added message to chat
 * **Paid promotion, subscription** - the fee for event advertisement to be more higher on search list, which results in a wider availability of reception and popularity
 ...And more. The project is quite universal, there are a lot of possibilities and ideas that can be implemented to develop an application.
-
-## Technologies
-* Node.js 10.15.3
-* Javascript (ES6)
-* Typescript 3.5.1
-* React 16.8.6
-* MongoDB 4.0.11
-* Mongoose 5.5.12
-* Typegoose 5.6.0
-* GraphQL 14.4.0
-* TypeGraphQL 0.17.4
-* Apollo Server Express 2.7.0
-* Socket.io 2.2.0
-* Account.js 0.13.0
-* EsLint 5.12.0
-* antd 3.20.3
-* Webpack 4.28.3
-* React Google Maps 9.4.5
-* React Router Dom 5.0.1
-* Emoji Mart 2.11.1
 
 ## Setup
 * [Install Node.js](https://nodejs.org/en/download/)
