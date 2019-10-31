@@ -20,7 +20,6 @@
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Documentation](#documentation)
-* [Credits](#credits)
 * [License](#license)
 
 ## Introduction
@@ -149,16 +148,44 @@ npm install -g npm
 ```
 npm run install:all
 ```
-
-##### ...IN PROGRESS...
+* Run server:
+  * [Install MongoDB Community Server](https://www.mongodb.com/download-center/community)
+  * Add Mongo's bin folder to the Path Environment Variable
+  * Run local database 
+  ```
+  mongod
+  ```
+  * Enter server folder
+  ```
+  cd server
+  ```
+  * Seed database
+  ```
+  npm run seed:db
+  ```
+  * Run server
+  ```
+  npm start
+  ```
+* Run client:
+  * Step back and enter client folder
+  ```
+  cd ../client-simple
+  ```
+  * Install all needed packages
+  ```
+  npm install
+  ```
+  * Run client
+  ```
+  npm start
+  ```
+For the proper operation keep the order of the steps!
 
 ## Documentation
 More about communication sites in those README files:
 - [Serwer](/server/README.md)
 - [Client](/client-simple/README.md)
 
-## Credits
-##### ...IN PROGRESS...
-
 ## License
-##### ...IN PROGRESS...
+This project is licensed under the terms of the MIT license.
