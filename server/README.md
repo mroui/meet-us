@@ -1,76 +1,64 @@
-# Backend
-[(powrót do głównej dokumentacji)](../README.md)
+# Server
+[(Back to main documentation...)](../README.md)
 
-### Technologia
-Językiem używanym w tym projekcie jest `typescript` (https://www.typescriptlang.org/) - typowany język zorientowany obiektowo, nadal kod można tworzyć w natywnym javascripcie używając rozszerzeń `.js` dla plików.
-Następstwem typescript'a jest użycie typescriptowych odpowiedników 'zwykłego' GraphQL oraz Mongoose. 
-- type-graphql (https://typegraphql.ml/) 
-- typegoose ([dokumentacja](https://github.com/szokodiakos/typegoose); [mongoose dokumentacja](https://mongoosejs.com/docs/guide.html))
+## Table of contents
+* [Structure](#structure)
+* [Technologies](#technologies)
+* [DatabaseSeed](#databaseseed)
+* [Conventions](#conventions)
 
-## Użycie
-Aby włączyć serwer należy:
-- Włączyć lokalną bazę danych MongoDB (komendą `mongod`) *Przy instalacji można wybrać opcje automatycznego startowania serwisu z bazą danych*
-- Zaseedować bazę komendą `npm run seed:db` w folderze /server
-- Włączyć serwer komendą `npm start` w folderze `/server`. *Dodatkowo komenda "watchuje" pliki - więc wszystkie zmiany w kodzie źródłowym serwera wywołają jego rebuild.
+## Structure
+Scheme declarations and creating models are located in the folder ./server/src/modules/{name}, then files are divided into:
+- {NameEntity} - schema declarations, their types, relationships and finally generating the Model
+- {NameResolver} - resolvers - declarations of Query / Mutation operations that we define and type, GraphQL can automatically and predictably collect data which will be asked from the client
+- {NameService} - helper functions that query the database directly and return the data to resolvers
+**API**
+- Graphql server runs on port `4000` by default
+- Endpoint socket.io is available at: http://localhost:{PORT}/socket.io
+- Endpoint GraphQL and GraphQLi "playground" for testing is available at: http://localhost:{PORT}/graphql
+- Visualizer with schemes and their relationships is available at: http://localhost:{PORT}/visualizer
+**Socket.IO**
+The socket.io initialization function and event handlers are located in the ./server/src/socketIO folder.
+**Server startup**
+The server startup file is ./server/src/index.ts (run by the ts-node module to execute typescript code execution in node.js).
+It includes the implementation of apollo-server, connection to the database and calling socket.io initialization function and providing visualizer tool.
+**Configuration**
+Configuration of the whole project is in ./server/config/index.js
 
-### API
-- Domyślnie serwer graphql działa na porcie `4000`
-- Endpoint socket.io dostępny jest pod adresem: http://localhost:{PORT}/socket.io
-- Endpoint GraphQL jak i "playground" GraphQLi do testowania dostępny jest pod adresem: http://localhost:{PORT}/graphql
-- Visualizer który pokazuje Schemy oraz ich relacje dostępny jest pod adresem: http://localhost:{PORT}/visualizer
+## Technologies
+The language used in this project is [typescript](https://www.typescriptlang.org/) - an object-oriented typed language, that can be still create code in native JavaScript using the `.js` extensions for files. 
+there are GraphQL and Mongoose equivalents:
+- [type-graphql](https://typegraphql.ml/)
+- [typegoose](https://github.com/szokodiakos/typegoose)
+**Database**
+Project data is stored in a non-profitable [MongoDB database](https://www.mongodb.com/)
+**Server**
+The server uses `apollo-server-express` - as the name implies, it is a combination of the [express.js](https://expressjs.com/) and apollo-graphql.
+Thanks to `apollo`, apart from the apollo server which is responsible for providing data to the client, `socket.io` is also connected to the `express` which is responsible for sending messages in chatrooms.
+**GraphQL**
+Modern approach to server API. In contrast to the REST definition of endpoints by different URL and HTTP method, GraphQL displays one endpoint that supports mutations and query.
+**type-graphql**
+Framework on GraphQL that facilitates writing 'schemas' and 'resolvers' in typescript, extending the standard description of the GraphQL API with an object-oriented approach and a set of annotations.
+**typegoose**
+Based on `mongoose` which provides data model support, can be define fields and object validations by creating a regular javascript object. It also provides full simplified API operations based on MongoDB with asynchronous support (promise).
+Typegoose allows to define database models using classes, additional annotations to describe half validation and references to other models (tables).
+**socket.io**
+Responsible for real-time communication with clients based on WebSocket, in the case of an app for the chat system (including division into channels and sending messages to users of these channels).
+**accounts.js**
+High level wrapper logic for creating user accounts and their authentication, more: https://accounts-js.netlify.com/
 
-### Automatyczna definicja modeli
-Połączenie `typegoose` oraz `type-graphql` zapewnia definicje zarówno modelu bazy danych (typegoose) oraz definicje podstawowego query modelu właściwie w jednym pliku w deklaratywny sposób przy pomocy annotacji.
-Przykładem może być [ChatRoomEntity.ts](server/src/modules/chatrooms/ChatRoomEntity.ts). Wiecej o bibliotekach można przeczytać poniżej oraz w ich dokumentacji.
+## DatabaseSeed
+**This operation will delete all previous data in the database!**
+```
+npm run seed:db
+```
+The tool for exporting the database with rigidly specified data is located in the folder ./server/src/tools/seed/index.ts
+It serves primarily to create start data and relationships between them. This data can be modified, respectively for each model, files are sorted by name in the folder ./server/src/tools/data:
+- {ModelName}.seed.json - which data in the model key:value is to get
+- {ModelName}.refs.json - which fields for THIS model should refer as references to other models, i.e. for Message.refs.json we specify that for their `from` field the reference will be the `User` model, and then in the `query` field, enter the query with the user who will be assigned in this place.
+*Due to the usage of the @accounts library, seeding users with a script is not entirely possible*
 
-## Opis najważniejszych modułów
-### Baza danych
-Dane projektu przechowywane są w nierelacynej bazie MongoDB, wiecej o niej samej i procesie instalacji można poczytać tutaj: https://www.mongodb.com/
+## Conventions
+The combination of `typegoose` and` type-graphql` provides definitions of both the database model (typegoose) and the definitions of the basic model query in a single file in a declarative way using annotations. An example would be [ChatRoomEntity.ts](server/src/modules/chatrooms/ChatRoomEntity.ts).
 
-### Server
-Serwer używa `apollo-server-express` - jak wskazuje nazwa jest to połączenie frameworka [express.js](https://expressjs.com/) oraz apollo-graphql.
-Za sprawa użycia `apollo` API GraphQL'owedzięki któremu oprócz właśnie serwera apollo który odpowiada za dostarczanie danych do clienta, do expressa podpięty jest również socket.io ktory odpowiada za wysyłanie wiadomości w chatroomach.
-
-### GraphQL
-Ultra nowoczesne podejście do API serwera. W przeciwieństwie to RESTowej definicji endpointów wg. różnych URL i HTTP method, GraphQL wystawia jeden endpoint który obsługuje mutacje oraz query.
-Same Query mogą przyjąć formę grafu / drzewa - stąd nazwa, więcej o GQL w dokumentacji: https://graphql.org/learn/
-.
-### type-graphql
-Framework na GraphQL który ułatwia pisanie 'schemów' i 'resolverów' w typescripcie, rozbudowujący standardowe opisywanie API GraphQL o podejście zorientowane obiektowo oraz zestaw annotacji.
-Dokumentacja: https://typegraphql.ml/
-
-### typegoose
-Oparty na mongoose który zapewnia obsługe modeli dla danych, czyli można zdefiniować pola i walidacje obiektu tworząc zwykly obiekt javascript. Zapewnie też pełne uproszone API operacji na bazie MongoDB z obsługą asynchronicznosci (promise).
-Sam typegoose pozwala definiować modele bazy danych za pomocą klas, dodatkowe annotacje pozwalaja na opis walidacji pół i referencji do innych modeli (tabel).
-### socket.io
-Odpowiada za komunikacje w czasie rzeczywistym z klientami opartą na WebSocket, w przypadku apki za system chatu (w tym podział na kanały oraz wysyłanie wiadomości dla użytkowników tych kanałów), więcej: https://socket.io/
-
-### accounts.js
-Wysoko poziomowy wrapper logiki tworzenia kont użytkowników i ich autentykacji, więcej: https://accounts-js.netlify.com/.
-
-
-## Struktura projektu
-Deklaracje Schemów i tworzenie ich modeli znajdują się odpowienio w folderze ./server/src/modules/{nazwa}, następnie pliki podzielone są na:
-- {NazwaEntity} czyli deklaracje Schemy, ich typów, relacji i na końcu generowanie Modelu
-- {NazwaResolvers} resolvery czyli deklaracje operacji Query/Mutation które definiujemy i typujemy aby GraphQL automatycznie i co najważniejsze przewidywalnie mógł zbierać dla nas dane o które zapytamy z clienta
-- {NazwaService} funkcje pomocnicze które odpytują się bezpośrednio bazy danych i zwracają dane do resolverów
-
-### Socket.IO
-Funkcja inicjalizująca socket.io oraz event handlery znajdują się w folderze ./server/src/socketIO
-
-### Plik startowy serwera
-Plik startowy serwera to ./server/src/index.ts (uruchamiany przez moduł ts-node aby egzekucja kodu typescript zadziałała w node.js)
-To w nim zawiera się implementacja apollo-server, połączenie z bazą danych oraz wywołanie funkcji inicjalizującej socket.io i udostępnienie narzędzia visualizer
-
-### Pliki konfiguracyjne
-Konfiguracja całego projektu znajduje się w ./server/config/index.js
-
-## Seedowanie bazy danych (komenda: npm run seed:db)
-**Ta operacja usunie wszystkie poprzednie dane w bazie danych!**
-
-Narzędzie do zaseedowania bazy danych sztywno określonymi danymi znajduje się w folderze ./server/src/tools/seed/index.ts
-Służy ono przede wszystkim to stworzenia startowych danych i relacji między nimi. Te dane można modyfikować, odpowiednio dla każdego modelu, pliki posegregowane są po nazwie w folderze ./server/src/tools/data:
-{NazwaModelu}.seed.json - w tym pliku określamy które dane ma dostać model w systemie klucz: wartość
-{NazwaModelu}.refs.json - określamy jakie pola dla TEGO modelu mają odnosić się jako referencje do innych modeli, czyli np. dla Message.refs.json określamy że dla ich pola `from` referencją będzie typ modelu `User`, a kolejno w polu `query` podajemy zapytanie jakim mamy wyszukać w tym przypadku użytkownika który w to miejsce zostanie przypisany.
-
-*footnote: Z racji użycia biblioteki @accounts, seedowanie użytkowników skryptem nie jest w pełni możliwe*
+*The file has been translated from Polish*
