@@ -9,7 +9,7 @@
 
 ## Commands
 `npm install` - Installation all needed packages </br>
-`npm start` - Client launch. Available at: [localhost:3001](localhost:3001) (HMR Support) </br>
+`npm start` - Client launch. Available at: `localhost:3001` (HMR Support) </br>
 `npm run lint` - Correction of errors in the code using ESLint </br>
 `npm build` - Building a client to production code in the **build** folder </br>
 `npm run start:prod` - Start static server [serve](https://github.com/zeit/serve) hosting the code built by `npm build`
