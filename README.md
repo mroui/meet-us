@@ -128,7 +128,21 @@ A few functionalities that can develop application:
 ...And more. The project is quite universal, there are a lot of possibilities and ideas that can be implemented to develop an application.
 
 ## Screenshots
-##### ...IN PROGRESS...
+[Move on quickly to setup](#setup)
+<p align="center">
+	<img src="./screenshots/meet-us-01.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-02.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-03.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-04.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-05.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-06.png" alt="Meet Us app screenshot"/>
+  <img src="./screenshots/meet-us-07.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-08.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-09.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-10.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-11.png" alt="Meet Us app screenshot"/>
+	<img src="./screenshots/meet-us-12.png" alt="Meet Us app screenshot"/>
+</p>
 
 ## Setup
 * [Install Node.js](https://nodejs.org/en/download/)
