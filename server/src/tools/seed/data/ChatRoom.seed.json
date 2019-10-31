@@ -1,21 +1,37 @@
 [
   {
-    "name": "Apex Legends Crew",
-    "active": true,
-    "latitude":  52.22977,
-    "longitude": 21.01178
+    "name": "Car race 2019",
+    "description": "We organize private car race in Lodz",
+    "active": false,
+    "latitude":  52.1445466,
+    "longitude": 21.04053739999995,
+    "locationName": "Ludwika Hirszfelda 11, 02-776 Warszawa, Polska",
+    "date": "2019-08-31",
+    "time": "18:00",
+    "price": 19,
+    "contact": "jess@tess.pl or illegal@racing.com"
   },
   {
-    "name": "Łódź united",
+    "name": "Study IT & programming with coffee",
+    "description": "Let's meet together and learn something new! Join us and start your career with IT :)",
     "active": true,
-    "latitude":  51.75,
-    "longitude": 19.46
+    "latitude":  51.7624615,
+    "longitude": 19.45840880000003,
+    "locationName": "Nawrot 2, 90-006 Łódź, Polska",
+    "date": "2019-11-24",
+    "time": "12:20",
+    "price": 4,
+    "contact": "all@ally.pl or just chat"
   },
   {
     "name": "TDSOFT Channel",
-    "description": "Nalepszy kanał.",
     "active": true,
     "latitude":  51.799010,
-    "longitude": 19.409430
+    "longitude": 19.409430,
+    "locationName": "Brukowa 12, 90-001 Łódź",
+    "date": "2019-10-11",
+    "time": "11:15",
+    "price": 0,
+    "contact": "https://tdsoft.pl/"
   }
 ]

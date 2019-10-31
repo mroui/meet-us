@@ -4,13 +4,13 @@
       "ref": "User",
       "fieldIsArray": true,
       "query": {
-        "profile.firstName": "Antoni"
+        "profile.firstName": "Jacob"
       }
     },
     "owner": {
       "ref": "User",
       "query": {
-        "profile.lastName": "Greenwood"
+        "profile.lastName": "Walter"
       }
     }
   },
@@ -21,10 +21,10 @@
       "query": {
         "$or": [
           {
-            "profile.firstName": "Antoni"
+            "profile.firstName": "Jacob"
           },
           {
-            "profile.lastName": "Greenwood"
+            "profile.lastName": "Walter"
           }
         ]
       }
@@ -32,7 +32,7 @@
     "owner": {
       "ref": "User",
       "query": {
-        "profile.firstName": "Antoni"
+        "profile.firstName": "Jacob"
       }
     }
   },
@@ -43,10 +43,10 @@
       "query": {
         "$or": [
           {
-            "profile.firstName": "Antoni"
+            "profile.firstName": "Ann"
           },
           {
-            "profile.lastName": "Greenwood"
+            "profile.lastName": "Poll"
           }
         ]
       }
@@ -54,7 +54,7 @@
     "owner": {
       "ref": "User",
       "query": {
-        "profile.lastName": "Greenwood"
+        "profile.lastName": "Poll"
       }
     }
   }

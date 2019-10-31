@@ -1,22 +1,22 @@
 [
   {
-    "msg": "Hellloooooo",
-    "guestName": "Guest1",
-    "guestId": "123"
-  },
-  {
-    "msg": "Supp",
-    "guestName": "Guest2",
-    "guestId": "321"
-  },
-  {
-    "msg": "Wanna play some Apex Legends guys?",
-    "guestName": "Guest3",
+    "msg": "Hi! I love fast cars and I want to join! :)",
+    "guestName": "jacobwalter",
     "guestId": "111"
   },
   {
-    "msg": "sure thing",
-    "guestName": "Guest4",
-    "guestId": "000"
+    "msg": "Hi~! Me too! Nice to meet u!",
+    "guestName": "annpolly",
+    "guestId": "222"
+  },
+  {
+    "msg": "Great!",
+    "guestName": "mroui",
+    "guestId": "333"
+  },
+  {
+    "msg": "Hi!",
+    "guestName": "guestanonymous",
+    "guestId": "444"
   }
 ]

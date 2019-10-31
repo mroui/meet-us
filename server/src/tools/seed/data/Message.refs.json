@@ -3,13 +3,13 @@
     "from": {
       "ref": "User",
       "query": {
-        "profile.firstName": "Antoni"
+        "profile.firstName": "Jacob"
       }
     },
     "chatroom": {
       "ref": "ChatRoom",
       "query": {
-        "name": "Apex Legends Crew"
+        "name": "Car race 2019"
       }
     }
   },
@@ -17,13 +17,13 @@
     "from": {
       "ref": "User",
       "query": {
-        "profile.firstName": "Antoni"
+        "profile.firstName": "Jacob"
       }
     },
     "chatroom": {
       "ref": "ChatRoom",
       "query": {
-        "name": "Apex Legends Crew"
+        "name": "Car race 2019"
       }
     }
   },
@@ -31,13 +31,13 @@
     "from": {
       "ref": "User",
       "query": {
-        "profile.lastName": "Greenwood"
+        "profile.lastName": "Poll"
       }
     },
     "chatroom": {
       "ref": "ChatRoom",
       "query": {
-        "name": "Apex Legends Crew"
+        "name": "Car race 2019"
       }
     }
   },
@@ -45,7 +45,7 @@
     "from": {
       "ref": "User",
       "query": {
-        "profile.firstName": "Antoni"
+        "profile.firstName": "Jacob"
       }
     },
     "chatroom": {
