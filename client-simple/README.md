@@ -16,28 +16,28 @@
 
 ## Structure
 
-**public/**
+**public/**</br>
 Includes the `index.html` page templates with meta tags.
 
-**assets/**
+**assets/**</br>
 Includes additional assets used in the project (icons, pictures, etc.).
 
-**components/**
+**components/**</br>
 All components are located in this folder. Each component is in a separate folder and has its own `ComponentName.js` file and the  optional `ComponentName.style.scss` file with styles. Filenames denoting the React and style components written in PascalCase.
 
-**pages/**
+**pages/**</br>
 Folder with pages. Each page is placed in its own folder, in which there is a file `index.js` with the logic and a file `Page.style.scss` with the styles.
 
-**styles/**
+**styles/**</br>
 Contains css files with global styles, variables and functions used throughout the project.
 
-**src/AppRouter.js**
+**src/AppRouter.js**</br>
 Router file to which all pages are imported.
 
-**src/index.js**
+**src/index.js**</br>
 The main file in which the application is rendered.
 
-**config/**
+**config/**</br>
 Folder of files created as a result of pulling out (eject) webpack configuration.
 
 ## Technologies
