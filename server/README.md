@@ -19,14 +19,14 @@ Scheme declarations and creating models are located in the folder ./server/src/m
 - Endpoint GraphQL and GraphQLi "playground" for testing is available at: http://localhost:{PORT}/graphql
 - Visualizer with schemes and their relationships is available at: http://localhost:{PORT}/visualizer
 
-**Socket.IO**
+**Socket.IO**</br>
 The socket.io initialization function and event handlers are located in the ./server/src/socketIO folder.
 
-**Server startup**
+**Server startup**</br>
 The server startup file is ./server/src/index.ts (run by the ts-node module to execute typescript code execution in node.js).
 It includes the implementation of apollo-server, connection to the database and calling socket.io initialization function and providing visualizer tool.
 
-**Configuration**
+**Configuration**</br>
 Configuration of the whole project is in ./server/config/index.js
 
 ## Technologies
