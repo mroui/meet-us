@@ -1,64 +1,50 @@
-# Frontend
-[(powrót do głównej dokumentacji)](../README.md)
+# Client
+[(Back to main documentation...)](../README.md)
 
-Aplikacja służąca do komunikowania się z osobami przy pomocy czatów lokalnych stworzonych przez użytkowników. 
-Użytkownicy mają możliwość stworzenia oraz określenia lokalizacji czatu na mapie.
+## Table of contents
+* [Commands](#commands)
+* [Structure](#structure)
+* [Technologies](#technologies)
+* [Conventions](#conventions)
 
-## Uruchamianie
+## Commands
+`npm install` - Installation all needed packages
+`npm start` - Client launch. Available at: [localhost:3001](localhost:3001) (HMR Support)
+`npm run lint` - Correction of errors in the code using ESLint
+`npm build` - Building a client to production code in the **build** folder
+`npm run start:prod` - Start static server [serve](https://github.com/zeit/serve) hosting the code built by `npm build`
 
-Przed uruchomieniem klienta należy zainstalować wszystkie potrzebne paczki przy pomocy komendy `npm install`. 
-Do poprawnego działania trzeba najpierw uruchomić serwer (postępuj zgodnie z instrukcjami zawartymi w opisie serwera). Nastepnie można odpalić klienta `client-simple/` za pomocą komendy `npm start`.
-
-## Komendy
-
-`npm install` - Instalacja wszystkich potrzebnych paczek  
-`npm start` - Uruchamianie klienta. Dostępny pod adresem: [localhost:3001](localhost:3001). (Wspiera HMR)
-`npm run lint` - Poprawienie błędów w kodzie przy pomocy ESLint  
-`npm build` - Budowanie klienta do kodu produkcyjnego w folderze **build**.
-`npm run start:prod` - Startuje serwer statyczny *serve* (https://github.com/zeit/serve) hostujacy zbudowany przez `npm build` kod.
-
-## Struktura projektu
-
-**public/**  
-Zawiera szablon strony `index.html`, w którym znajdują się meta tagi.
-
-**assets/**  
-Zawiera dodatkowe assety wykorzystwane w projekcie (ikonki, obrazki itp.)
-
-**components/**  
-W tym folderze są umieszczone wszystkie komponenty. Każdy komponent znajduje się w osobnym folderze oraz posiada swój plik `ComponentName.js` oraz opcjonalny plik `ComponentName.style.scss` ze stylami. Nazwy plików w wypadku komponentów reacta i styli pisane PascalCasem.
-
-**pages/**  
-Folder ze stronami. Każda strona jest umieszczona we własnym folderze,w której znajduje się plik `index.js` z logiką strony oraz plik `Page.style.scss` ze stylami danej strony.
-
-**styles/**  
-Zawiera pliki css z globalnymi stylami, zmiennymi oraz funkcjami wykorzystywanymi w całym projekcie.
-
-**src/AppRouter.js**  
-Plik z routerem, do którego są importowane wszystkie strony.
-
-**src/index.js**  
-Główny plik, w którym aplikacja jest renderowana.
-
+## Structure
+**public/**
+Includes the `index.html` page templates with meta tags.
+**assets/**
+Includes additional assets used in the project (icons, pictures, etc.).
+**components/**
+All components are located in this folder. Each component is in a separate folder and has its own `ComponentName.js` file and the  optional `ComponentName.style.scss` file with styles. Filenames denoting the React and style components written in PascalCase.
+**pages/**
+Folder with pages. Each page is placed in its own folder, in which there is a file `index.js` with the logic and a file `Page.style.scss` with the styles.
+**styles/**
+Contains css files with global styles, variables and functions used throughout the project.
+**src/AppRouter.js**
+Router file to which all pages are imported.
+**src/index.js**
+The main file in which the application is rendered.
 **config/**
-Folder plików powstałych w wyniku wyciągniecia (twz. eject) konfiguracji webpacka - *możecie ignorować jego egzystencje ;)*
+Folder of files created as a result of pulling out (eject) webpack configuration.
 
-## Narzędzia
+## Technologies
+- **Webpack** - Module Bundler for applications. The main task is to create "bundles" of code, i.e. one or more output files.
+- **Babel** - Transpiler converting ES6 + code into code understandable for older browsers.
+- **Sass** - CSS preprocessor that extends the CSS syntax considerably by adding commands to make it much more re-usable.
+- **Socket.io** - Enables communication between the client and server.
+- **GraphQL** - Query language, an alternative to the traditional REST API. Main advantage is only one endpoint, and properly constructed queries provide only the data you need.
+- **Apollo-GraphQL** - Provides GraphQL API integration with React components, cache for received data and their storage for reuse between views.
+- **EsLint** - Linter, who supports writing code by applying rules that everyone in the project should follow.
+- **antd** - React library containing a huge set of useful UI components.
+- **react-google-maps** - Google Maps for React.
 
-- **Webpack** - Module Bundler dla aplikacji. Głównym zadaniem webpacka jest tworzenie tzw. "bundli" kodu, a więc jednego lub wielu plików wynikowych.
-- **Babel** - Transpiler konwertujący kod ES6+ na kod zrozumiały dla starszych przeglądarek.
-- **Sass** - Pre-procesor CSS, który rozszerza znacznie składnię CSS dodając do niego komendy, dzięki którym staje się on znacznie bardziej re-używalny.
-- **Socket.io** - Umożliwia komunikację między klientem a serwerem.
-- **GraphQL** - Język zapytań, alternatywa dla tradycyjnego REST API. Jego główną zaletą jest tylko jeden endpoint, a odpowiednio skonstruowane zapytania dostarczają tylko potrzebnych danych.
-- **Apollo-GraphQL** - Zapewnia integracje GraphQL API z komponentami Reacta, cache dla odbieranych danych oraz ich przechowywanie ich w store dla ponownego użycia miedzy widokami. 
-- **EsLint** - Linter, który wspiera pisanie kodu poprzez zastosowanie zasad, do których wszyscy w projekcie mają się stosować. 
-- **antd** - Reactowa biblioteka zawierająca ogromny zestaw przydatnych komponentów UI.
-- **react-google-maps** - Mapy Google dla Reacta
+## Conventions
+- The .env file provides access to client-side environment variables (injected into the code during construction) by [dotenv](https://github.com/motdotla/dotenv#readme) standard.
+- ESLint, which uses the `.eslintrc` configuration file, is responsible for the proper convention of writing in` .js` files. Classes are written in SCSS using the BEM methodology.
 
-## Konfiguracja zmiennych środowiskowych
-Plik .env zapewnia dostęp do zmiennych środowiskowych po stronie klienta (są wstrzykiwane w kod podczas budowy) wg. standardu [dotenv](https://github.com/motdotla/dotenv#readme).
-
-
-## Konwencja pisania
-
-Za odpowiednią konwencje pisania w plikach `.js` odpowiada ESLint, który wykorzystuje plik konfiguracyjny `.eslintrc`. Klasy są pisane w SCSS przy pomocy metodologii BEM.
+*The file has been translated from Polish*
